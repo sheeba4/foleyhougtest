@@ -1,0 +1,38 @@
+<?php
+/*
+* Set paths to theme functions and admin section
+*/
+$admin_path 	= TEMPLATEPATH . '/core/admin/';
+$widgets_path	= TEMPLATEPATH . '/core/widgets/';
+$functions_path = TEMPLATEPATH . '/core/functions/';
+$options_path 	= TEMPLATEPATH . '/core/options/';
+
+
+/*
+* functions
+*/
+require_once($functions_path . 'functions.php');
+
+
+/*
+* theme options
+*/
+require($options_path . 'options.php');
+
+
+/*
+* add-on's
+*/
+require_once($functions_path . 'css3pie.php');
+//require_once($functions_path . 'TinyMCE.php');
+
+
+/*
+* widgets
+*/
+require_once($widgets_path . 'twitter.php');
+require_once($widgets_path . 'button.php');
+require_once($widgets_path . 'address.php');
+require_once($widgets_path . 'address_extended.php');
+require_once($widgets_path . 'author.php');
+
