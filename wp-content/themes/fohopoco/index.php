@@ -26,11 +26,6 @@ get_header(); ?>
 				</a>
 				<!-- / bookmark -->
 
-
-
-
-				
-
 <?php $authorrole = esc_attr(get_the_author_meta
 
 ('user_level') );
@@ -59,13 +54,6 @@ rel="author"><?php the_author_meta('display_name'); ?></a>
 <!-- / by-author -->
 
 <?php } ?>
-
-
-
-
-
-
-
 			</div>
 			<!-- / entry-meta -->
 		</header>

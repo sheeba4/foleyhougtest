@@ -21,7 +21,7 @@ if (!function_exists('minify_setup')):
 		// add_theme_support('post-formats', array('aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat'));
 		
 		// Add support for custom backgrounds
-		add_custom_background();
+		add_theme_support( 'custom-background' );
 		
 		// Add editor style via editor-style.css
 		add_editor_style('editor-style.css');
@@ -47,17 +47,17 @@ endif; // end of minify_setup()
 class MINIFY_Clean_Walker_Nav extends Walker {
 	var $tree_type = array( 'post_type', 'taxonomy', 'custom' );
 	var $db_fields = array( 'parent' => 'menu_item_parent', 'id' => 'db_id' );
-	function start_lvl(&$output, $depth) {
+	function start_lvl(&$output, $depth = 0, $args = array() ) {
 		$indent = str_repeat("\t", $depth);
 		$output .= "\n$indent<ul class=\"sub-menu\">\n";
 	}
 	
-	function end_lvl(&$output, $depth) {
+	function end_lvl(&$output,  $depth = 0, $args = array() ) {
 		$indent = str_repeat("\t", $depth);
 		$output .= "$indent</ul>\n";
 	}
 	
-    function start_el(&$output, $item, $depth, $args) {
+    function start_el(&$output, $item, $depth = 0, $args = array(), $current_object_id = 0) {
 		global $wp_query;
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 		$class_names = $value = '';
@@ -72,15 +72,17 @@ class MINIFY_Clean_Walker_Nav extends Walker {
 		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
 		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
 		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
-		$item_output = $args->before;
+		$item_output = isset( $args->before ) ? $args->before : '';
 		$item_output .= '<a'. $attributes .'>';
-		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+		$item_output .= isset( $args->link_before ) ? $args->link_before: '';
+		$item_output .= apply_filters( 'the_title', $item->title, $item->ID );
+		$item_output .= isset( $args->link_after ) ? $args->link_after : '';
 		$item_output .= '</a>';
-		$item_output .= $args->after;
+		$item_output .= isset( $args->after ) ? $args->after : '';
 		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 	}
 	
-	function end_el(&$output, $item, $depth) {
+	function end_el(&$output, $item, $depth = 0, $args = array()) {
 		$output .= "</li>\n";
 	}
 }
