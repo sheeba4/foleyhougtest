@@ -4,7 +4,7 @@
 */
 
 /*******************************************************************************
- Run fohopoco_setup() when our theme is activated
+ Run minify_setup() when our theme is activated
 ********************************************************************************/
 add_action('after_setup_theme', 'fohopoco_setup');
 
@@ -16,9 +16,6 @@ if (!function_exists('fohopoco_setup')):
 		
 		// Add post thumbnails
 		add_theme_support('post-thumbnails');
-		
-		// Add post formats {@link http://codex.wordpress.org/Post_Formats}
-		// add_theme_support('post-formats', array('aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat'));
 		
 		// Add support for custom backgrounds
 		add_theme_support( 'custom-background' );
@@ -42,9 +39,9 @@ endif; // end of fohopoco_setup()
 
 
 /*******************************************************************************
- fohopoco Clean Navigation Walker
+ Fohopoco Clean Navigation Walker
 ********************************************************************************/
-class fohopoco_Clean_Walker_Nav extends Walker {
+class Fohopoco_Clean_Walker_Nav extends Walker {
 	var $tree_type = array( 'post_type', 'taxonomy', 'custom' );
 	var $db_fields = array( 'parent' => 'menu_item_parent', 'id' => 'db_id' );
 	function start_lvl(&$output, $depth = 0, $args = array() ) {
@@ -283,7 +280,8 @@ function kpl_user_bio_visual_editor_unfiltered() {
 add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 
 
-function fh_excerpt_more( $more ) {
-	return '... <a href="' . the_permalink() .'">More</a>';
+function fohopoco_excerpt_more( $more ) {
+	global $post;
+	return '... <a href="' . the_permalink( $post->ID ) .'">More</a>';
 }
-add_filter('excerpt_more', 'fh_excerpt_more');
+add_filter('excerpt_more', 'fohopoco_excerpt_more');
