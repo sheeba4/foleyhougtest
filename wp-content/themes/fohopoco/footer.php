@@ -8,7 +8,7 @@
  * @since fohopoco 1.0
  */
 ?>
- 	<?php $o = get_option('minify_theme_options'); ?>
+ 	<?php $o = get_option('fohopoco_theme_options'); ?>
 	
 	<footer id="footer" class="clearfix">
 		<div class="clearfix row">
@@ -18,12 +18,12 @@
 						'theme_location' 	=> 'info-links',
 						'menu_class' 		=> 'info-links',
 						'container' 		=> false,
-						'walker' 			=> new MINIFY_Clean_Walker_Nav()
+						'walker' 			=> new fohopoco_Clean_Walker_Nav()
 					)
 				);
 			?>
 			<!-- / info-links -->
-			<p class="copyright" role="contentinfo"><?php echo $o['minify_copyright_text']; ?></p>
+			<p class="copyright" role="contentinfo"><?php echo $o['fohopoco_copyright_text']; ?></p>
 		</div>
 		<!-- / row -->
 		

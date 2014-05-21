@@ -7,7 +7,7 @@
 						'theme_location' 	=> 'nav-main',
 						'menu_class' 		=> '',
 						'container' 		=> false,
-						'walker' 			=> new MINIFY_Clean_Walker_Nav()
+						'walker' 			=> new fohopoco_Clean_Walker_Nav()
 					)
 				);
 			?>

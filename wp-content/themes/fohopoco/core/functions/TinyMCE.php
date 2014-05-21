@@ -7,18 +7,18 @@
 /*******************************************************************************
  Filter TinyMCE Buttons
 ********************************************************************************/
-function minify_mce_buttons_2($buttons)
+function fohopoco_mce_buttons_2($buttons)
 {
 	array_unshift($buttons, 'styleselect');
 	return $buttons;
 }
-add_filter( 'mce_buttons_2', 'minify_mce_buttons_2' );
+add_filter( 'mce_buttons_2', 'fohopoco_mce_buttons_2' );
 
 
 /*******************************************************************************
  Add Style Options
 ********************************************************************************/
-function minify_tiny_mce_before_init($settings)
+function fohopoco_tiny_mce_before_init($settings)
 {
 	$settings['theme_advanced_blockformats'] 	= 'p,address,pre,code,h2,h3,h4,h5,h6,div,figure';
 	$settings['theme_advanced_disable'] 		= 'underline,forecolor,wp_help';
@@ -34,5 +34,5 @@ function minify_tiny_mce_before_init($settings)
 	$settings['style_formats'] = json_encode( $style_formats );
 	return $settings;
 }
-add_filter( 'tiny_mce_before_init', 'minify_tiny_mce_before_init' );
+add_filter( 'tiny_mce_before_init', 'fohopoco_tiny_mce_before_init' );
 ?>

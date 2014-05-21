@@ -2,7 +2,7 @@
 
 <div id="content" role="main">
 <?php if ( have_posts() ) : ?>
-	<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'minify' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+	<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'fohopoco' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
 	
 	<?php while ( have_posts() ) : the_post(); ?>
 	
@@ -38,11 +38,11 @@
 	
 	<article id="post-0" class="post no-results not-found">
 		<header class="entry-header">
-			<h1 class="entry-title"><?php _e( 'Nothing Found', 'minify' ); ?></h1>
+			<h1 class="entry-title"><?php _e( 'Nothing Found', 'fohopoco' ); ?></h1>
 		</header><!-- .entry-header -->
 		
 		<div class="entry-content">
-			<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'minify' ); ?></p>
+			<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'fohopoco' ); ?></p>
 			<?php get_search_form(); ?>
 		</div><!-- .entry-content -->
 	</article><!-- #post-0 -->
