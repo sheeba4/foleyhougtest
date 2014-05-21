@@ -284,6 +284,6 @@ add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 
 
 function fh_excerpt_more( $more ) {
-	return '... <a href="' . the_permalink() .'">More</a>';
+	return '... <a href="' . get_permalink($post->ID) .'">More</a>';
 }
 add_filter('excerpt_more', 'fh_excerpt_more');
