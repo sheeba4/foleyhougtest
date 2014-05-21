@@ -60,7 +60,7 @@ rel="author"><?php the_author_meta('display_name'); ?></a>
 		<!-- / header -->
 
 		<div class="entry-content">
-			<?php the_content(); ?>
+			<?php the_excerpt(); ?>
 		</div>
 		<!-- / entry-content -->
 
