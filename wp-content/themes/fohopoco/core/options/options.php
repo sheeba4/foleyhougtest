@@ -10,7 +10,7 @@ class MINIFY_Options {
 		$this->register_settings_and_fields();
 	}
 	
-	public function add_menu_page()
+	public static function add_menu_page()
 	{
 		add_theme_page('Theme Options', 'Theme Options', 'edit_theme_options', __FILE__, array('MINIFY_Options', 'display_options_page'));
 	}

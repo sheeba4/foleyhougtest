@@ -281,5 +281,9 @@ function kpl_user_bio_visual_editor_unfiltered() {
 	remove_all_filters('pre_user_description');
 }
 add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
- 
-?>
+
+
+function fh_excerpt_more( $more ) {
+	return '... <a href="' . the_permalink() .'">More</a>';
+}
+add_filter('excerpt_more', 'fh_excerpt_more');
