@@ -282,6 +282,6 @@ add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 
 function fohopoco_excerpt_more( $more ) {
 	global $post;
-	return '... <a href="' . the_permalink( $post->ID ) .'">More</a>';
+	return '... <a href="' . get_permalink( $post->ID ) .'">More</a>';
 }
 add_filter('excerpt_more', 'fohopoco_excerpt_more');
