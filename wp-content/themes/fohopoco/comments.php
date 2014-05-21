@@ -47,7 +47,7 @@
 				 * define fohopoco_comment() and that will be used instead.
 				 * See fohopoco_comment() in fohopoco/functions.php for more.
 				 */
-				wp_list_comments( array( 'callback' => 'minify_comment' ) );
+				wp_list_comments( array( 'callback' => 'fohopoco_comment' ) );
 			?>
 		</ol>
 

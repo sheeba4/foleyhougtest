@@ -11,10 +11,10 @@
 	<div id="content" role="main">
 		<article class="clearfix post">
 			<header class="entry-header">
-				<h1 class="entry-title"><?php _e( 'Nothing Found', 'minify' ); ?></h1>
+				<h1 class="entry-title"><?php _e( 'Nothing Found', 'fohopoco' ); ?></h1>
 			</header>
 			<div class="entry-content">
-				<p><?php _e( 'Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'minify' ); ?></p>
+				<p><?php _e( 'Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'fohopoco' ); ?></p>
 				<?php get_search_form(); ?>
 			</div>
 		</article>
