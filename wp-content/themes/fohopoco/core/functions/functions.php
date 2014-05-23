@@ -37,6 +37,31 @@ if (!function_exists('fohopoco_setup')):
 	}
 endif; // end of fohopoco_setup()
 
+function fohopoco_scripts() {
+	//TODO: use this instead of direct all from teh header.
+  // wp_enqueue_style('fohopoco_main', get_template_directory_uri() . '/_ui/js/main.css', false, '1.0');
+
+  // Grab Google CDN's latest jQuery with a protocol relative URL; fallback to local if offline
+  // It's kept in the header instead of footer to avoid conflicts with plugins.
+  if (!is_admin() && current_theme_supports('jquery-cdn')) {
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array(), null, false);
+    add_filter('script_loader_src', 'fohopoco_jquery_local_fallback', 10, 2);
+  }
+
+  if (is_single() && comments_open() && get_option('thread_comments')) {
+    wp_enqueue_script('comment-reply');
+  }
+
+  wp_register_script('fohopoco_main', get_template_directory_uri() . '/_ui/js/main.js', array('jquery'), '1.0', true);
+  wp_register_script('fohopoco_placeholder', get_template_directory_uri() . '/_ui/js/placeholder.js', array('jquery'), '1.0', true);
+  wp_register_script('fohopoco_addthis', '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-511069c56122ca9e&domready=1', array('fohopoco_main'), '1.0', true);
+  wp_enqueue_script('jquery');
+  wp_enqueue_script('fohopoco_main');
+  wp_enqueue_script('fohopoco_placeholder');
+  wp_enqueue_script('fohopoco_addthis');
+}
+add_action('wp_enqueue_scripts', 'fohopoco_scripts', 100);
 
 /*******************************************************************************
  Fohopoco Clean Navigation Walker
