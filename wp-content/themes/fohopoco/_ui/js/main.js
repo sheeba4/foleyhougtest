@@ -1,5 +1,7 @@
 (function ($) {
-
+	//addthis config
+	var addthis_config = {"data_track_addressbar":true};
+	
 	///////////////////
 	// _trackDownloads
 	$(document).ready(function() {
