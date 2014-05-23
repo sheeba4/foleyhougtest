@@ -44,14 +44,17 @@
 			</span>
 			<!-- / tag-links -->
 
-			<?php if(function_exists('wp_email')) { email_link(); } ?>
-			<?php if(function_exists('wp_print')) { print_link(); } ?>
+			<a class="addthis_button_email addthis_default_style icon icon-email alignleft" addthis:url="<?php the_permalink(); ?>" addthis:title="<?php the_title(); ?>"></a>
+			<a class="addthis_button_printfriendly addthis_default_style icon icon-print alignleft" addthis:url="<?php the_permalink(); ?>" addthis:title="<?php the_title(); ?>"></a>
 			<a class="link link-comments" href="<?php comments_link(); ?>"><span class="icon icon-comments"></span>Comments</a>
 			<a class="link link-trackbacks" href="<?php trackback_url(); ?>"><span class="icon icon-trackbacks"></span>Trackbacks</a>
-			<span class='link st_sharethis_hcount' displayText='ShareThis'></span>
-			<a href="https://twitter.com/share" class="link twitter-share-button" style="margin-top: 0 !important;">Tweet</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			<div class="link fb-like" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
+			<!-- AddThis Button BEGIN -->
+			<div class="addthis_toolbox addthis_default_style" addthis:url="<?php the_permalink(); ?>" addthis:title="<?php the_title(); ?>">
+			<a class="addthis_counter addthis_pill_style"></a>
+			<a class="addthis_button_tweet"></a>
+			<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+			</div>
+			<!-- AddThis Button END -->
 		</footer>
 		<!-- / entry-footer -->
 	</article>

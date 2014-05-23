@@ -314,6 +314,12 @@ a:hover, a:active, a:focus {
 	background-position: -95px 0;
 }
 
+.addthis_default_style {
+	margin: 5px;
+}
+.addthis_button_email span, .addthis_button_printfriendly span {
+	display: none;
+}
 
 /* 2.1 Container
 ------------------------------------------------------------------------------*/

@@ -46,8 +46,11 @@
 
 <script src="<?php echo get_template_directory_uri(); ?>/_ui/js/main.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/_ui/js/placeholder.js"></script>
-
-<div id="fb-root"></div>
+<?php //TODO: include with wp_enqueue_script() ?>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-511069c56122ca9e&domready=1"></script>
+		
+<!-- <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -55,6 +58,6 @@
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
-
+ -->
 </body>
 </html>
