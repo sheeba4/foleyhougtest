@@ -28,7 +28,7 @@
 		<!-- / row -->
 		
 		<div class="col">
-			<h2>Corporate Social Responsibility and the Law</h2>
+			<h2><?php bloginfo( 'name' ); ?></h2>
 			<p>Published by Foley Hoag LLP</p>
 			<p>Attorney advertising.<br />
 				Prior results do not guarantee a&nbsp;similar outcome.</p>
