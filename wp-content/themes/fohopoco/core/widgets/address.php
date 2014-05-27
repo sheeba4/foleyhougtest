@@ -34,6 +34,15 @@ class X_Address_Widget extends WP_Widget {
         name="<?php echo $this->get_field_name('title'); ?>" 
         value="<?php if( isset($title) ) echo esc_attr($title); ?>" />
     </p>
+    <p>
+      <label for="<?php echo $this->get_field_id('url'); ?>">Website URL: </label>
+      <input 
+        type="text" 
+        class="widefat" 
+        id="<?php echo $this->get_field_id('url'); ?>" 
+        name="<?php echo $this->get_field_name('url'); ?>" 
+        value="<?php if( isset($url) ) echo esc_attr($url); ?>" />
+    </p>
 	<p>
       <label for="<?php echo $this->get_field_id('org'); ?>">Organization: </label>
       <input 
@@ -114,7 +123,8 @@ class X_Address_Widget extends WP_Widget {
   {
     extract($args);
     extract($instance);
-    
+
+    $url = apply_filters('widget_url', $url);
     $org = apply_filters('widget_org', $org);
 	$street = apply_filters('widget_street', $street);
     $locality = apply_filters('widget_locality', $locality);
@@ -126,7 +136,11 @@ class X_Address_Widget extends WP_Widget {
 	
 	echo $before_widget;
 	echo "<p class='vcard'>";
-		echo "<strong class='fn org'>$org</strong><br />";
+			if ( $url != "" && $org != "" ) {
+				echo "<a class='url' href='$url'><strong class='fn org'>$org</strong></a><br />";
+			} else {
+				echo "<strong class='fn org'>$org</strong><br />";
+			}
 			echo "<span class='adr'>";
 				echo "<span class='street-address'>$street</span><br />";
 				echo "<span class='locality'>$locality</span>, <span class='region'>$region</span> <span class='postal-code'>$postal</span><br />";
