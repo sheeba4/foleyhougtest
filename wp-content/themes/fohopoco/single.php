@@ -35,7 +35,9 @@
 			<?php the_content(); ?>
 		</div>
 		<!-- / entry-content -->
-		<p class="print-disclaimer clearfix"><?php echo stripslashes('Copyright &copy; 2012 Foley Hoag. All rights reserved.'); ?></p>
+		
+		<?php $o = get_option('minify_theme_options'); ?>
+		<p class="print-disclaimer clearfix"><?php echo stripslashes($o['minify_copyright_text']); ?></p>
 
 		<footer class="entry-meta">
 			
