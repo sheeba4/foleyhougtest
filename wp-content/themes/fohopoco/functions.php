@@ -12,6 +12,7 @@ $options_path 	= TEMPLATEPATH . '/core/options/';
 * functions
 */
 require_once($functions_path . 'functions.php');
+require_once($functions_path . 'widget_classes.php');
 
 
 /*
