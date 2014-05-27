@@ -30,8 +30,6 @@
 	<?php wp_head(); ?>
 	
 	<script type="text/javascript">var switchTo5x=true;</script>
-	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-	<script type="text/javascript">stLight.options({publisher: "ba046b90-f354-40dd-b303-bb6338593003"}); </script>
 </head>
 
 <body <?php body_class('no-js'); ?>>
