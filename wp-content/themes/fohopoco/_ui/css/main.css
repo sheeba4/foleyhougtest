@@ -630,7 +630,10 @@ a:hover, a:active, a:focus {
 #content .post .icon-share {
 	margin: 5px 5px 0 0;
 }
-
+/* Print disclaimer */
+.print-disclaimer {
+	display: none;
+}
 
 
 /* 2.5 Sidebar
@@ -1313,7 +1316,10 @@ a.comment-reply-link > span {
 		border: 0 none;
 		box-shadow: 0 0 0 0 transparent;
 	}
-	
+	/* Copyright */
+	.print-disclaimer {
+		display: block;
+	}
 	/* Comments */
 	.commentlist > li.comment {
 		background: none;

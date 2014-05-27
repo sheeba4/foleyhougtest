@@ -35,6 +35,9 @@
 			<?php the_content(); ?>
 		</div>
 		<!-- / entry-content -->
+		
+		<?php $o = get_option('minify_theme_options'); ?>
+		<p class="print-disclaimer clearfix"><?php echo stripslashes($o['minify_copyright_text']); ?></p>
 
 		<footer class="entry-meta">
 			
