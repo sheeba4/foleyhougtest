@@ -4,7 +4,7 @@
 */
 
 /*******************************************************************************
- Run minify_setup() when our theme is activated
+ Run fohopoco_setup() when our theme is activated
 ********************************************************************************/
 add_action('after_setup_theme', 'fohopoco_setup');
 
