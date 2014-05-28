@@ -110,6 +110,22 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'priority' => 3
 	) ) );
 	
+	// Footer Container
+	$wp_customize->add_setting( 'footercontainer_bg_image', array(
+			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'transport' => 'refresh',
+	) );
+
+	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'footercontainer_bg_image', array(
+			'label' => __( 'Footer Container Background Image (2px x 114px)' ),
+			'section' => 'background_image',
+			'settings' => 'footercontainer_bg_image',
+			'context' => 'footercontainer_bg_image',
+			'priority' => 4,
+
+	) ) );
+	
+	// Footer Background 
 	$wp_customize->add_setting( 'footer_bg_image', array(
 			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
 			'transport' => 'refresh',
@@ -221,6 +237,37 @@ function fohopoco_customize_theme( $wp_customize ) {
 			) ) 
 	);
 	
+	// Navigation Menu
+	$wp_customize->add_setting( 'navmenu_bg_color', array(
+			'default'		=> '#eeaf30',
+			'transport'		=> 'postMessage'
+		) );
+
+	$wp_customize->add_control( 
+		new WP_Customize_Color_Control( 
+			$wp_customize, 'navmenu_bg_color', array(
+				'label'		=> 'Nav Menu BG Color',
+				'section'	=> 'colors',
+				'settings'	=> 'navmenu_bg_color',
+				'priority' => 6
+			) ) 
+	);
+	// Navigation Menu Hover
+	$wp_customize->add_setting( 'navmenu_bghover_color', array(
+			'default'		=> '#fba01d',
+			'transport'		=> 'postMessage'
+		) );
+
+	$wp_customize->add_control( 
+		new WP_Customize_Color_Control( 
+			$wp_customize, 'navmenu_bghover_color', array(
+				'label'		=> 'Nav Menu BG Hover Color',
+				'section'	=> 'colors',
+				'settings'	=> 'navmenu_bghover_color',
+				'priority' => 7
+			) ) 
+	);
+	
 	// Buttons
 	$wp_customize->add_setting( 'button_bg_color', array(
 			'default'		=> '#009aa6',
@@ -233,7 +280,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Button Color',
 				'section'	=> 'colors',
 				'settings'	=> 'button_bg_color',
-				'priority' => 6
+				'priority' => 8
 			) ) 
 	);
 	// Button Hover
@@ -248,7 +295,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Button Hover Color',
 				'section'	=> 'colors',
 				'settings'	=> 'button_bghover_color',
-				'priority' => 7
+				'priority' => 9
 			) ) 
 	);
 	
@@ -265,7 +312,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Copyright Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_copyright_color',
-				'priority' => 8
+				'priority' => 10
 			) ) 
 	);
 	
@@ -281,7 +328,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Text Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_color',
-				'priority' => 9
+				'priority' => 11
 			) ) 
 	);
 	$wp_customize->add_setting( 'footer_link_color', array(
@@ -295,7 +342,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Link Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_link_color',
-				'priority' => 10
+				'priority' => 12
 			) ) 
 	);
 	// Footer Links Hover
@@ -310,7 +357,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Link Hover Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_linkhover_color',
-				'priority' => 11
+				'priority' => 13
 			) ) 
 	);
 	// Footer Info Link
@@ -325,7 +372,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Info Link Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_infolink_color',
-				'priority' => 12
+				'priority' => 14
 			) ) 
 	);
 	// Footer Info Link Hover
@@ -340,7 +387,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Info Link Hover Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_infolinkhover_color',
-				'priority' => 13
+				'priority' => 15
 			) ) 
 	);
 	
@@ -356,7 +403,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'label'		=> 'Footer Background Color',
 				'section'	=> 'colors',
 				'settings'	=> 'footer_bg_color',
-				'priority' => 14
+				'priority' => 16
 			) ) 
 	);
 	
@@ -385,67 +432,63 @@ add_action( 'customize_controls_print_styles', 'fohopoco_customize_add_customize
  * This function actually spits out the css inline in the head. It will modify the fonts of whatever is selected
  */
 function fohopoco_customize_add_customizer_css() {
-	// need to do logic to figure out which set they picked.
-	// Set 1:
-	/* H1 - FONT: Signika
-
-	 * H2 - FONT: Noto Sans - bold
-	 * H3 - FONT: Noto Sans - regularbox
-	 *
-	 */
-
-	$font1 = array(
-		'h1' => 'Signika',
-		'h2' => 'Noto Sans',
-		'h3' => 'Noto Sans',
-		'a'	 => 'Signika'
-	);
-	$font2 = array(
-		'h1' => 'Patua One',
-		'h2' => 'Noto Serif',
-		'h3' => 'Noto Serif',
-		'a'  => 'Patua One'
-	);
-
-	$font1_json = json_encode( $font1 );
-	$font2_json = json_encode( $font2 );
-
-	switch ( get_theme_mod( 'rg_font_h1' ) ) {
-		case $font1_json:
-			$font_family_h1 = 'Signika';
-			$font_family_h2_h3 = 'Noto Sans';
-			break;
-		case $font2_json:
-			$font_family_h1 = 'Patua One';
-			$font_family_h2_h3 = 'Noto Serif';
-			break;
-		default:
-			$font_family_h1 = 'sans-serif';
-			$font_family_h2_h3 = 'serif';
-			break;
-
-	}
 	?>
 	<style>
-
-		body { color: <?php	echo get_theme_mod('body_color', 'default_value'); ?>; }
-
-		h1 a { color: <?php	echo get_theme_mod('h1_link_color', 'default_value'); ?>; }
-		h1 a:hover { color: <?php	echo get_theme_mod('h1_linkhover_color', 'default_value'); ?>; }
-
-		a {color: <?php	echo get_theme_mod('body_link_color', 'default_value'); ?>; }
-		a:hover {color: <?php	echo get_theme_mod('body_linkhover_color', 'default_value'); ?>; }
-
-		footer {
-				background-image: url(<?php echo fohopoco_get_footer_bg_image(); ?>);
+		html body { 
+			color: <?php echo get_theme_mod('body_color', 'default_value'); ?>; 
+			background: <?php echo get_theme_mod('body_bg_color', 'default_value'); ?> url(<?php echo get_theme_mod('background_image'); ?>) repeat-x 0 0; background-attachment: inherit;
 		}
+		#sidebar .widget_recent_entries a {
+			color: <?php echo get_theme_mod('body_link_color', 'default_value'); ?>; 
+		}
+		#sidebar .widget_recent_entries a:hover {
+			color: <?php echo get_theme_mod('body_linkhover_color', 'default_value'); ?>; 
+		}
+		
+		#header { background: url(<?php	echo get_theme_mod('header_bg_image'); ?>) no-repeat; }
+		#header .site-name span { background: url(<?php	echo get_theme_mod('header_image'); ?>) no-repeat; }
 
+		#content h1 a { color: <?php echo get_theme_mod('h1_link_color', 'default_value'); ?>; }
+		#content h1 a:hover { color: <?php echo get_theme_mod('h1_linkhover_color', 'default_value'); ?>; }
+
+		#content a { color: <?php echo get_theme_mod('body_link_color', 'default_value'); ?>; }
+		#content a:hover { color: <?php	echo get_theme_mod('body_linkhover_color', 'default_value'); ?>; }
+		
+		#navigation li {  background: <?php echo get_theme_mod('navmenu_bg_color', 'default_value'); ?>;  }
+		#navigation li:hover, #navigation .current-menu-item {  
+			background: <?php echo get_theme_mod('navmenu_bghover_color', 'default_value'); ?>;  
+			font-weight: inherit;	
+		}
+		#navigation a:hover {
+			font-weight: inherit;
+		}
+		.widget #searchsubmit, .widget #feedburner_email_widget_sbef_submit {
+			background: <?php echo get_theme_mod('button_bg_color', 'default_value'); ?>;	
+		}
+		.widget #searchsubmit:hover, .widget #feedburner_email_widget_sbef_submit:hover {
+			background: <?php echo get_theme_mod('button_bghover_color', 'default_value'); ?>;	
+		}
+		.footer-container { 
+			clear: both;
+			position: relative;
+			background: #393b3e url(<?php echo get_theme_mod('footercontainer_bg_image'); ?>) repeat-x 0 0; 
+		}
+		#footer {
+				background: url(<?php echo get_theme_mod('footer_bg_image'); ?>) no-repeat;
+		}
+		#footer .info-links, #footer .info-links a {
+			color: <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;
+		}
+		
+		#footer .info-links li + li { border-left: 1px solid <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;}
+		
+		#footer .col strong, #footer .col a {
+			color: <?php echo get_theme_mod('footer_link_color', 'default_value'); ?>; 
+		}
+		#footer .col a:hover {
+			color: <?php echo get_theme_mod('footer_linkhover_color', 'default_value'); ?>; 
+		}
 
 	</style>
 	<?php
-}
-
-function fohopoco_get_footer_bg_image(){
-	if (get_theme_mod('footer_bg_image'))
-		return get_theme_mod('footer_bg_image');
 }
