@@ -1,13 +1,11 @@
 <?php
-/*
-  Plugin Name: Customize Theme Menu Mod
-  Description: Custom css features for for FOHOPOCO theme
-  Version: 1.0
-  Author: Northpoint Solutions
-  Author URI: http://www.northpointsolutions.com
-  License: GPLv2
+/**
+ * Custom css features for for FOHOPOCO theme
+ *
+ * @package WordPress
+ * @subpackage fohopoco
+ * @since fohopoco 1.0
  */
-
 
 add_action( 'customize_register', 'fohopoco_customize_theme' );
 
@@ -65,14 +63,35 @@ function fohopoco_customize_theme( $wp_customize ) {
 
 	} // end class.
 	
-	// Background Tab
-
+	/**
+	* Customize Textarea Control Class
+	*
+	* Extend WP_Customize_Control to create a textarea control
+	*
+	*/
+	class Example_Customize_Textarea_Control extends WP_Customize_Control {
+		public $type = 'textarea';
+	 
+		public function render_content() {
+			?>
+			<label>
+			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+			<textarea rows="5" style="width:100%;" <?php $this->link(); ?>><?php echo esc_textarea( $this->value() ); ?></textarea>
+			</label>
+			<?php
+		}
+	} // end class.
+	
+	
+	/**
+	* Background Image Tab
+	*/
+	
 	// Header Image
 	$wp_customize->add_setting( 'header_image', array(
-			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'default' => '', 
 			'transport' => 'refresh',
 	) );
-
 	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'header_image', array(
 			'label' => __( 'Header Image (451px x 230px)' ),
 			'section' => 'background_image',
@@ -81,9 +100,21 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'priority' => 1,
 
 	) ) );
+	// Header Custom CSS
+	$wp_customize->add_setting( 'header_custom_css', array(
+			'default' => '', 
+			'transport' => 'refresh',
+	) );
+	$wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'header_custom_css', array(
+		'label'   => 'Header Custom CSS',
+		'section' => 'background_image',
+		'settings'   => 'header_custom_css',
+		'priority' => 1,
+	) ) );
+	
 	// Header Background Image
 	$wp_customize->add_setting( 'header_bg_image', array(
-			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'default' => '', 
 			'transport' => 'refresh',
 	) );
 	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'header_bg_image', array(
@@ -98,7 +129,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	
 	// Content Background Image
 	$wp_customize->add_setting( 'content_bg_image', array(
-			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'default' => '', 
 			'transport' => 'refresh',
 	) );
 
@@ -112,7 +143,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	
 	// Footer Container
 	$wp_customize->add_setting( 'footercontainer_bg_image', array(
-			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'default' => '', 
 			'transport' => 'refresh',
 	) );
 
@@ -127,7 +158,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	
 	// Footer Background 
 	$wp_customize->add_setting( 'footer_bg_image', array(
-			'default' => '', //get_bloginfo( 'template_directory' ) . '/images/logo.png',
+			'default' => '', 
 			'transport' => 'refresh',
 	) );
 
@@ -140,7 +171,9 @@ function fohopoco_customize_theme( $wp_customize ) {
 
 	) ) );
 
-	// Color Tab
+	/**
+	* Colors Tab
+	*/
 	
 	// H1
 	$wp_customize->add_setting( 'h1_link_color', array(
@@ -318,7 +351,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	
 	// Footer Text
 	$wp_customize->add_setting( 'footer_color', array(
-			'default'		=> '#009aa6',
+			'default'		=> '#333',
 			'transport'		=> 'postMessage'
 		) );
 
@@ -375,25 +408,10 @@ function fohopoco_customize_theme( $wp_customize ) {
 				'priority' => 14
 			) ) 
 	);
-	// Footer Info Link Hover
-	$wp_customize->add_setting( 'footer_infolinkhover_color', array(
-			'default'		=> '#eeaf30',
-			'transport'		=> 'postMessage'
-		) );
-
-	$wp_customize->add_control( 
-		new WP_Customize_Color_Control( 
-			$wp_customize, 'footer_infolinkhover_color', array(
-				'label'		=> 'Footer Info Link Hover Color',
-				'section'	=> 'colors',
-				'settings'	=> 'footer_infolinkhover_color',
-				'priority' => 15
-			) ) 
-	);
 	
 	// Footer Background Color
 	$wp_customize->add_setting( 'footer_bg_color', array(
-			'default'		=> '#009aa6',
+			'default'		=> '#fff',
 			'transport'		=> 'postMessage'
 		) );
 
@@ -413,15 +431,11 @@ function fohopoco_customize_theme( $wp_customize ) {
 add_action( 'customize_preview_init', 'fohopoco_customize_customize_preview_js' );
 
 function fohopoco_customize_customize_preview_js() {
-	wp_enqueue_script( 'rg-network-customizer', plugins_url() . '/customize-theme-menu-mod/customize-theme-menu-mod.js', array( 'customize-preview' ), false, true );
-}
-
-
-add_action( 'wp_head', 'fohopoco_customize_load_fonts' );
-
-function fohopoco_customize_load_fonts() {
-	// inline load the css for the google fonts
-	echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Signika:400,600,700|Noto+Sans:400,400italic,700,700italic|Patua+One|Noto+Serif:400,400italic,700,700italic">';
+	wp_enqueue_script( 
+		'fohopoco-theme-customizer', 
+		get_template_directory_uri() .  '/js/customize-theme-menu-mod.js', 
+		array( 'customize-preview' ), false, true 
+	);
 }
 
 add_action( 'wp_head', 'fohopoco_customize_add_customizer_css' );
@@ -438,15 +452,18 @@ function fohopoco_customize_add_customizer_css() {
 			color: <?php echo get_theme_mod('body_color', 'default_value'); ?>; 
 			background: <?php echo get_theme_mod('body_bg_color', 'default_value'); ?> url(<?php echo get_theme_mod('background_image'); ?>) repeat-x 0 0; background-attachment: inherit;
 		}
-		#sidebar .widget_recent_entries a {
+		#sidebar .widget a {
 			color: <?php echo get_theme_mod('body_link_color', 'default_value'); ?>; 
 		}
-		#sidebar .widget_recent_entries a:hover {
+		#sidebar .widget a:hover {
 			color: <?php echo get_theme_mod('body_linkhover_color', 'default_value'); ?>; 
 		}
 		
 		#header { background: url(<?php	echo get_theme_mod('header_bg_image'); ?>) no-repeat; }
-		#header .site-name span { background: url(<?php	echo get_theme_mod('header_image'); ?>) no-repeat; }
+		#header .site-name span { 
+			background: url(<?php	echo get_theme_mod('header_image'); ?>) no-repeat; 
+			<?php echo (get_theme_mod('header_custom_css') != '') ? get_theme_mod('header_custom_css') : ''; ?>
+		}
 
 		#content h1 a { color: <?php echo get_theme_mod('h1_link_color', 'default_value'); ?>; }
 		#content h1 a:hover { color: <?php echo get_theme_mod('h1_linkhover_color', 'default_value'); ?>; }
@@ -474,19 +491,23 @@ function fohopoco_customize_add_customizer_css() {
 			background: #393b3e url(<?php echo get_theme_mod('footercontainer_bg_image'); ?>) repeat-x 0 0; 
 		}
 		#footer {
-				background: url(<?php echo get_theme_mod('footer_bg_image'); ?>) no-repeat;
+			background: url(<?php echo get_theme_mod('footer_bg_image'); ?>) no-repeat;
+			color: <?php echo get_theme_mod('footer_color', 'default_value'); ?>;
 		}
 		#footer .info-links, #footer .info-links a {
 			color: <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;
 		}
 		
-		#footer .info-links li + li { border-left: 1px solid <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;}
+		#footer .info-links li + li { border-color: <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;}
 		
 		#footer .col strong, #footer .col a {
 			color: <?php echo get_theme_mod('footer_link_color', 'default_value'); ?>; 
 		}
-		#footer .col a:hover {
+		#footer .col a:hover, #footer .col strong:hover {
 			color: <?php echo get_theme_mod('footer_linkhover_color', 'default_value'); ?>; 
+		}
+		#footer .copyright {
+			color: <?php echo get_theme_mod('footer_copyright_color', 'default_value'); ?>; 
 		}
 
 	</style>

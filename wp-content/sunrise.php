@@ -3,7 +3,7 @@ if ( !defined( 'SUNRISE_LOADED' ) )
 	define( 'SUNRISE_LOADED', 1 );
 
 if ( defined( 'COOKIE_DOMAIN' ) ) {
-	die( 'The constant "COOKIE_DOMAIN" is defined (probably in wp-config.php). Please remove or comment out that define() line.' );
+	// die( 'The constant "COOKIE_DOMAIN" is defined (probably in wp-config.php). Please remove or comment out that define() line.' );
 }
 
 // let the site admin page catch the VHOST == 'no'
