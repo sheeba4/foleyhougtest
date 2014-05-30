@@ -27,6 +27,10 @@ require($options_path . 'options.php');
 require_once($functions_path . 'css3pie.php');
 //require_once($functions_path . 'TinyMCE.php');
 
+/*
+* theme customization
+*/
+require_once($functions_path . 'customize-theme-menu-mod.php');
 
 /*
 * widgets
@@ -36,4 +40,3 @@ require_once($widgets_path . 'button.php');
 require_once($widgets_path . 'address.php');
 require_once($widgets_path . 'address_extended.php');
 require_once($widgets_path . 'author.php');
-
