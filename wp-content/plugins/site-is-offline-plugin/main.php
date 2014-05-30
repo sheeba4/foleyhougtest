@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: Site Offline or Coming Soon
-  Version: 1.6.3
+  Version: 1.6.4
   Plugin URI: http://wp-ecommerce.net/
   Author: wpecommerce
   Author URI: http://wp-ecommerce.net/
@@ -38,11 +38,18 @@ function cp_siteoffline_options_page_content() {
     include_once('site-offline-options.php');
 }
 
-function cp_siteoffline_message() {
-    $options = get_option('sp_siteoffline_options');
-    if ($options['enabled'] === false)
+function cp_siteoffline_check() {
+    
+    if(is_admin()){//Don't show on admin side of the site
         return;
-    if (!current_user_can('edit_posts')) {
+    }
+    
+    $options = get_option('sp_siteoffline_options');
+    if ($options['enabled'] === false){
+        return;
+    }
+
+    if (!current_user_can('edit_posts') && !in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ))) {
         $protocol = "HTTP/1.0";
         if ("HTTP/1.1" == $_SERVER["SERVER_PROTOCOL"]) {
             $protocol = "HTTP/1.1";
@@ -83,10 +90,8 @@ function cpso_login_form_msg()
  * if the user have manage_options capabaility he can easily navigate,test,make changes without letting the general public know.
  * */
 add_action('init', 'cp_siteoffline_activate');
+add_action('init', 'cp_siteoffline_check');
 add_action('admin_menu', 'cp_siteoffline_options_page');
-if (!is_admin()) {
-    add_action('send_headers', 'cp_siteoffline_message');
-}
 
 if (is_admin()) {
     add_action('admin_notices', 'cpso_maintenance_mode_check_msg');
