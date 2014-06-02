@@ -15,7 +15,7 @@ class MINIFY_Options {
 		add_theme_page('Theme Options', 'Theme Options', 'edit_theme_options', __FILE__, array('MINIFY_Options', 'display_options_page'));
 	}
 	
-	public function display_options_page()
+	public static function display_options_page()
 	{
 		?>
 	
