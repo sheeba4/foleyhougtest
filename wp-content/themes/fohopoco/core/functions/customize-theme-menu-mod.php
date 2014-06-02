@@ -294,7 +294,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	$wp_customize->add_control( 
 		new WP_Customize_Color_Control( 
 			$wp_customize, 'navmenu_bghover_color', array(
-				'label'		=> 'Nav Menu BG Hover Color',
+				'label'		=> 'Nav Menu BG Hover/Active Color',
 				'section'	=> 'colors',
 				'settings'	=> 'navmenu_bghover_color',
 				'priority' => 7
@@ -465,6 +465,7 @@ function fohopoco_customize_add_customizer_css() {
 		$footercontainer_bg_image = !empty($style_options['footercontainer_bg_image']) ? $style_options['footercontainer_bg_image'] : '';
 		$footer_bg_image = !empty($style_options['footer_bg_image']) ? $style_options['footer_bg_image'] : '';
 		$footer_color = !empty($style_options['footer_color']) ? $style_options['footer_color'] : '#333';
+		$footer_bg_color = !empty($style_options['footer_bg_color']) ? $style_options['footer_bg_color'] : '#fff';
 		$footer_infolink_color = !empty($style_options['footer_infolink_color']) ? $style_options['footer_infolink_color'] : '#009aa6';
 		$footer_link_color = !empty($style_options['footer_link_color']) ? $style_options['footer_link_color'] : '#009aa6';
 		$footer_linkhover_color = !empty($style_options['footer_linkhover_color']) ? $style_options['footer_linkhover_color'] : '#eeaf30';
@@ -475,6 +476,9 @@ function fohopoco_customize_add_customizer_css() {
 			color: <?php echo $body_color; ?>; 
 			background: <?php echo $body_bg_color; ?> url(<?php echo $body_background_image; ?>) repeat-x 0 0;
 			background-attachment: inherit;
+		}
+		#navigation a:hover {
+			font-weight: normal;
 		}
 		#sidebar .widget a {
 			color: <?php echo $body_link_color; ?>; 
@@ -490,7 +494,7 @@ function fohopoco_customize_add_customizer_css() {
 			<?php echo ($header_custom_css != '') ? $header_custom_css : ''; ?>
 		}
 
-		#content h1 a { color: <?php echo $h1_link_color; ?>; }
+		#content h1, #content h1 a { color: <?php echo $h1_link_color; ?>; }
 		#content h1 a:hover { color: <?php echo $h1_linkhover_color; ?>; }
 
 		#content a { color: <?php echo $body_link_color; ?>; }
@@ -515,7 +519,7 @@ function fohopoco_customize_add_customizer_css() {
 			<?php } ?>
 		}
 		#footer {
-			background: url(<?php echo $footer_bg_image; ?>) no-repeat;
+			background: <?php echo $body_bg_color; ?> url(<?php echo $footer_bg_image; ?>) no-repeat;
 			color: <?php echo $footer_color; ?>;
 		}
 		#footer .info-links, #footer .info-links a {

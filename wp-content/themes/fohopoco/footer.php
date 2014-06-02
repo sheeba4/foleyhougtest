@@ -9,7 +9,7 @@
  */
 ?>
  	<?php $o = get_option('minify_theme_options'); ?>
-<div class="footer-container clearfix">
+<div class="footer-container">
 	<footer id="footer" class="clearfix">
 		<div class="clearfix row">
 			<?php  // Footer Custom Menu Walker
