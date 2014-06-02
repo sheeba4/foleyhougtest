@@ -8,8 +8,15 @@
  * @since fohopoco 1.0
  */
 ?>
- 	<?php $o = get_option('minify_theme_options'); ?>
-<div class="footer-container">
+<?php 
+	$o = get_option('minify_theme_options'); 
+	$footer_container_bg = get_theme_mod( 'footercontainer_bg_image', '');
+ 
+if( $footer_container_bg != ''){ ?>
+	</div> <!-- / container -->
+	<div class="footer-container">
+<?php } ?>
+
 	<footer id="footer" class="clearfix">
 		<div class="clearfix row">
 			<?php  // Footer Custom Menu Walker
@@ -39,10 +46,13 @@
 		
 	</footer>
 	<!-- / footer -->
-</div>
+</div> 
+<?php if( $footer_container_bg != ''){ ?>	
+<!-- / .footer-container -->
+<?php } else { ?>
 <!-- / container -->
+<?php } ?>
 
 <?php wp_footer(); ?>
-</div>
 </body>
 </html>
