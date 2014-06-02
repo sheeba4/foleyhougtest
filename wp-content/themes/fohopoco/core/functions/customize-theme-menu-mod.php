@@ -446,68 +446,90 @@ add_action( 'customize_controls_print_styles', 'fohopoco_customize_add_customize
  * This function actually spits out the css inline in the head. It will modify the fonts of whatever is selected
  */
 function fohopoco_customize_add_customizer_css() {
+	
+	$style_options = get_theme_mods();
+	$body_color = !empty($style_options['body_color']) ? $style_options['body_color'] : '#444';
+	$body_bg_color = !empty($style_options['body_bg_color']) ? $style_options['body_bg_color'] : '#fff';
+	$body_background_image = !empty($style_options['background_image']) ? $style_options['background_image'] : '';
+	$body_link_color = !empty($style_options['body_link_color']) ? $style_options['body_link_color'] : '#009aa6';
+	$body_linkhover_color = !empty($style_options['body_linkhover_color']) ? $style_options['body_linkhover_color'] : '#eeaf30';
+	$header_bg_image = !empty($style_options['header_bg_image']) ? $style_options['header_bg_image'] : '';
+	$header_image = !empty($style_options['header_image']) ? $style_options['header_image'] : '';
+	$header_custom_css = !empty($style_options['header_custom_css']) ? $style_options['header_custom_css'] : '';
+	$h1_link_color = !empty($style_options['h1_link_color']) ? $style_options['h1_link_color'] : '#009aa6';
+		$h1_linkhover_color = !empty($style_options['h1_linkhover_color']) ? $style_options['h1_linkhover_color'] : '#eeaf30';
+		$navmenu_bg_color = !empty($style_options['navmenu_bg_color']) ? $style_options['navmenu_bg_color'] : '#eeaf30';
+		$navmenu_bghover_color = !empty($style_options['navmenu_bghover_color']) ? $style_options['navmenu_bghover_color'] : '#fba01d';
+		$button_bg_color = !empty($style_options['button_bg_color']) ? $style_options['button_bg_color'] : '#009aa6';
+		$button_bghover_color = !empty($style_options['button_bghover_color']) ? $style_options['button_bghover_color'] : '#eeaf30';
+		$footercontainer_bg_image = !empty($style_options['footercontainer_bg_image']) ? $style_options['footercontainer_bg_image'] : '';
+		$footer_bg_image = !empty($style_options['footer_bg_image']) ? $style_options['footer_bg_image'] : '';
+		$footer_color = !empty($style_options['footer_color']) ? $style_options['footer_color'] : '#333';
+		$footer_infolink_color = !empty($style_options['footer_infolink_color']) ? $style_options['footer_infolink_color'] : '#009aa6';
+		$footer_link_color = !empty($style_options['footer_link_color']) ? $style_options['footer_link_color'] : '#009aa6';
+		$footer_linkhover_color = !empty($style_options['footer_linkhover_color']) ? $style_options['footer_linkhover_color'] : '#eeaf30';
+		$footer_copyright_color = !empty($style_options['footer_copyright_color']) ? $style_options['footer_copyright_color'] : '#009aa6';
 	?>
 	<style>
 		html body { 
-			color: <?php echo get_theme_mod('body_color', 'default_value'); ?>; 
-			background: <?php echo get_theme_mod('body_bg_color', 'default_value'); ?> url(<?php echo get_theme_mod('background_image'); ?>) repeat-x 0 0; background-attachment: inherit;
+			color: <?php echo $body_color; ?>; 
+			background: <?php echo $body_bg_color; ?> url(<?php echo $body_background_image; ?>) repeat-x 0 0;
+			background-attachment: inherit;
 		}
 		#sidebar .widget a {
-			color: <?php echo get_theme_mod('body_link_color', 'default_value'); ?>; 
+			color: <?php echo $body_link_color; ?>; 
 		}
 		#sidebar .widget a:hover {
-			color: <?php echo get_theme_mod('body_linkhover_color', 'default_value'); ?>; 
+			color: <?php echo $body_linkhover_color; ?>; 
 		}
 		
-		#header { background: url(<?php	echo get_theme_mod('header_bg_image'); ?>) no-repeat; }
+		#header { background: url(<?php	echo $header_bg_image; ?>) no-repeat; }
+		
 		#header .site-name span { 
-			background: url(<?php	echo get_theme_mod('header_image'); ?>) no-repeat; 
-			<?php echo (get_theme_mod('header_custom_css') != '') ? get_theme_mod('header_custom_css') : ''; ?>
+			background: url(<?php echo $header_image; ?>) no-repeat; 
+			<?php echo ($header_custom_css != '') ? $header_custom_css : ''; ?>
 		}
 
-		#content h1 a { color: <?php echo get_theme_mod('h1_link_color', 'default_value'); ?>; }
-		#content h1 a:hover { color: <?php echo get_theme_mod('h1_linkhover_color', 'default_value'); ?>; }
+		#content h1 a { color: <?php echo $h1_link_color; ?>; }
+		#content h1 a:hover { color: <?php echo $h1_linkhover_color; ?>; }
 
-		#content a { color: <?php echo get_theme_mod('body_link_color', 'default_value'); ?>; }
-		#content a:hover { color: <?php	echo get_theme_mod('body_linkhover_color', 'default_value'); ?>; }
+		#content a { color: <?php echo $body_link_color; ?>; }
+		#content a:hover { color: <?php	echo $body_linkhover_color; ?>; }
 		
-		#navigation li {  background: <?php echo get_theme_mod('navmenu_bg_color', 'default_value'); ?>;  }
+		#navigation li {  background: <?php echo $navmenu_bg_color; ?>;  }
 		#navigation li:hover, #navigation .current-menu-item {  
-			background: <?php echo get_theme_mod('navmenu_bghover_color', 'default_value'); ?>;  
+			background: <?php echo $navmenu_bghover_color; ?>;  
 			font-weight: inherit;	
 		}
-		#navigation a:hover {
-			font-weight: inherit;
-		}
 		.widget #searchsubmit, .widget #feedburner_email_widget_sbef_submit {
-			background: <?php echo get_theme_mod('button_bg_color', 'default_value'); ?>;	
+			background: <?php echo $button_bg_color; ?>;	
 		}
 		.widget #searchsubmit:hover, .widget #feedburner_email_widget_sbef_submit:hover {
-			background: <?php echo get_theme_mod('button_bghover_color', 'default_value'); ?>;	
+			background: <?php echo $button_bghover_color; ?>;	
 		}
 		.footer-container { 
 			clear: both;
 			position: relative;
-			background: #393b3e url(<?php echo get_theme_mod('footercontainer_bg_image'); ?>) repeat-x 0 0; 
+			<?php if ($footercontainer_bg_image) { ?>
+				background: #393b3e url(<?php echo $footercontainer_bg_image; ?>) repeat-x 0 0; 
+			<?php } ?>
 		}
 		#footer {
-			background: url(<?php echo get_theme_mod('footer_bg_image'); ?>) no-repeat;
-			color: <?php echo get_theme_mod('footer_color', 'default_value'); ?>;
+			background: url(<?php echo $footer_bg_image; ?>) no-repeat;
+			color: <?php echo $footer_color; ?>;
 		}
 		#footer .info-links, #footer .info-links a {
-			color: <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;
+			color: <?php echo $footer_infolink_color; ?>;
 		}
-		
-		#footer .info-links li + li { border-color: <?php echo get_theme_mod('footer_infolink_color', 'default_value'); ?>;}
-		
+		#footer .info-links li + li { border-color: <?php echo $footer_infolink_color; ?>;}
 		#footer .col strong, #footer .col a {
-			color: <?php echo get_theme_mod('footer_link_color', 'default_value'); ?>; 
+			color: <?php echo $footer_link_color; ?>; 
 		}
 		#footer .col a:hover, #footer .col strong:hover {
-			color: <?php echo get_theme_mod('footer_linkhover_color', 'default_value'); ?>; 
+			color: <?php echo $footer_linkhover_color; ?>; 
 		}
 		#footer .copyright {
-			color: <?php echo get_theme_mod('footer_copyright_color', 'default_value'); ?>; 
+			color: <?php echo $footer_copyright_color; ?>; 
 		}
 
 	</style>
