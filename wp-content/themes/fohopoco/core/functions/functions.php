@@ -63,6 +63,9 @@ function fohopoco_scripts() {
 }
 add_action('wp_enqueue_scripts', 'fohopoco_scripts', 100);
 
+function fohopoco_jquery_local_fallback(){
+	wp_register_script('jquery', get_template_directory_uri() .'/_ui/js/jquery-1.7.1.min.js', __FILE__, false, '1.7.1', true); // register the local file
+}
 /*******************************************************************************
  Fohopoco Clean Navigation Walker
 ********************************************************************************/

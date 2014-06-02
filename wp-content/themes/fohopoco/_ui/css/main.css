@@ -856,6 +856,9 @@ a:hover, a:active, a:focus {
 	font-size: 0.9166em;
 	margin-bottom: 73px;
 }
+.footer-container #footer .row {
+	padding: 0 30px;
+}
 
 #footer .info-links {
 	width: 200px;

@@ -523,7 +523,7 @@ function fohopoco_customize_add_customizer_css() {
 			width: 920px; 
 		}
 		#footer {
-			background: <?php echo $body_bg_color; ?> url(<?php echo $footer_bg_image; ?>) no-repeat;
+			background: <?php echo $footer_bg_color; ?> url(<?php echo $footer_bg_image; ?>) no-repeat;
 			color: <?php echo $footer_color; ?>;
 		}
 		#footer .info-links, #footer .info-links a {
