@@ -20,7 +20,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	* with wp bootloader.
 	*
 	*/
-	class My_Customize_Image_Reloaded_Control extends WP_Customize_Image_Control {
+	class Fohopoco_Customize_Image_Reloaded_Control extends WP_Customize_Image_Control {
 		/**
 		* Constructor.
 		*
@@ -69,7 +69,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 	* Extend WP_Customize_Control to create a textarea control
 	*
 	*/
-	class Example_Customize_Textarea_Control extends WP_Customize_Control {
+	class Fohopoco_Customize_Textarea_Control extends WP_Customize_Control {
 		public $type = 'textarea';
 	 
 		public function render_content() {
@@ -92,7 +92,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'default' => '', 
 			'transport' => 'refresh',
 	) );
-	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'header_image', array(
+	$wp_customize->add_control( new Fohopoco_Customize_Image_Reloaded_Control( $wp_customize, 'header_image', array(
 			'label' => __( 'Header Image (451px x 230px)' ),
 			'section' => 'background_image',
 			'settings' => 'header_image',
@@ -105,7 +105,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'default' => '', 
 			'transport' => 'refresh',
 	) );
-	$wp_customize->add_control( new Example_Customize_Textarea_Control( $wp_customize, 'header_custom_css', array(
+	$wp_customize->add_control( new Fohopoco_Customize_Textarea_Control( $wp_customize, 'header_custom_css', array(
 		'label'   => 'Header Custom CSS',
 		'section' => 'background_image',
 		'settings'   => 'header_custom_css',
@@ -117,7 +117,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'default' => '', 
 			'transport' => 'refresh',
 	) );
-	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'header_bg_image', array(
+	$wp_customize->add_control( new Fohopoco_Customize_Image_Reloaded_Control( $wp_customize, 'header_bg_image', array(
 			'label' => __( 'Header Background Image (920px x 303px)' ),
 			'section' => 'background_image',
 			'settings' => 'header_bg_image',
@@ -133,7 +133,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'transport' => 'refresh',
 	) );
 
-	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'content_bg_image', array(
+	$wp_customize->add_control( new Fohopoco_Customize_Image_Reloaded_Control( $wp_customize, 'content_bg_image', array(
 			'label' => __( 'Content Background Image (920px x 2px)' ),
 			'section' => 'background_image',
 			'settings' => 'content_bg_image',
@@ -147,7 +147,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'transport' => 'refresh',
 	) );
 
-	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'footercontainer_bg_image', array(
+	$wp_customize->add_control( new Fohopoco_Customize_Image_Reloaded_Control( $wp_customize, 'footercontainer_bg_image', array(
 			'label' => __( 'Footer Container Background Image (2px x 114px)' ),
 			'section' => 'background_image',
 			'settings' => 'footercontainer_bg_image',
@@ -162,7 +162,7 @@ function fohopoco_customize_theme( $wp_customize ) {
 			'transport' => 'refresh',
 	) );
 
-	$wp_customize->add_control( new My_Customize_Image_Reloaded_Control( $wp_customize, 'footer_bg_image', array(
+	$wp_customize->add_control( new Fohopoco_Customize_Image_Reloaded_Control( $wp_customize, 'footer_bg_image', array(
 			'label' => __( 'Footer Background Image (920px x 114px)' ),
 			'section' => 'background_image',
 			'settings' => 'footer_bg_image',
@@ -517,6 +517,10 @@ function fohopoco_customize_add_customizer_css() {
 			<?php if ($footercontainer_bg_image) { ?>
 				background: #393b3e url(<?php echo $footercontainer_bg_image; ?>) repeat-x 0 0; 
 			<?php } ?>
+		}
+		.footer-container #footer{
+			margin: 0 auto;
+			width: 920px; 
 		}
 		#footer {
 			background: <?php echo $body_bg_color; ?> url(<?php echo $footer_bg_image; ?>) no-repeat;

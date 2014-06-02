@@ -44,7 +44,7 @@
 <!-- / accessibility-nav -->
 <hr />
 
-<div class="container">
+<div class="container <?php if( get_theme_mod('footercontainer_bg_image', '') != '') {?> clearfix<?php }?>">
 
 	<header id="header" role="banner">
 		<?php if ( is_home() ) { ?>
