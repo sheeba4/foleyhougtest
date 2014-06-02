@@ -14,7 +14,7 @@
  
 if( $footer_container_bg != ''){ ?>
 	</div> <!-- / container -->
-	<div class="footer-container">
+	<div class="footer-container clearfix">
 <?php } ?>
 
 	<footer id="footer" class="clearfix">

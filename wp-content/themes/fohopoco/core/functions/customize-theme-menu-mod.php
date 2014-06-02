@@ -518,6 +518,10 @@ function fohopoco_customize_add_customizer_css() {
 				background: #393b3e url(<?php echo $footercontainer_bg_image; ?>) repeat-x 0 0; 
 			<?php } ?>
 		}
+		.footer-container #footer{
+			margin: 0 auto;
+			width: 920px; 
+		}
 		#footer {
 			background: <?php echo $body_bg_color; ?> url(<?php echo $footer_bg_image; ?>) no-repeat;
 			color: <?php echo $footer_color; ?>;

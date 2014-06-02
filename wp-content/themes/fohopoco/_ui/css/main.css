@@ -848,7 +848,9 @@ a:hover, a:active, a:focus {
 	clear: both;
 	background: #6f6f6f url(../images/common/bg_footer.png) no-repeat;
 }
-
+.footer-container #footer {
+	padding: 77px 0 40px;
+}
 #footer .row {
 	line-height: 11px;
 	font-size: 0.9166em;
