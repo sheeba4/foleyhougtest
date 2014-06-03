@@ -910,6 +910,10 @@ a:hover, a:active, a:focus {
 	font-weight: normal;
 }
 
+.footer-container #footer > .row + .col {
+	padding-left: 30px;
+}
+
 
 /* 3. PAGES
 --------------------------------------------------------------------------------
