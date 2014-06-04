@@ -1,13 +1,7 @@
 <?php
 
-interface Syndication_Client {
+interface wp_client {
 
-	/**
-	 * Return Client Data
-	 * @return array array( 'id' => (string) $transport_name, 'modes' => array( 'push', 'pull' ), 'name' => (string) $name );
-	 */
-	public static function get_client_data();
-	 
 	/**
 	 * Creates a new post in the slave site.
 	 *
@@ -36,24 +30,6 @@ interface Syndication_Client {
 	 */
 	public function delete_post( $ext_ID );
 
-    /**
-     * Retrieves a single post from a slave site.
-     *
-     * @param   int  $ext_ID  Slave post ID to retrieve.
-     *
-     * @return  boolean true on success false on failure.
-     */
-    public function get_post( $ext_ID );
-
-    /**
-     * Retrieves a list of posts from a slave site.
-     *
-     * @param   array   $args  Arguments when retrieving posts.
-     *
-     * @return  boolean true on success false on failure.
-     */
-    public function get_posts( $args = array() );
-
 	/**
 	 * Test the connection with the slave site.
 	 *
@@ -69,6 +45,27 @@ interface Syndication_Client {
 	 * @return  boolean  true on success false on failure.
 	 */
 	public function is_post_exists( $ext_ID );
+
+	/**
+	 * Get the response message sent from the slave site.
+	 *
+	 * @return  string  response message.
+	 */
+	public function get_response();
+
+	/**
+	 * Get the error code.
+	 *
+	 * @return  int  error code.
+	 */
+	public function get_error_code();
+
+	/**
+	 * Get the error message sent from the slave site.
+	 *
+	 * @return string error message.
+	 */
+	public function get_error_message();
 
 	/**
 	 * Display the client settings for the slave site.
