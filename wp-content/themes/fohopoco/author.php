@@ -18,12 +18,12 @@ get_header(); ?>
 		$curauth = get_userdata(intval($author));
 		endif;
 	?>
-<p><a href="feed/">Subscribe to <?php echo $curauth->display_name; ?><img src="/wp-content/uploads/2012/08/feed-icon-12x12-orange.gif" style="border:0;"></a></p>	
+<p><a href="feed/">Subscribe to <?php echo $curauth->display_name; ?><img src="<?php echo get_template_directory_uri();?>/_ui/images/common/feed_24.png" style="border:0;" width="12" height="12"></a></p>	
 <h1> <a href="<?php echo $curauth->gurl; ?>" rel="me"><?php echo $curauth->display_name; ?></a></h1>
 	
 	<article class="clearfix post">
 		
-		<?php echo get_avatar( $curauth->user_email, '80', 'no_avatar.jpg' ); ?>
+		<?php //echo get_avatar( $curauth->user_email, '80' ); ?>
 		<p><?php echo $curauth->user_description; ?><p>
 	</article>
 	
