@@ -307,6 +307,30 @@ function kpl_user_bio_visual_editor_unfiltered() {
 }
 add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 
+function fohopoco_wp_trim_excerpt($text) {
+	$raw_excerpt = $text;
+	if ( '' == $text ) {
+		$text = get_the_content('');
+
+		$text = strip_shortcodes( $text );
+
+		$text = apply_filters('the_content', $text);
+		$text = str_replace(']]>', ']]>', $text);
+		$excerpt_length = apply_filters('excerpt_length', 100);
+		$excerpt_more = apply_filters('excerpt_more', ' ' . '[...]');
+		$words = preg_split("/[\n\r\t ]+/", $text, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY);
+		if ( count($words) > $excerpt_length ) {
+			array_pop($words);
+			$text = implode(' ', $words);
+			$text = $text . $excerpt_more;
+		} else {
+			$text = implode(' ', $words);
+		}
+	}
+	return $text;
+}
+remove_filter('get_the_excerpt', 'wp_trim_excerpt');
+add_filter('get_the_excerpt', 'fohopoco_wp_trim_excerpt');
 
 function fohopoco_excerpt_more( $more ) {
 	global $post;
