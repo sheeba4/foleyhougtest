@@ -337,3 +337,87 @@ function fohopoco_excerpt_more( $more ) {
 	return '... <a href="' . get_permalink( $post->ID ) .'">More</a>';
 }
 add_filter('excerpt_more', 'fohopoco_excerpt_more');
+
+
+add_action( 'save_post', 'fohopoco_save_metadata' );
+add_action( 'add_meta_boxes', 'fohopoco_add_meta_boxes' );
+
+if ( ! function_exists( 'fohopoco_add_meta_boxes' ) ) {
+
+  function fohopoco_add_meta_boxes( $post ) {
+    global $post;
+
+    /* Add post meta for external url link */
+    add_meta_box( 'display_option', __( 'Display Option for Homepage', 'fohopoco' ), 'fohopoco_display_option_metabox', 'post', 'normal', 'high' );
+  }
+
+}
+
+if ( ! function_exists( 'fohopoco_display_option_metabox' ) ) {
+	function fohopoco_display_option_metabox( $post ) {
+	  // Use nonce for verification
+	  wp_nonce_field( 'fohopoco_display_option', 'fohopoco_display_option_noncename' );
+
+	  $fohopoco_display_option = get_post_meta( $post->ID, '_fohopoco_display_option', true );
+	  $fields = array(
+	  	'excerpt'       => __('Preview', 'fohopoco'),
+	    'content'     => __('Full Content', 'fohopoco'),
+	    );
+	  if ( ! $fohopoco_display_option ){
+	  	$fohopoco_display_option = 'excerpt';
+	  }
+	?>
+
+	  <p>
+	    <label>
+	      <?php _e( 'Display Option for Homepage:', 'fohopoco' ); ?>
+	    </label><br />
+	    <?php foreach( $fields as $key => $label ){ 
+	        printf(
+	            '<input type="radio" name="_fohopoco_display_option" value="%1$s" id="_fohopoco_display_option[%1$s]" %3$s />'.
+	            '<label for="_fohopoco_display_option[%1$s]"> %2$s ' .
+	            '</label><br>',
+	            esc_attr( $key ),
+	            esc_html( $label ),
+	            checked( $fohopoco_display_option, $key, false )
+	        );
+	    } ?>
+	  </p>
+	  <?php
+	}
+}
+
+/**
+ * Validate, sanitize, and save post metadata.
+ */
+if ( ! function_exists( 'fohopoco_save_metadata' ) ) {
+	function fohopoco_save_metadata( $post_id ) {
+
+	  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+	    return;
+
+
+	  if ( isset( $_POST['post_type'] ) && 'post' == $_POST['post_type'] ) {
+	    if ( ! current_user_can( 'edit_page', $post_id ) )
+	      return;
+	  } else {
+	    if ( ! current_user_can( 'edit_post', $post_id ) )
+	      return;
+	  }
+
+	  $post_ID = isset( $_POST['post_ID'] ) ? $_POST['post_ID']: '';
+
+	  // Secondly we need to check if the user intended to change this value.
+	  $fohopoco_custom_fields = array( 'fohopoco_display_option' );
+	  foreach ( $fohopoco_custom_fields as $fohopoco_custom ) {
+	    if ( isset( $_POST[$fohopoco_custom . '_noncename'] ) && wp_verify_nonce( $_POST[ $fohopoco_custom . '_noncename'], $fohopoco_custom )  ) {	     
+	      // clean and validate data.
+	      ${$fohopoco_custom} =  $_POST['_' . $fohopoco_custom];
+	      if ( isset( ${$fohopoco_custom} ) && ! empty( ${$fohopoco_custom} ) )
+	        update_post_meta( $post_ID, '_' . $fohopoco_custom, ${$fohopoco_custom} );
+	      else
+	        delete_post_meta( $post_ID, '_' . $fohopoco_custom );	      	
+	    }
+	  }
+	}
+}
