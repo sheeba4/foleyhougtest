@@ -60,7 +60,16 @@ rel="author"><?php the_author_meta('display_name'); ?></a>
 		<!-- / header -->
 
 		<div class="entry-content">
-			<?php the_excerpt(); ?>
+			<?php 
+			$display_option = get_post_meta( $post->ID, '_fohopoco_display_option', true );
+	
+			if( $display_option == 'content' ){
+				the_content(); 
+			}else {
+				the_excerpt();
+			}
+			
+			?>
 		</div>
 		<!-- / entry-content -->
 
