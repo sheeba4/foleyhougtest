@@ -307,15 +307,18 @@ function kpl_user_bio_visual_editor_unfiltered() {
 }
 add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 
-function fohopoco_wp_trim_excerpt($text) {
+function fohopoco_wp_trim_excerpt( $text ) {
 	$raw_excerpt = $text;
 	if ( '' == $text ) {
 		$text = get_the_content('');
 
 		$text = strip_shortcodes( $text );
 
+		
 		$text = apply_filters('the_content', $text);
-		$text = str_replace(']]>', ']]>', $text);
+		$text = str_replace(']]>', ']]&gt;', $text);
+		$text = strip_tags( $text, '<p><a><img>' );
+		
 		$excerpt_length = apply_filters('excerpt_length', 100);
 		$excerpt_more = apply_filters('excerpt_more', ' ' . '[...]');
 		$words = preg_split("/[\n\r\t ]+/", $text, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY);
