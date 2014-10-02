@@ -44,10 +44,6 @@
 	});
 	
 	$(window).load(function() {
-		if ($(".FeedburnerEmailWidget").is('*')) {
-			$(".FeedburnerEmailWidget h3").append('<a href="http://feeds.feedburner.com/csrandthelaw" target="top" id="f33d"><b>RSS</b></a>');
-			
-		}
 		$(".footerLinkFoley .fn.org").click(function(e) {
 			if(e.target.innerHTML.indexOf("Emerging Enterprise")>= 0) {
 				window.open('http://www.emergingenterprisecenter.com');
