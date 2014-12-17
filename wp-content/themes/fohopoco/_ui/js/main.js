@@ -31,8 +31,14 @@
 		///////////////////
 		// _trackOutbound
 		$('a[href^="http"]:not([href*="//' + location.host + '"])').live('click', function(e) {
-					_gaq.push(['_trackEvent', 'outbound', 'click', this.href.match(/\/\/([^\/]+)/)[1]]);
+			_gaq.push(['_trackEvent', 'outbound', 'click', this.href.match(/\/\/([^\/]+)/)[1]]);
 		});
+
+		//Track any specified events. 
+		$( 'a[data-event]' ).live('click', function(e){            
+			_gaq.push(['_trackEvent', 'special tracking', $(this).attr('data-event'), $(this).attr('href')]);					
+		});
+				
 		///////////////////
 		// _remove empty row if it exists
 		$(".contact-info .fn.org").each(function(index) {
