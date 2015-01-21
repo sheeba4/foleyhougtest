@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&product_id=94
 Tags: add, antispam, anti-spam, anti-spam security, arithmetic actions, capcha, captcha, captha, catcha, cpatcha, captcha numbers, captcha plugin, captcha words, contact form with captcha, comment,  label, login, lost password, match captcha, math actions, multiply, registration, security, spam, spam protection, substract, text captcha, web form protection
-Requires at least: 3.0
-Tested up to: 3.9.1
-Stable tag: 4.0.1
+Requires at least: 3.1
+Tested up to: 4.1
+Stable tag: 4.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,13 +18,13 @@ There is also a premium version of the plugin, allowing compatibility with Buddy
 
 http://www.youtube.com/watch?v=jxrvHaCmQfg
 
-<a href="http://www.youtube.com/watch?v=svcdSfwlb2c" target="_blank">Video instruction on Installation</a>
+<a href="http://www.youtube.com/watch?v=jsvc8FxxEnk" target="_blank">Video instruction on Installation</a>
 
 <a href="http://wordpress.org/plugins/captcha/faq/" target="_blank">FAQ</a>
 
 <a href="http://support.bestwebsoft.com" target="_blank">Support</a>
 
-<a href="http://bestwebsoft.com/plugin/captcha-pro/?k=2d2d85a3c277bf3489697c9a9ff2d352" target="_blank">Upgrade to Pro Version</a>
+<a href="http://bestwebsoft.com/products/captcha/?k=2d2d85a3c277bf3489697c9a9ff2d352" target="_blank">Upgrade to Pro Version</a>
 
 = Features =
 
@@ -36,8 +36,10 @@ http://www.youtube.com/watch?v=jxrvHaCmQfg
 
 The author of the Captcha also recommends the following plugins:
 
+*  <a href="http://wordpress.org/plugins/limit-attempts/">Limit Attempts</a> - This plugin allows you to limit users' attempts to log in to your website, as well as create and edit black- and whitelists. This way, you will be able to manage access to your website and its content and protect it from spam and unwanted visitors.
+There is also a premium version of the plugin - <a href="http://bestwebsoft.com/products/limit-attempts/?k=c6b924d096b75a288daf0e49a58f93c2">Limited Attempts Pro</a>, with more useful features available. With the pro version, you recieve a possibility to add ranges of IP addresses or IP masks to black- and whitelists. Also, it is compatible with Captcha Pro plugin, so all functionality of Limit Attempts Pro can be apllied to all forms when Captcha Pro is activated.
 * <a href="http://wordpress.org/plugins/updater/">Updater</a> - This plugin updates WordPress core and the plugins to the recent versions. You can also use the auto mode or manual mode for updating and set email notifications.
-There is also a premium version of the plugin <a href="http://bestwebsoft.com/plugin/updater-pro/?k=0864088de1701a5e104ffb77c6d7011c">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
+There is also a premium version of the plugin <a href="http://bestwebsoft.com/products/updater/?k=0864088de1701a5e104ffb77c6d7011c">Updater Pro</a> with more useful features available. It can make backup of all your files and database before updating. Also it can forbid some plugins or WordPress Core update.
 
 = Translation =
 
@@ -46,15 +48,15 @@ There is also a premium version of the plugin <a href="http://bestwebsoft.com/pl
 * Brazilian Portuguese (pt_BR) (thanks to <a href="mailto:brenojac@gmail.com">Breno Jacinto</a>, www.iconis.org.br)
 * Bulgarian (bg_BG) (thanks to <a href="mailto:paharaman@gmail.com">Nick</a>)
 * Catalan (ca) (thanks to <a href="mailto:psiete@gmail.com">Psiete</a>)
-* Chinese (zh_CN) (thanks to Billy Jeans)
+* Chinese (zh_CN) (thanks to <a href="mailto:newbiesup@gmail.com">Newbiesup</a>, www.wpsites.org)
 * Taiwan (zh_TW) (thanks to <a href="mailto:hh3stuff@gmail.com">Henry H</a>)
 * Croatian (hr) (thanks to <a href="mailto:daniel@geogat.com">Daniel</a>)
-* Czech (cs_CZ) (thanks to Tomas Vesely, <a href="mailto:crysman@seznam.cz">Crysman</a>)
+* Czech (cs_CZ) (thanks to <a href="mailto:crysman@seznam.cz">Crysman</a>)
 * Danish (da_DK) (thanks to Byrial Ole Jensed)
 * Dutch (nl_NL) (thanks to <a href="mailto:byrial@vip.cybercity.dk">Bart Duineveld</a>)
 * Estonian (et) (thanks to Ahto Tanner)
 * Greek (el) (thanks to Aris, www.paraxeno.net)
-* Farsi/Persian (fa_IR) (thanks to <a href="mailto:info[at]mpspace[dot]zio[dot]ir">Meysam Parvizi</a>, www.mpspace.zio.ir)
+* Farsi/Persian (fa_IR) (thanks to <a href="mailto:mostafaasadi73@gmail.com">Mostafa Asadi</a>, www.ma73.ir)
 * Finnish (fi) (thanks to Mikko Sederholm)
 * French (fr_FR) (thanks to Martel Benjamin, <a href="mailto:lcapronnier@yahoo.com">Capronnier luc</a>)
 * German (de_DE) (thanks to Thomas Hartung, <a href="mailto:lothar.schiborr@web.de">Lothar Schiborr</a>)
@@ -63,11 +65,12 @@ There is also a premium version of the plugin <a href="http://bestwebsoft.com/pl
 * Hungarian (hu_HU) (thanks to Bőm Tamás)
 * Japanese (ja) (thanks to Foken)
 * Indonesian (id_ID) (thanks to <a href="mailto:nasroel@al-badar.net">Nasrulhaq Muiz</a>, www.al-badar.net)
-* Italian (it_IT) (thanks to Gianluca Di Carlo, <a href="mailto:marco@blackstudio.it">Marco</a>)
+* Italian (it_IT) (thanks to <a href="mailto:marco@blackstudio.it">Marco</a>)
 * Latvian (lv) (thanks to <a href="mailto:juris.o@gmail.com">Juris O</a>)
 * Lithuanian (lt_LT) (thanks to <a href="mailto:arnas.metal@gmail.com">Arnas</a>)
 * Norwegian (nb_NO) (thanks to Tore Hjartland)
 * Polish (pl_PL) (thanks to Krzysztof Opuchlik)
+* Portuguese (pt_PT) (thanks to <a href="mailto:jp.jp@sapo.pt">João Paulo Antunes</a>)
 * Romanian (ro_RO) (thanks to Ciprian)
 * Russian (ru_RU)
 * Serbian (sr_RS) (thanks to Radovan Georgijevic)
@@ -76,7 +79,7 @@ There is also a premium version of the plugin <a href="http://bestwebsoft.com/pl
 * Spain (es_ES) (thanks to Iván García Cubero)
 * Swedish (sv_SE) (thanks to Christer Rönningborg, <a href="mailto:blittan@xbmc.org">Blittan</a>)
 * Tagalog (tl) (thanks to <a href="mailto:rjalali@languageconnect.net">Roozbeh Jalali</a>, www.languageconnect.net)
-* Turkish (tr_TR) (thanks to Can Atasever, www.candanblog.com)
+* Turkish (tr_TR) (thanks to Can Atasever, www.canatasever.com)
 * Ukrainian (uk)
 * Vietnamese (vi_VN) (thanks to NDT Solutions)
 
@@ -98,7 +101,7 @@ We can fix some things for free for the users who provide translation of our plu
 
 <a href="https://docs.google.com/document/d/1DN2yYCvDyK2LqmbWw6xmUNLbb0awOVDZ_dOgIXod-Jw/edit" target="_blank">View a Step-by-step Instruction on Captcha Installation</a>.
 
-http://www.youtube.com/watch?v=svcdSfwlb2c
+http://www.youtube.com/watch?v=jsvc8FxxEnk
 
 == Frequently Asked Questions ==
 
@@ -179,6 +182,34 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
+= V4.0.8 - 23.12.2014 =
+* Update : The language files are updated.
+* Update : We updated all functionality for wordpress 4.1.
+
+= V4.0.7 - 27.11.2014 =
+* Bugfix : Security Vulnerability was fixed.
+* Bugfix : The bug with error message on multisite is fixed.
+
+= V4.0.6 - 17.11.2014 =
+* NEW : The Portuguese language file is added to the plugin.
+* Update : The French language file is updated.
+* Bugfix : The performance issue was fixed.
+* Update : We added padding style for captcha input.
+
+= V4.0.5 - 15.10.2014 =
+* Update : The Brazilian Portuguese language file is updated.
+* NEW: We added filter 'cptch_forms_list' in the plugin settings page.
+
+= V4.0.4 - 10.09.2014 =
+* Update : The Farsi language file is updated.
+* Update : We updated all functionality for wordpress 4.0.
+
+= V4.0.3 - 07.08.2014 =
+* Bugfix : Security Exploit was fixed.
+
+= V4.0.2 - 28.07.2014 =
+* Update : We updated all functionality for Limit Attempts plugin.
+
 = V4.0.1 - 12.05.2014 =
 * Bugfix : We fixed syntax error.
 
@@ -194,7 +225,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Bugfix : We fixed error related to custom plugins folder.
 
 = V3.9.7 - 10.03.2014 =
-* Budfix : Plugin optimization is done.
+* Bugfix : Plugin optimization is done.
 * Update : The French language file is updated.
 
 = V3.9.6 - 12.02.2014 =
@@ -469,6 +500,27 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 * Select functionality of mathematical actions and level of their difficulty are implemented.
 
 == Upgrade Notice ==
+
+= V4.0.8 =
+The language files are updated. We updated all functionality for wordpress 4.1.
+
+= V4.0.7 =
+Security Vulnerability was fixed. The bug with error message on multisite is fixed.
+
+= V4.0.6 =
+The Portuguese language file is added to the plugin. The French language file is updated. The performance issue was fixed. We added padding style for captcha input.
+
+= V4.0.5 =
+The Brazilian Portuguese language file is updated. We added filter 'cptch_forms_list' in the plugin settings page.
+
+= V4.0.4 =
+The Farsi language file is updated. We updated all functionality for wordpress 4.0.
+
+= V4.0.3 =
+Security Exploit was fixed.
+
+= V4.0.2 =
+We updated all functionality for Limit Attempts plugin.
 
 = V4.0.1 =
 We fixed syntax error.
