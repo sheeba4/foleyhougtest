@@ -104,6 +104,9 @@ class FeedburnerEmailWidget extends WP_Widget {
                     e_a.innerHTML = '-';
                 }
             }
+            if( typeof addLoadEvent != 'function' ){
+                addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};    
+            }
             addLoadEvent(function() {
                 jQuery('#<?php echo $this->get_field_id('title'); ?>_div_a, #<?php echo $this->get_field_id('title'); ?>_div_span').click(function() {
                     feedburner_email_widget_admin_toggle_visibility('<?php echo $this->get_field_id('title'); ?>_div');
