@@ -22,7 +22,11 @@
 				<span class="by-author">
 					<span class="sep"> by </span>
 					<span class="author vcard">
-						<a class="url fn n" href="<?php echo get_author_posts_url(get_the_author_meta( 'ID' )); ?>" title="View all posts by <?php the_author() ?>" rel="author"><?php the_author_meta('display_name'); ?></a>
+						<?php if ( function_exists( 'coauthors_posts_links' ) ): ?>
+							<?php coauthors_posts_links(); ?>
+						<?php else: ?>
+							<a class="url fn n" href="<?php echo get_author_posts_url(get_the_author_meta( 'ID' )); ?>" title="View all posts by <?php the_author() ?>" rel="author"><?php the_author_meta('display_name'); ?></a>
+						<?php endif; ?>
 					</span>
 				</span>
 				<!-- / by-author -->
