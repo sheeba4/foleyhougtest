@@ -892,6 +892,10 @@ a:hover, a:active, a:focus {
 	float: left;
 }
 
+#footer .col.no-float {
+    float: none;
+}
+
 #footer .col h2 {
 	line-height: 19px;
 	font-size: 1.41666em;
