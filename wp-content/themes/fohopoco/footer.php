@@ -33,17 +33,17 @@ if( $footer_container_bg != ''){ ?>
 			<p class="copyright" role="contentinfo"><?php echo $o['minify_copyright_text']; ?></p>
 		</div>
 		<!-- / row -->
-		
-		<div class="col">
+
+		<?php if ( ! dynamic_sidebar( 'footer-widgets' ) ) : endif; ?>
+
+		<div class="col no-float">
 			<h2><?php bloginfo( 'name' ); ?></h2>
 			<p>Published by Foley Hoag LLP</p>
 			<p>Attorney advertising.<br />
 				Prior results do not guarantee a&nbsp;similar outcome.</p>
 		</div>
 		<!-- / col -->
-		
-		<?php if ( ! dynamic_sidebar( 'footer-widgets' ) ) : endif; ?>
-		
+
 	</footer>
 	<!-- / footer -->
 </div> 
