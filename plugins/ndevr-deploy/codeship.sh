@@ -67,7 +67,7 @@ function deploy_staging {
     cd ~/clone
 
     echo -e "\nWP Engine Deployment ($DEPLOY_ENV)"
-    rsync -rcz --delete-excluded ~/clone/ ~/wpengine-staging/wp-content \
+    rsync -rcz --delete-excluded ~/clone/ ~/wpengine-staging/wp-content/ \
     --exclude=".editorconfig" \
     --exclude=".gitignore" \
     --exclude=".DS_Store" \
@@ -75,9 +75,10 @@ function deploy_staging {
     --exclude="README.md" \
     --exclude="readme.txt" \
     --exclude="package.json" \
-    --exclude="plugins/ndevr-deploy/"
+    --exclude="index.php" \
+    --exclude="ndevr-deploy/"
 
-    cp ~/clone/plugins/ndevr-deploy/wpengine-gitignore-no-wp.txt ~/wpengine-staging/.gitignore
+    cp ~/ndevr-plugins/ndevr-deploy/wpengine-gitignore-no-wp.txt ~/wpengine-staging/.gitignore
 
     cd ~/wpengine-staging/
     git add --all
