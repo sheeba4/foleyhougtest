@@ -45,7 +45,7 @@ function deploy_production {
     deploy_init_staging
     deploy_init_production
 
-    local SITE_URL = $PRODUCTION_URL
+    local SITE_URL=$PRODUCTION_URL
     curl -u "meekyhwang1:VKXS5VqUBPwVnudAMifE" -H "Content-Type: application/json" -H "Accept: application/json"  -d '{"browsers": [{"os": "Windows", "os_version": "7", "browser_version": "8.0", "browser": "ie"}], "url": "'"$SITE_URL"'"}' https://www.browserstack.com/screenshots
 
     cd ~/wpengine-staging
@@ -80,7 +80,7 @@ function deploy_staging {
     git push -f origin master
     loud "Deployment Complete ($DEPLOY_ENV/$REPO)!"
 
-    local SITE_URL = $STAGING_URL
+    local SITE_URL=$STAGING_URL
     curl -u "meekyhwang1:VKXS5VqUBPwVnudAMifE" -H "Content-Type: application/json" -H "Accept: application/json"  -d '{"browsers": [{"os": "Windows", "os_version": "7", "browser_version": "8.0", "browser": "ie"}], "url": "'"$SITE_URL"'"}' https://www.browserstack.com/screenshots
 
 }
