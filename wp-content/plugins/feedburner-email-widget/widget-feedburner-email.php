@@ -1,29 +1,29 @@
 <?php
 /*
   Plugin Name: Feedburner Email Widget
-  Version: 1.1.9
+  Version: 1.2.0
   Plugin URI: http://wyrihaximus.net/projects/wordpress/feedburner-email-widget/?utm_source=wordpress_install&utm_medium=details&utm_campaign=feedburner-email-widget
   Description: Allows you to add a Feedburner Email Subscription widget to one of your sidebars.
   Author: WyriHaximus
   Author URI: http://wyrihaximus.net/
- */ 
+ */
 
 class FeedburnerEmailWidget extends WP_Widget {
 
     /**
      * Constructor
      */
-    function FeedburnerEmailWidget() {
+    function __construct() {
         $widget_ops = array(
             'classname' => 'FeedburnerEmailWidget',
             'description' => 'Allows you to add a Feedburner Email Subscription widget to one of your sidebars.',
         );
-        $this->WP_Widget('FeedburnerEmailWidget', 'Feedburner Email Widget', $widget_ops);
+        parent::__construct('FeedburnerEmailWidget', 'Feedburner Email Widget', $widget_ops);
     }
-    
+
     /**
      * Build the admin widget manipulation form
-     * 
+     *
      * @param array $instance
      */
     function form($instance) {
@@ -104,9 +104,6 @@ class FeedburnerEmailWidget extends WP_Widget {
                     e_a.innerHTML = '-';
                 }
             }
-            if( typeof addLoadEvent != 'function' ){
-                addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};    
-            }
             addLoadEvent(function() {
                 jQuery('#<?php echo $this->get_field_id('title'); ?>_div_a, #<?php echo $this->get_field_id('title'); ?>_div_span').click(function() {
                     feedburner_email_widget_admin_toggle_visibility('<?php echo $this->get_field_id('title'); ?>_div');
@@ -135,9 +132,9 @@ class FeedburnerEmailWidget extends WP_Widget {
         </script>
 <?php
     }
-    
+
     /**
-     * 
+     *
      * @param unknown $new_instance
      * @param unknown $old_instance
      * @return unknown
@@ -147,19 +144,19 @@ class FeedburnerEmailWidget extends WP_Widget {
     }
 
     /**
-     * 
+     *
      * @param array $args
      * @param array $instance
      */
     function widget($args, $instance) {
         echo $this->generate($args, $instance);
     }
-    
+
     /**
      * Generate the widget
-     * 
+     *
      * @param array $args Arguments
-     * @param array $instance 
+     * @param array $instance
      * @return string Generated HTML
      */
     function generate($args, $instance) {
@@ -179,7 +176,7 @@ class FeedburnerEmailWidget extends WP_Widget {
         $analytics_act = empty($instance['analytics_act']) ? false : $instance['analytics_act'];
         $analytics_lab = empty($instance['analytics_lab']) ? false : $instance['analytics_lab'];
         $analytics_val = empty($instance['analytics_val']) ? false : $instance['analytics_val'];
-        
+
         // Cut out the part we need
         $uri = parse_url($uri);
         if ($uri['host'] == 'feedburner.google.com' && !empty($uri['query'])) {
@@ -200,13 +197,13 @@ class FeedburnerEmailWidget extends WP_Widget {
             $uri = false;
             $queryParams = array();
         }
-        
+
         if ($uri && count($queryParams) > 0) {
-            
+
             if (!isset($queryParams['loc'])) {
                 $queryParams['loc'] ='en_US';
             }
-            
+
             if (!empty($title)) {
                 if(!isset($before_title)) {
                     $before_title = '';
@@ -272,7 +269,7 @@ class FeedburnerEmailWidget extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget(\'FeedburnerEmailWidget\');'));
 
 /**
- * 
+ *
  * @param array $atts Widget attributes
  * @return string Generated HTML for the widget
  */

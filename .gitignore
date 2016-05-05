@@ -5,6 +5,10 @@
 *.bak
 *.swp
 Thumbs.db
+/vendor
+node_modules
+.sass-cache
+bower_components
 
 # wordpress specific
 wp-config.php
@@ -62,6 +66,12 @@ wp-content/mysql.sql
 /wp-content/themes/index.php
 /wp-content/plugins/index.php
 
+#ndevr theme specific
+wp-content/themes/ndevr/assets/fonts/
+wp-content/themes/ndevr/assets/images/
+wp-content/themes/ndevr/assets/scripts/
+wp-content/themes/ndevr/assets/styles/
+
 # large/disallowed file types
 # a CDN should be used for these
 *.hqx
@@ -96,4 +106,3 @@ wp-content/mysql.sql
 *.asf
 *.wmv
 *.avi
-.idea/
