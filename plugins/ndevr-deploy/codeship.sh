@@ -97,4 +97,4 @@ function quiet {
   echo -e "\t${1}"
 }
 
-#deploy
+deploy
