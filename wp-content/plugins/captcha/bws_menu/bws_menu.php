@@ -1,21 +1,18 @@
 <?php
 /*
 * Function for displaying BestWebSoft menu
-* Version: 1.8.3
+* Version: 1.4.0
 */
-
-if ( ! function_exists ( 'bws_admin_enqueue_scripts' ) )
-	require_once( dirname( __FILE__ ) . '/bws_functions.php' );
 
 if ( ! function_exists( 'bws_add_menu_render' ) ) {
 	function bws_add_menu_render() {
-		global $wpdb, $wp_version, $bws_plugin_info;
+		global $wpdb, $wpmu, $wp_version, $bws_plugin_info;
 		$error = $message = $bwsmn_form_email = '';
-		$bws_donate_link = 'http://bestwebsoft.com/donate/';
+		$bws_donate_link = 'https://www.2checkout.com/checkout/purchase?sid=1430388&quantity=1&product_id=94';
 
 		if ( ! function_exists( 'is_plugin_active_for_network' ) )
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
+			
 		if ( function_exists( 'is_multisite' ) )
 			$admin_url = ( ! is_multisite() ) ? admin_url( '/' ) : network_admin_url( '/' );
 		else
@@ -43,7 +40,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'pro_version'	=> 'contact-form-pro/contact_form_pro.php',
 				'purchase'		=> 'http://bestwebsoft.com/products/contact-form/buy/?k=773dc97bb3551975db0e32edca1a6d71&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'pro_settings'	=> 'admin.php?page=contact_form_pro.php'
-			),
+			), 
 			'facebook-button-plugin/facebook-button-plugin.php' => array(
 				'name'			=> 'Facebook Like Button',
 				'description'	=> 'Allows you to add the Follow and Like buttons the easiest way.',
@@ -65,17 +62,14 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'pro_version'	=> 'twitter-pro/twitter-pro.php',
 				'purchase' 		=> 'http://bestwebsoft.com/products/twitter/buy/?k=63ecbf0cc9cebf060b5a3c9362299700&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'pro_settings' 	=> 'admin.php?page=twitter-pro.php'
-			),
+			), 
 			'portfolio/portfolio.php' => array(
 				'name'			=> 'Portfolio',
 				'description'	=> 'Allows you to create a page with the information about your past projects.',
 				'link'			=> 'http://bestwebsoft.com/products/portfolio/?k=1249a890c5b7bba6bda3f528a94f768b&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/portfolio/download/?k=1249a890c5b7bba6bda3f528a94f768b&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Portfolio+bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=portfolio.php',
-				'pro_version'	=> 'portfolio-pro/portfolio-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/portfolio/buy/?k=2cc716026197d36538a414b728e49fdd&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings' 	=> 'admin.php?page=portfolio-pro.php'
+				'settings'		=> 'admin.php?page=portfolio.php'
 			),
 			'gallery-plugin/gallery-plugin.php' => array(
 				'name'			=> 'Gallery',
@@ -94,10 +88,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/google-adsense/?k=60e3979921e354feb0347e88e7d7b73d&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/google-adsense/download/?k=60e3979921e354feb0347e88e7d7b73d&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Adsense+Plugin+bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=adsense-plugin.php',
-				'pro_version'	=> 'adsense-pro/adsense-pro.php',
-				'purchase'		=> 'http://bestwebsoft.com/products/google-adsense/buy/?k=c23889b293d62aa1ad2c96513405f0e1&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=adsense-pro.php'
+				'settings'		=> 'admin.php?page=adsense-plugin.php'
 			),
 			'custom-search-plugin/custom-search-plugin.php'=> array(
 				'name'			=> 'Custom Search',
@@ -105,10 +96,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/custom-search/?k=933be8f3a8b8719d95d1079d15443e29&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/custom-search/download/?k=933be8f3a8b8719d95d1079d15443e29&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Custom+Search+plugin+bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=custom_search.php',
-				'pro_version'	=> 'custom-search-pro/custom-search-pro.php',
-				'purchase'		=> 'http://bestwebsoft.com/products/custom-search/buy/?k=062b652ac6ac8ba863c9f30fc21d62c6&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=custom_search_pro.php'
+				'settings'		=> 'admin.php?page=custom_search.php'
 			),
 			'quotes-and-tips/quotes-and-tips.php'=> array(
 				'name'			=> 'Quotes and Tips',
@@ -168,7 +156,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'settings'		=> 'admin.php?page=related-posts-plugin.php'
 			),
 			'contact-form-to-db/contact_form_to_db.php' => array(
-				'name'			=> 'Contact Form to DB',
+				'name'			=> 'Contact Form To DB',
 				'description'	=> 'Allows you to manage the messages that have been sent from your site.',
 				'link'			=> 'http://bestwebsoft.com/products/contact-form-to-db/?k=ba3747d317c2692e4136ca096a8989d6&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/contact-form-to-db/download/?k=ba3747d317c2692e4136ca096a8989d6&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
@@ -198,7 +186,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'settings'		=> 'admin.php?page=donate.php'
 			),
 			'post-to-csv/post-to-csv.php' => array(
-				'name'			=> 'Post to CSV',
+				'name'			=> 'Post To CSV',
 				'description'	=> 'The plugin allows to export posts of any types to a csv file.',
 				'link'			=> 'http://bestwebsoft.com/products/post-to-csv/?k=653aa55518ae17409293a7a894268b8f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/post-to-csv/download/?k=653aa55518ae17409293a7a894268b8f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
@@ -219,10 +207,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/htaccess/?k=2b865fcd56a935d22c5c4f1bba52ed46&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/htaccess/download/?k=2b865fcd56a935d22c5c4f1bba52ed46&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Htaccess+Bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=htaccess.php',
-				'pro_version'	=> 'htaccess-pro/htaccess-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/htaccess/buy/?k=59e9209a32864be534fda77d5e591c15&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings' 	=> 'admin.php?page=htaccess-pro.php'
+				'settings'		=> 'admin.php?page=htaccess.php'
 			),
 			'google-captcha/google-captcha.php' => array(
 				'name'			=> 'Google Captcha (reCAPTCHA)',
@@ -230,10 +215,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/google-captcha/?k=7b59fbe542acf950b29f3e020d5ad735&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/google-captcha/download/?k=7b59fbe542acf950b29f3e020d5ad735&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Google+Captcha+Bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=google-captcha.php',
-				'pro_version'	=> 'google-captcha-pro/google-captcha-pro.php',
-				'purchase'		=> 'http://bestwebsoft.com/products/google-captcha/buy/?k=773d30149acf1edc32e5c0766b96c134&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=google-captcha-pro.php'
+				'settings'		=> 'admin.php?page=google-captcha.php'
 			),
 			'sender/sender.php' => array(
 				'name'			=> 'Sender',
@@ -252,14 +234,11 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/subscriber/?k=a4ecc1b7800bae7329fbe8b4b04e9c88&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/subscriber/download/?k=a4ecc1b7800bae7329fbe8b4b04e9c88&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Subscriber+Bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=sbscrbr_settings_page',
-				'pro_version'	=> 'subscriber-pro/subscriber-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/subscriber/buy/?k=02dbb8b549925d9b74e70adc2a7282e4&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings' 	=> 'admin.php?page=sbscrbrpr_settings_page'
+				'settings'		=> 'admin.php?page=sbscrbr_settings_page'
 			),
 			'contact-form-multi/contact-form-multi.php' => array(
 				'name'			=> 'Contact Form Multi',
-				'description'	=> 'Add-on to the Contact Form plugin that allows to create and implement multiple contact forms.',
+				'description'	=> 'This plugin allows you to subscribe users for newsletters from your website.',
 				'link'			=> 'http://bestwebsoft.com/products/contact-form-multi/?k=83cdd9e72a9f4061122ad28a67293c72&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/contact-form-multi/download/?k=83cdd9e72a9f4061122ad28a67293c72&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Contact+Form+Multi+Bestwebsoft&plugin-search-input=Search+Plugins',
@@ -269,29 +248,26 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'pro_settings' 	=> ''
 			),
 			'bws-google-maps/bws-google-maps.php' => array(
-				'name'			=> 'Google Maps',
+				'name'			=> 'BestWebSoft Google Maps',
 				'description'	=> 'Easy to set up and insert Google Maps to your website.',
 				'link'			=> 'http://bestwebsoft.com/products/bws-google-maps/?k=d8fac412d7359ebaa4ff53b46572f9f7&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/bws-google-maps/download/?k=d8fac412d7359ebaa4ff53b46572f9f7&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Google+Maps+Bestwebsoft&plugin-search-input=Search+Plugins',
+				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=BestWebSoft+Google+Maps&plugin-search-input=Search+Plugins',
 				'settings'		=> 'admin.php?page=bws-google-maps.php',
 				'pro_version'	=> 'bws-google-maps-pro/bws-google-maps-pro.php',
 				'purchase' 		=> 'http://bestwebsoft.com/products/bws-google-maps/buy/?k=117c3f9fc17f2c83ef430a8a9dc06f56&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'pro_settings' 	=> 'admin.php?page=bws-google-maps-pro.php'
 			),
 			'bws-google-analytics/bws-google-analytics.php' => array(
-				'name'			=> 'Google Analytics',
+				'name'			=> 'BestWebSoft Google Analytics',
 				'description'	=> 'Allows you to retrieve basic stats from Google Analytics account and add the tracking code to your blog.',
 				'link'			=> 'http://bestwebsoft.com/products/bws-google-analytics/?k=261c74cad753fb279cdf5a5db63fbd43&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/bws-google-analytics/download/?k=261c74cad753fb279cdf5a5db63fbd43&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=Google+Analytics+Bestwebsoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=bws-google-analytics.php',
-				'pro_version'	=> 'bws-google-analytics-pro/bws-google-analytics-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/bws-google-analytics/buy/?k=83796e84fec3f70ecfcc8894a73a6c4a&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings' 	=> 'admin.php?page=bws-google-analytics-pro.php'
+				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&s=BestWebSoft+Google+Analytics&plugin-search-input=Search+Plugins',
+				'settings'		=> 'admin.php?page=bws-google-analytics.php'
 			),
 			'db-manager/db-manager.php' => array(
-				'name'			=> 'DB Manager',
+				'name'			=> 'DB manager',
 				'description'	=> 'Allows you to download the latest version of PhpMyadmin and Dumper and manage your site.',
 				'link'			=> 'http://bestwebsoft.com/products/db-manager/?k=01ed9731780d87f85f5901064b7d76d8&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/db-manager/download/?k=01ed9731780d87f85f5901064b7d76d8&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
@@ -329,7 +305,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'pro_settings'	=> 'admin.php?page=limit-attempts-pro.php'
 			),
 			'job-board/job-board.php' => array(
-				'name'			=> 'Job Board',
+				'name'			=> 'Job board',
 				'description'	=> 'Allows to create a job-board page on your site.',
 				'link'			=> 'http://bestwebsoft.com/products/job-board/?k=b0c504c9ce6edd6692e04222af3fed6f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/job-board/download/?k=b0c504c9ce6edd6692e04222af3fed6f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
@@ -342,144 +318,17 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				'link'			=> 'http://bestwebsoft.com/products/multilanguage/?k=7d68c7bfec2486dc350c67fff57ad433&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'download'		=> 'http://bestwebsoft.com/products/multilanguage/download/?k=7d68c7bfec2486dc350c67fff57ad433&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Multilanguage+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=mltlngg_settings',
-				'pro_version'	=> 'multilanguage-pro/multilanguage-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/multilanguage/buy/?k=2d1121cd9a5ced583fc29eefd51bdf57&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=mltlnggpr_settings'
-			),
-			'bws-popular-posts/bws-popular-posts.php' => array(
-				'name'			=> 'Popular Posts',
-				'description'	=> 'This plugin will help you can display the most popular posts on your blog in the widget.',
-				'link'			=> 'http://bestwebsoft.com/products/popular-posts/?k=4d529f116d2b7f7df3a78018c383f975&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/popular-posts/download/?k=4d529f116d2b7f7df3a78018c383f975&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Popular+Posts+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=popular-posts.php'
-			),
-			'bws-testimonials/bws-testimonials.php' => array(
-				'name'			=> 'Testimonials',
-				'description'	=> 'Allows creating and displaying a Testimonial on your website.',
-				'link'			=> 'http://bestwebsoft.com/products/testimonials/?k=3fe4bb89dc901c98e43a113e08f8db73&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/testimonials/download/?k=3fe4bb89dc901c98e43a113e08f8db73&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Testimonials+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=testimonials.php'
-			),
-			'bws-featured-posts/bws-featured-posts.php' => array(
-				'name'			=> 'Featured Posts',
-				'description'	=> 'Displays featured posts randomly on any website page.',
-				'link'			=> 'http://bestwebsoft.com/products/featured-posts/?k=f0afb31185ba7c7d6d598528d69f6d97&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/featured-posts/download/?k=f0afb31185ba7c7d6d598528d69f6d97&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Featured+Posts+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=featured-posts.php'
-			),
-			'gallery-categories/gallery-categories.php' => array(
-				'name'			=> 'Gallery Categories',
-				'description'	=> 'Add-on for Gallery Plugin by BestWebSoft',
-				'link'			=> 'http://bestwebsoft.com/products/gallery-categories/?k=7d68c7bfec2486dc350c67fff57ad433&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/gallery-categories/download/?k=7d68c7bfec2486dc350c67fff57ad433&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Gallery+Categories+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> ''
-			),
-			're-attacher/re-attacher.php' => array(
-				'name'			=> 'Re-attacher',
-				'description'	=> 'This plugin allows to attach, unattach or reattach media item in different post.',
-				'link'			=> 'http://bestwebsoft.com/products/re-attacher/?k=4d529f116d2b7f7df3a78018c383f975&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/re-attacher/download/?k=4d529f116d2b7f7df3a78018c383f975&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Re-attacher+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=re-attacher.php'
-			),
-			'bws-smtp/bws-smtp.php' => array(
-				'name'			=> 'SMTP',
-				'description'	=> 'This plugin introduces an easy way to configure sending email messages via SMTP.',
-				'link'			=> 'http://bestwebsoft.com/products/smtp/?k=0546419f962704429ad2d9b88567752f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/smtp/download/?k=0546419f962704429ad2d9b88567752f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=SMTP+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=bwssmtp_settings'
-			),
-			'promobar/promobar.php' => array(
-				'name'			=> 'PromoBar',
-				'description'	=> 'This plugin allows placing banners with any data on your website.',
-				'link'			=> 'http://bestwebsoft.com/products/promobar/?k=619eac2232d9cfa382c4e678c3b14766&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/promobar/download/?k=619eac2232d9cfa382c4e678c3b14766&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=PromoBar+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=promobar.php',
-				'pro_version'	=> 'promobar-pro/promobar-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/promobar/buy/?k=a9b09708502f12a1483532ba12fe2103&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=promobar-pro.php'
-			),
-			'realty/realty.php' => array(
-				'name'			=> 'Realty',
-				'description'	=> 'A convenient plugin that adds Real Estate functionality.',
-				'link'			=> 'http://bestwebsoft.com/products/realty/?k=d55de979dbbbb7af0b2ff1d7f43884fa&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/realty/download/?k=d55de979dbbbb7af0b2ff1d7f43884fa&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Realty+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=realty_settings',
-				'pro_version'	=> 'realty-pro/realty-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/realty/buy/?k=c7791f0a72acfb36f564a614dbccb474&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=realty_pro_settings'
-			),
-			'zendesk-help-center/zendesk-help-center.php' => array(
-				'name'			=> 'Zendesk Help Center Backup',
-				'description'	=> 'This plugin allows to backup Zendesk Help Center.',
-				'link'			=> 'http://bestwebsoft.com/products/zendesk-help-center/?k=2a5fd2f4b2f4bde46f2ca44b8d15846d&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/zendesk-help-center/download/?k=2a5fd2f4b2f4bde46f2ca44b8d15846d&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Zendesk+Help+Center+Backup+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=zendesk_hc.php&tab=settings',
-				'pro_version'	=> 'zendesk-help-center-pro/zendesk-help-center-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/zendesk-help-center/buy/?k=45199e4538b5befe4d9566868a61a3aa&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=zendesk_hc.php&tab=settings'
-			),
-			'social-buttons-pack/social-buttons-pack.php' => array(
-				'name'			=> 'Social Buttons Pack',
-				'description'	=> 'Add Social buttons to your WordPress website.',
-				'link'			=> 'http://bestwebsoft.com/products/social-buttons-pack/?k=b6440fad9f54274429e536b0c61b42da&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/social-buttons-pack/download/?k=b6440fad9f54274429e536b0c61b42da&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Social+Buttons+Pack+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=social-buttons.php'
-			),
-			'pagination/pagination.php' => array(
-				'name'			=> 'Pagination',
-				'description'	=> 'Add pagination block to your WordPress website.',
-				'link'			=> 'http://bestwebsoft.com/products/pagination/?k=22adb940256f149559ba8fedcd728ac8&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/pagination/download/?k=22adb940256f149559ba8fedcd728ac8&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Pagination+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=pagination.php'
-			),
-			'visitors-online/visitors-online.php' => array(
-				'name'			=> 'Visitors Online',
-				'description'	=> 'See how many users, guests and bots are online at the website.',
-				'link'			=> 'http://bestwebsoft.com/products/visitors-online/?k=93c28013a4f830671b3bba9502ed5177&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/visitors-online/download/?k=93c28013a4f830671b3bba9502ed5177&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Visitors+online+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=visitors-online.php',
-				'pro_version'	=> 'visitors-online-pro/visitors-online-pro.php',
-				'purchase' 		=> 'http://bestwebsoft.com/products/visitors-online/buy/?k=f9a746075ff8a0a6cb192cb46526afd2&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'pro_settings'	=> 'admin.php?page=visitors-online-pro.php'
-			),
-			'profile-extra-fields/profile-extra-fields.php' => array(
-				'name'			=> 'Profile Extra Fields',
-				'description'	=> "Add additional fields on the user's profile page",
-				'link'			=> 'http://bestwebsoft.com/products/profile-extra-fields/?k=fe3b6c3dbc80bd4b1cf9a27a2f339820&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/profile-extra-fields/download/?k=fe3b6c3dbc80bd4b1cf9a27a2f339820&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Profile+Extra+Fields+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=profile-extra-fields.php'
-			),
-			'error-log-viewer/error-log-viewer.php' => array(
-				'name'			=> 'Error Log Viewer',
-				'description'	=> "Work with log files and folders on the WordPress server",
-				'link'			=> 'http://bestwebsoft.com/products/error-log-viewer/?k=da0de8bd2c7a0b2fea5df64d55a368b3&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'download'		=> 'http://bestwebsoft.com/products/error-log-viewer/download/?k=da0de8bd2c7a0b2fea5df64d55a368b3&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-				'wp_install'	=> $admin_url . 'plugin-install.php?tab=search&type=term&s=Error+Log+Viewer+BestWebSoft&plugin-search-input=Search+Plugins',
-				'settings'		=> 'admin.php?page=rrrlgvwr.php&tab=settings'
-			)		
+				'settings'		=> 'admin.php?page=mltlngg_settings'
+			)
 		);
-
+		
 		$all_plugins = get_plugins();
 		$active_plugins = get_option( 'active_plugins' );
 		$recommend_plugins = array_diff_key( $bws_plugins, $all_plugins );
 		$bws_plugins_pro = array();
 
 		foreach ( $bws_plugins as $key_plugin => $value_plugin ) {
-			if ( ! isset( $all_plugins[ $key_plugin ] ) && isset( $bws_plugins[ $key_plugin ]['pro_version'] ) && isset( $all_plugins[ $bws_plugins[ $key_plugin ]['pro_version'] ] ) ) {
+			if ( ! isset( $all_plugins[ $key_plugin ] ) && isset( $bws_plugins[ $key_plugin ]['pro_version'] ) && isset( $all_plugins[ $bws_plugins[ $key_plugin ]['pro_version'] ] ) ) {				
 				unset( $recommend_plugins[ $key_plugin ] );
 			}
 		}
@@ -494,7 +343,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 					if ( isset( $value['pro_version'] ) && $value['pro_version'] == $key_plugin ) {
 						$bws_plugins_pro[ $key_plugin ] = $key;
 						unset( $all_plugins[ $key ] );
-					}
+					}						
 				}
 			}
 		}
@@ -507,7 +356,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 		    	$sql_mode = $mysql_info[0]->Value;
 		    if ( empty( $sql_mode ) )
 		    	$sql_mode = __( 'Not set', 'bestwebsoft' );
-
+		    
 			$safe_mode = ( ini_get( 'safe_mode' ) ) ? __( 'On', 'bestwebsoft' ) : __( 'Off', 'bestwebsoft' );
 			$allow_url_fopen = ( ini_get( 'allow_url_fopen' ) ) ? __( 'On', 'bestwebsoft' ) : __( 'Off', 'bestwebsoft' );
 			$upload_max_filesize = ( ini_get( 'upload_max_filesize' ) )? ini_get( 'upload_max_filesize' ) : __( 'N/A', 'bestwebsoft' );
@@ -563,7 +412,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 					$system_info['active_plugins'][ $plugin['Name'] ] = $plugin['Version'];
 				else
 					$system_info['inactive_plugins'][ $plugin['Name'] ] = $plugin['Version'];
-			}
+			} 
 		}
 
 		if ( ( isset( $_REQUEST['bwsmn_form_submit'] ) && check_admin_referer( plugin_basename(__FILE__), 'bwsmn_nonce_submit' ) ) ||
@@ -575,7 +424,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				} else {
 					$email = $bwsmn_form_email;
 					$bwsmn_form_email = '';
-					$message = __( 'Email with system info is sent to ', 'bestwebsoft' ) . $email;
+					$message = __( 'Email with system info is sent to ', 'bestwebsoft' ) . $email;			
 				}
 			} else {
 				$email = 'plugin_system_status@bestwebsoft.com';
@@ -590,14 +439,14 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				<h4>Environment</h4>
 				<table>';
 				foreach ( $system_info['system_info'] as $key => $value ) {
-					$message_text .= '<tr><td>'. $key .'</td><td>'. $value .'</td></tr>';
+					$message_text .= '<tr><td>'. $key .'</td><td>'. $value .'</td></tr>';	
 				}
 				$message_text .= '</table>';
 				if ( ! empty( $system_info['active_plugins'] ) ) {
 					$message_text .= '<h4>Active Plugins</h4>
 					<table>';
-					foreach ( $system_info['active_plugins'] as $key => $value ) {
-						$message_text .= '<tr><td scope="row">'. $key .'</td><td scope="row">'. $value .'</td></tr>';
+					foreach ( $system_info['active_plugins'] as $key => $value ) {	
+						$message_text .= '<tr><td scope="row">'. $key .'</td><td scope="row">'. $value .'</td></tr>';	
 					}
 					$message_text .= '</table>';
 				}
@@ -616,7 +465,8 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 			}
 		} ?>
 		<div class="wrap">
-			<h1>
+			<div class="icon32 icon32-bws" id="icon-options-general"></div>
+			<h2>
 				<span class="bws_main title">BestWebSoft</span>
 				<ul class="subsubsub bws_title_menu">
 					<li><a href="<?php echo esc_url( 'http://support.bestwebsoft.com/home' ); ?>" target="_blank"><?php _e( 'Need help?', 'bestwebsoft' ); ?></a></li> |
@@ -624,20 +474,22 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 					<li><a class="bws_system_status <?php if ( isset( $_GET['action'] ) && 'system_status' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins&amp;action=system_status"><?php _e( 'System status', 'bestwebsoft' ); ?></a></li>
 				</ul>
 				<div class="clear"></div>
-			</h1>
+			</h2>			
 			<h2 class="nav-tab-wrapper">
 				<a class="nav-tab<?php if ( !isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins"><?php _e( 'Plugins', 'bestwebsoft' ); ?></a>
-				<a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'themes' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins&amp;action=themes"><?php _e( 'Themes', 'bestwebsoft' ); ?></a>
-			</h2>
-			<?php if ( ! isset( $_GET['action'] ) ) { ?>
+				<?php if ( $wp_version >= '3.4' ) { ?>
+					<a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'themes' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=bws_plugins&amp;action=themes"><?php _e( 'Themes', 'bestwebsoft' ); ?></a>
+				<?php } ?>
+			</h2>			
+			<?php if ( ! isset( $_GET['action'] ) ) { ?>				
 				<ul class="subsubsub">
 					<li><a <?php if ( !isset( $_GET['sub'] ) ) echo 'class="current" '; ?>href="admin.php?page=bws_plugins"><?php _e( 'All', 'bestwebsoft' ); ?></a></li> |
 					<li><a <?php if ( isset( $_GET['sub'] ) && 'installed' == $_GET['sub'] ) echo 'class="current" '; ?>href="admin.php?page=bws_plugins&amp;sub=installed"><?php _e( 'Installed', 'bestwebsoft' ); ?></a></li> |
 					<li><a <?php if ( isset( $_GET['sub'] ) && 'recommended' == $_GET['sub'] ) echo 'class="current" '; ?>href="admin.php?page=bws_plugins&amp;sub=recommended"><?php _e( 'Recommended', 'bestwebsoft' ); ?></a></li>
 				</ul>
 				<div class="clear"></div>
-				<?php if ( ( isset( $_GET['sub'] ) && 'installed' == $_GET['sub'] ) || !isset( $_GET['sub'] ) ) { ?>
-					<h3 class="bws_installed"><?php _e( 'Installed plugins', 'bestwebsoft' ); ?></h3>
+				<?php if ( ( isset( $_GET['sub'] ) && 'installed' == $_GET['sub'] ) || !isset( $_GET['sub'] ) ) { ?>	
+					<h4 class="bws_installed"><?php _e( 'Installed plugins', 'bestwebsoft' ); ?></h4>
 					<?php foreach ( $all_plugins as $key_plugin => $value_plugin ) {
 						if ( isset( $bws_plugins_pro[ $key_plugin ] ) )
 							$key_plugin = $bws_plugins_pro[ $key_plugin ];
@@ -650,33 +502,33 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 								$key_plugin_explode = explode( '/', $key_plugin );
 								$icon = $key_plugin_explode[0];
 							}
-						}
+						}			
 
 						if ( isset( $bws_plugins[ $key_plugin ]['pro_version'] ) && ( in_array( $bws_plugins[ $key_plugin ]['pro_version'], $active_plugins ) || is_plugin_active_for_network( $bws_plugins[ $key_plugin ]['pro_version'] ) ) ) { ?>
 							<div class="bws_product_box bws_exist_overlay">
-								<div class="bws_product">
+								<div class="bws_product">				
 									<div class="bws_product_title"><?php echo $value_plugin["Name"]; ?></div>
 									<div class="bws_product_content">
 										<div class="bws_product_icon">
 											<div class="bws_product_icon_pro">PRO</div>
-											<img src="<?php echo plugins_url( "icons/" , __FILE__ ) . $icon . '.png'; ?>"/>
-										</div>
+											<img src="<?php echo plugins_url( "icons/" , __FILE__ ) . $icon . '.png'; ?>"/>												
+										</div>			
 										<div class="bws_product_description"><?php echo $value_plugin["Description"]; ?></div>
 									</div>
 									<div class="clear"></div>
 								</div>
-								<div class="bws_product_links">
+								<div class="bws_product_links">								
 									<a href="<?php echo $bws_plugins[ $key_plugin ]["link"]; ?>" target="_blank"><?php _e( "Learn more", 'bestwebsoft' ); ?></a>
 									<?php if ( '' != $bws_plugins[ $key_plugin ]["pro_settings"] ) { ?>
 										<span> | </span>
 										<a href="<?php echo $bws_plugins[ $key_plugin ]["pro_settings"]; ?>" target="_blank"><?php _e( "Settings", 'bestwebsoft' ); ?></a>
 									<?php } ?>
 								</div>
-							</div>
-						<?php } elseif ( isset( $bws_plugins[ $key_plugin ] ) && ( in_array( $key_plugin, $active_plugins ) || is_plugin_active_for_network( $key_plugin ) ) ) {
+							</div>								
+						<?php } elseif ( in_array( $key_plugin, $active_plugins ) || is_plugin_active_for_network( $key_plugin ) ) {
 							if ( isset( $bws_plugins[ $key_plugin ]['pro_version'] ) && isset( $all_plugins[ $bws_plugins[ $key_plugin ]['pro_version'] ] ) ) { ?>
 								<div class="bws_product_box bws_product_deactivated">
-									<div class="bws_product">
+									<div class="bws_product">				
 										<div class="bws_product_title"><?php echo $value_plugin["Name"]; ?></div>
 										<div class="bws_product_content">
 											<div class="bws_product_icon">
@@ -686,7 +538,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 											<div class="bws_product_description"><?php echo $bws_plugins[ $key_plugin ]["description"]; ?></div>
 										</div>
 										<div class="clear"></div>
-									</div>
+									</div>									
 									<div class="bws_product_links">
 										<a href="<?php echo $bws_plugins[ $key_plugin ]["link"]; ?>" target="_blank"><?php _e( "Learn more", 'bestwebsoft' ); ?></a>
 										<span> | </span>
@@ -695,7 +547,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 								</div>
 							<?php } else { ?>
 								<div class="bws_product_box bws_product_free">
-									<div class="bws_product">
+									<div class="bws_product">				
 										<div class="bws_product_title"><?php echo $value_plugin["Name"]; ?></div>
 										<div class="bws_product_content">
 											<div class="bws_product_icon">
@@ -713,7 +565,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 											</a>
 										<?php } ?>
 										<div class="clear"></div>
-									</div>
+									</div>									
 									<div class="bws_product_links">
 										<a href="<?php echo $bws_plugins[ $key_plugin ]["link"]; ?>" target="_blank"><?php _e( "Learn more", 'bestwebsoft' ); ?></a>
 										<?php if ( '' != $bws_plugins[ $key_plugin ]["settings"] ) { ?>
@@ -725,9 +577,9 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 							<?php }
 						} elseif ( isset( $bws_plugins[ $key_plugin ] ) ) { ?>
 							<div class="bws_product_box bws_product_deactivated bws_product_free">
-								<div class="bws_product">
+								<div class="bws_product">					
 									<div class="bws_product_title"><?php echo $value_plugin["Name"]; ?></div>
-									<div class="bws_product_content">
+									<div class="bws_product_content">	
 										<div class="bws_product_icon">
 											<img src="<?php echo plugins_url( "icons/" , __FILE__ ) . $icon . '.png'; ?>"/>
 										</div>
@@ -755,7 +607,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 				} ?>
 				<div class="clear"></div>
 				<?php if ( ( isset( $_GET['sub'] ) && 'recommended' == $_GET['sub'] ) || !isset( $_GET['sub'] ) ) { ?>
-					<h3 class="bws_recommended"><?php _e( 'Recommended plugins', 'bestwebsoft' ); ?></h3>
+					<h4 class="bws_recommended"><?php _e( 'Recommended plugins', 'bestwebsoft' ); ?></h4>
 					<?php foreach ( $recommend_plugins as $key_plugin => $value_plugin ) {
 
 						if ( isset( $bws_plugins[ $key_plugin ] ) ) {
@@ -768,21 +620,21 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 							}
 						} ?>
 						<div class="bws_product_box">
-							<div class="bws_product">
+							<div class="bws_product">				
 								<div class="bws_product_title"><?php echo $value_plugin["name"]; ?></div>
 								<div class="bws_product_content">
 									<div class="bws_product_icon">
-										<?php if ( isset( $bws_plugins[ $key_plugin ]['pro_version'] ) ) { ?>
+										<?php if ( isset( $bws_plugins[ $key_plugin ]['pro_version'] ) ) { ?>								
 											<div class="bws_product_icon_pro">PRO</div>
 										<?php } ?>
 										<img src="<?php echo plugins_url( "icons/" , __FILE__ ) . $icon . '.png'; ?>"/>
 									</div>
 									<div class="bws_product_description"><?php echo $bws_plugins[ $key_plugin ]["description"]; ?></div>
 								</div>
-								<?php if ( isset( $bws_plugins[ $key_plugin ]["pro_version"] ) ) { ?>
+								<?php if ( isset( $bws_plugins[ $key_plugin ]["pro_version"] ) ) { ?>								
 									<a class="bws_product_button" href="<?php echo $bws_plugins[ $key_plugin ]["purchase"]; ?>" target="_blank">
 										<?php _e( 'Go', 'bestwebsoft' ); ?> <strong>PRO</strong>
-									</a>
+									</a> 
 								<?php } else { ?>
 									<a class="bws_product_button bws_donate_button" href="<?php echo $bws_donate_link; ?>" target="_blank">
 										<strong><?php _e( 'DONATE', 'bestwebsoft' ); ?></strong>
@@ -790,15 +642,15 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 								<?php } ?>
 							</div>
 							<div class="clear"></div>
-							<div class="bws_product_links">
+							<div class="bws_product_links">								
 								<a href="<?php echo $bws_plugins[ $key_plugin ]["link"]; ?>" target="_blank"><?php _e( "Learn more", 'bestwebsoft' ); ?></a>
 								<span> | </span>
 								<a href="<?php echo $bws_plugins[ $key_plugin ]["wp_install"]; ?>" target="_blank"><?php _e( "Install now", 'bestwebsoft' ); ?></a>
 							</div>
 						</div>
-					<?php }
-				} ?>
-			<?php } elseif ( 'themes' == $_GET['action'] ) { ?>
+					<?php }						
+				} ?>	
+			<?php } elseif ( 'themes' == $_GET['action'] ) { ?>	
 				<div id="availablethemes">
 					<?php global $tabs, $tab, $paged, $type, $theme_field_defaults;
 					include( ABSPATH . 'wp-admin/includes/theme-install.php' );
@@ -814,7 +666,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 					$api = themes_api( 'query_themes', $args );
 
 					if ( is_wp_error( $api ) )
-						wp_die( $api->get_error_message() . '</p> <p><a href="#" onclick="document.location.reload(); return false;">' . __( 'Try again', 'bestwebsoft' ) . '</a>' );
+						wp_die( $api->get_error_message() . '</p> <p><a href="#" onclick="document.location.reload(); return false;">' . __( 'Try again' ) . '</a>' );
 
 					$theme_class->items = $api->themes;
 					$theme_class->set_pagination_args( array(
@@ -832,7 +684,7 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 
 								$name   = wp_kses( $theme->name,   $themes_allowedtags );
 								$author = wp_kses( $theme->author, $themes_allowedtags );
-								$preview_title = sprintf( __( 'Preview &#8220;%s&#8221;', 'bestwebsoft' ), $name );
+								$preview_title = sprintf( __('Preview &#8220;%s&#8221;'), $name );
 								$preview_url   = add_query_arg( array(
 									'tab'   => 'theme-information',
 									'theme' => $theme->slug,
@@ -863,29 +715,29 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 								switch ( $status ) {
 									default:
 									case 'install':
-										$actions[] = '<a class="install-now" href="' . esc_url( wp_nonce_url( $install_url, 'install-theme_' . $theme->slug ) ) . '" title="' . esc_attr( sprintf( __( 'Install %s', 'bestwebsoft' ), $name ) ) . '">' . __( 'Install Now', 'bestwebsoft' ) . '</a>';
+										$actions[] = '<a class="install-now" href="' . esc_url( wp_nonce_url( $install_url, 'install-theme_' . $theme->slug ) ) . '" title="' . esc_attr( sprintf( __( 'Install %s' ), $name ) ) . '">' . __( 'Install Now' ) . '</a>';
 										break;
 									case 'update_available':
-										$actions[] = '<a class="install-now" href="' . esc_url( wp_nonce_url( $update_url, 'upgrade-theme_' . $theme->slug ) ) . '" title="' . esc_attr( sprintf( __( 'Update to version %s', 'bestwebsoft' ), $theme->version ) ) . '">' . __( 'Update', 'bestwebsoft' ) . '</a>';
+										$actions[] = '<a class="install-now" href="' . esc_url( wp_nonce_url( $update_url, 'upgrade-theme_' . $theme->slug ) ) . '" title="' . esc_attr( sprintf( __( 'Update to version %s' ), $theme->version ) ) . '">' . __( 'Update' ) . '</a>';
 										break;
 									case 'newer_installed':
 									case 'latest_installed':
-										$actions[] = '<span class="install-now" title="' . esc_attr__( 'This theme is already installed and is up to date' ) . '">' . _x( 'Installed', 'theme', 'bestwebsoft' ) . '</span>';
+										$actions[] = '<span class="install-now" title="' . esc_attr__( 'This theme is already installed and is up to date' ) . '">' . _x( 'Installed', 'theme' ) . '</span>';
 										break;
 								}
-								$actions[] = '<a class="install-theme-preview" href="' . esc_url( $preview_url ) . '" title="' . esc_attr( sprintf( __( 'Preview %s', 'bestwebsoft' ), $name ) ) . '">' . __( 'Preview', 'bestwebsoft' ) . '</a>';
+								$actions[] = '<a class="install-theme-preview" href="' . esc_url( $preview_url ) . '" title="' . esc_attr( sprintf( __( 'Preview %s' ), $name ) ) . '">' . __( 'Preview' ) . '</a>';
 								$actions = apply_filters( 'theme_install_actions', $actions, $theme ); ?>
 								<a class="screenshot install-theme-preview" href="<?php echo esc_url( $preview_url ); ?>" title="<?php echo esc_attr( $preview_title ); ?>">
 									<img src='<?php echo esc_url( $theme->screenshot_url ); ?>' width='150' />
 								</a>
 								<h3><?php echo $name; ?></h3>
-								<div class="theme-author"><?php printf( __( 'By %s', 'bestwebsoft' ), $author ); ?></div>
+								<div class="theme-author"><?php printf( __( 'By %s' ), $author ); ?></div>
 								<div class="action-links">
 									<ul>
 										<?php foreach ( $actions as $action ): ?>
 											<li><?php echo $action; ?></li>
 										<?php endforeach; ?>
-										<li class="hide-if-no-js"><a href="#" class="theme-detail"><?php _e( 'Details', 'bestwebsoft' ) ?></a></li>
+										<li class="hide-if-no-js"><a href="#" class="theme-detail"><?php _e('Details') ?></a></li>
 									</ul>
 								</div>
 								<?php $theme_class->install_theme_info( $theme ); ?>
@@ -911,13 +763,13 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 								<?php } else { ?>
 									<div class="theme-screenshot blank"></div>
 								<?php } ?>
-								<div class="theme-author"><?php printf( __( 'By %s', 'bestwebsoft' ), $theme->author ); ?></div>
+								<div class="theme-author"><?php printf( __( 'By %s' ), $theme->author ); ?></div>
 								<h3 class="theme-name"><?php echo $theme->name; ?></h3>
 								<div class="theme-actions">
-									<a class="button button-secondary preview install-theme-preview" href="theme-install.php?theme=<?php echo $theme->slug ?>"><?php esc_html_e( 'Learn More', 'bestwebsoft' ); ?></a>
+									<a class="button button-secondary preview install-theme-preview" href="theme-install.php?theme=<?php echo $theme->slug ?>"><?php esc_html_e( 'Learn More' ); ?></a>
 								</div>
 								<?php if ( $theme->installed ) { ?>
-									<div class="theme-installed"><?php _e( 'Already Installed', 'bestwebsoft' ); ?></div>
+									<div class="theme-installed"><?php _e( 'Already Installed' ); ?></div>
 								<?php } ?>
 							</div>
 						<?php } ?>
@@ -935,11 +787,11 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 					<table class="bws_system_info">
 						<thead><tr><th><?php _e( 'Environment', 'bestwebsoft' ); ?></th><td></td></tr></thead>
 						<tbody>
-						<?php foreach ( $system_info['system_info'] as $key => $value ) { ?>
+						<?php foreach ( $system_info['system_info'] as $key => $value ) { ?>	
 							<tr>
 								<td scope="row"><?php echo $key; ?></td>
 								<td scope="row"><?php echo $value; ?></td>
-							</tr>
+							</tr>	
 						<?php } ?>
 						</tbody>
 					</table>
@@ -947,11 +799,11 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 						<thead><tr><th><?php _e( 'Active Plugins', 'bestwebsoft' ); ?></th><th></th></tr></thead>
 						<tbody>
 						<?php if ( ! empty( $system_info['active_plugins'] ) ) {
-							foreach ( $system_info['active_plugins'] as $key => $value ) { ?>
+							foreach ( $system_info['active_plugins'] as $key => $value ) { ?>	
 								<tr>
 									<td scope="row"><?php echo $key; ?></td>
 									<td scope="row"><?php echo $value; ?></td>
-								</tr>
+								</tr>	
 							<?php }
 						} ?>
 						</tbody>
@@ -960,70 +812,78 @@ if ( ! function_exists( 'bws_add_menu_render' ) ) {
 						<thead><tr><th><?php _e( 'Inactive Plugins', 'bestwebsoft' ); ?></th><th></th></tr></thead>
 						<tbody>
 						<?php if ( ! empty( $system_info['inactive_plugins'] ) ) {
-							foreach ( $system_info['inactive_plugins'] as $key => $value ) { ?>
+							foreach ( $system_info['inactive_plugins'] as $key => $value ) { ?>	
 								<tr>
 									<td scope="row"><?php echo $key; ?></td>
 									<td scope="row"><?php echo $value; ?></td>
-								</tr>
-							<?php }
+								</tr>	
+							<?php } 
 						} ?>
 						</tbody>
 					</table>
-					<div class="clear"></div>
+					<div class="clear"></div>						
 					<form method="post" action="admin.php?page=bws_plugins&amp;action=system_status">
-						<p>
+						<p>			
 							<input type="hidden" name="bwsmn_form_submit" value="submit" />
 							<input type="submit" class="button-primary" value="<?php _e( 'Send to support', 'bestwebsoft' ) ?>" />
-							<?php wp_nonce_field( plugin_basename(__FILE__), 'bwsmn_nonce_submit' ); ?>
-						</p>
-					</form>
-					<form method="post" action="admin.php?page=bws_plugins&amp;action=system_status">
-						<p>
-							<input type="hidden" name="bwsmn_form_submit_custom_email" value="submit" />
+							<?php wp_nonce_field( plugin_basename(__FILE__), 'bwsmn_nonce_submit' ); ?>		
+						</p>		
+					</form>				
+					<form method="post" action="admin.php?page=bws_plugins&amp;action=system_status">	
+						<p>			
+							<input type="hidden" name="bwsmn_form_submit_custom_email" value="submit" />						
 							<input type="submit" class="button" value="<?php _e( 'Send to custom email &#187;', 'bestwebsoft' ) ?>" />
-							<input type="text" maxlength="250" value="<?php echo $bwsmn_form_email; ?>" name="bwsmn_form_email" />
+							<input type="text" value="<?php echo $bwsmn_form_email; ?>" name="bwsmn_form_email" />
 							<?php wp_nonce_field( plugin_basename(__FILE__), 'bwsmn_nonce_submit_custom_email' ); ?>
-						</p>
-					</form>
+						</p>				
+					</form>						
 				</div>
 			<?php } ?>
 		</div>
 	<?php }
 }
 
-if ( ! function_exists( 'bws_get_banner_array' ) ) {
-	function bws_get_banner_array() {
-		global $bstwbsftwppdtplgns_banner_array;
-		$bstwbsftwppdtplgns_banner_array = array(
-			array( 'zndskhcpr_hide_banner_on_plugin_page', 'zendesk-help-center/zendesk-help-center.php', '1.0.0' ),
-			array( 'gglcptch_hide_banner_on_plugin_page', 'google-captcha/google-captcha.php', '1.18' ),
-			array( 'mltlngg_hide_banner_on_plugin_page', 'multilanguage/multilanguage.php', '1.1.1' ),
-			array( 'adsns_hide_banner_on_plugin_page', 'adsense-plugin/adsense-plugin.php', '1.36' ),
-			array( 'vstrsnln_hide_banner_on_plugin_page', 'visitors-online/visitors-online.php', '0.2' ),			
-			array( 'cstmsrch_hide_banner_on_plugin_page', 'custom-search-plugin/custom-search-plugin.php', '1.28' ),
-			array( 'prtfl_hide_banner_on_plugin_page', 'portfolio/portfolio.php', '2.33' ),
-			array( 'rlt_hide_banner_on_plugin_page', 'realty/realty.php', '1.0.0' ),
-			array( 'prmbr_hide_banner_on_plugin_page', 'promobar/promobar.php', '1.0.0' ),
-			array( 'gglnltcs_hide_banner_on_plugin_page', 'bws-google-analytics/bws-google-analytics.php', '1.6.2' ),
-			array( 'htccss_hide_banner_on_plugin_page', 'htaccess/htaccess.php', '1.6.3' ),
-			array( 'sbscrbr_hide_banner_on_plugin_page', 'subscriber/subscriber.php', '1.1.8' ),
-			array( 'lmtttmpts_hide_banner_on_plugin_page', 'limit-attempts/limit-attempts.php', '1.0.2' ),
-			array( 'sndr_hide_banner_on_plugin_page', 'sender/sender.php', '0.5' ),
-			array( 'srrl_hide_banner_on_plugin_page', 'user-role/user-role.php', '1.4' ),
-			array( 'pdtr_hide_banner_on_plugin_page', 'updater/updater.php', '1.12' ),
-			array( 'cntctfrmtdb_hide_banner_on_plugin_page', 'contact-form-to-db/contact_form_to_db.php', '1.2' ),
-			array( 'cntctfrmmlt_hide_banner_on_plugin_page', 'contact-form-multi/contact-form-multi.php', '1.0.7' ),
-			array( 'gglmps_hide_banner_on_plugin_page', 'bws-google-maps/bws-google-maps.php', '1.2' ),
-			array( 'fcbkbttn_hide_banner_on_plugin_page', 'facebook-button-plugin/facebook-button-plugin.php', '2.29' ),
-			array( 'twttr_hide_banner_on_plugin_page', 'twitter-plugin/twitter.php', '2.34' ),
-			array( 'pdfprnt_hide_banner_on_plugin_page', 'pdf-print/pdf-print.php', '1.7.1' ),
-			array( 'gglplsn_hide_banner_on_plugin_page', 'google-one/google-plus-one.php', '1.1.4' ),
-			array( 'gglstmp_hide_banner_on_plugin_page', 'google-sitemap-plugin/google-sitemap-plugin.php', '2.8.4' ),
-			array( 'cntctfrmpr_for_ctfrmtdb_hide_banner_on_plugin_page', 'contact-form-pro/contact_form_pro.php', '1.14' ),
-			array( 'cntctfrm_hide_banner_on_plugin_page', 'contact-form-plugin/contact_form.php', '3.47' ),
-			array( 'cptch_hide_banner_on_plugin_page', 'captcha/captcha.php', '3.8.4' ),
-			array( 'gllr_hide_banner_on_plugin_page', 'gallery-plugin/gallery-plugin.php', '3.9.1' ),
-			array( 'cntctfrm_for_ctfrmtdb_hide_banner_on_plugin_page', 'contact-form-plugin/contact_form.php', '3.62' )
-		);
+if ( ! function_exists ( 'bws_plugin_init' ) ) {
+	function bws_plugin_init() {
+		// Internationalization, first(!)
+		load_plugin_textdomain( 'bestwebsoft', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' ); 
 	}
 }
+
+if ( ! function_exists ( 'bws_admin_enqueue_scripts' ) ) {
+	function bws_admin_enqueue_scripts() {
+		global $wp_version;
+		if ( $wp_version < 3.8 )
+			wp_enqueue_style( 'bws-admin-stylesheet', plugins_url( 'css/general_style_wp_before_3.8.css', __FILE__ ) );	
+		else
+			wp_enqueue_style( 'bws-admin-stylesheet', plugins_url( 'css/general_style.css', __FILE__ ) );
+
+		if ( isset( $_GET['page'] ) && $_GET['page'] == "bws_plugins" ) {
+			wp_enqueue_style( 'bws_menu_style', plugins_url( 'css/style.css', __FILE__ ) );
+			wp_enqueue_script( 'bws_menu_script', plugins_url( 'js/bws_menu.js' , __FILE__ ) );			
+			if ( $wp_version >= '3.8' )
+				wp_enqueue_script( 'theme-install' );
+			elseif ( $wp_version >= '3.4' )
+				wp_enqueue_script( 'theme' );
+		}
+	}
+}
+
+if ( ! function_exists ( 'bws_admin_head' ) ) {
+	function bws_admin_head() {
+		if ( isset( $_GET['page'] ) && $_GET['page'] == "bws_plugins" ) { ?>
+			<noscript>
+				<style type="text/css">
+					.bws_product_button {
+						display: inline-block;
+					}
+				</style>
+			</noscript>
+		<?php }
+	}
+}
+
+add_action( 'admin_init', 'bws_plugin_init' );
+add_action( 'admin_enqueue_scripts', 'bws_admin_enqueue_scripts' );
+add_action( 'admin_head', 'bws_admin_head' );
+?>
