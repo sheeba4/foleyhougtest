@@ -6,14 +6,18 @@
 
 if [ -z ${REPO} ]; then echo "REPO is set to default."; REPO="foleyhoag"; fi
 if [ -z ${DEPLOY_ENV} ]; then echo "DEPLOY_ENV is set to default."; DEPLOY_ENV="staging"; fi
-if [ -z ${STAGING_URL} ]; then echo "STAGING_URL is set to default."; STAGING_URL="https://ndevr.io"; fi
-if [ -z ${PRODUCTION_URL} ]; then echo "PRODUCTION_URL is set to default."; PRODUCTION_URL="https://ndevr.io"; fi
 
 function deploy_init_production {
-    echo -e "\Add production remote"
-    cd ~/wpengine-staging/
-    git remote add production git@git.wpengine.com:production/$REPO.git
-    loud "Production remote for $REPO set up!"
+    echo -e "\nCreating production deploy directory"
+    cd ~/
+    git clone git@git.wpengine.com:production/$REPO.git wpengine-production
+    cd ~/wpengine-production/
+    echo -e "\nSetting up git"
+
+    git config user.email "codeship@ndevr.io"
+    git config user.name "ndevr-codeship2"
+    pwd
+    loud "Production directory for $REPO set up!"
 }
 
 function deploy_init_staging {
@@ -45,11 +49,13 @@ function deploy_production {
     deploy_init_staging
     deploy_init_production
 
-    local SITE_URL=$PRODUCTION_URL
-    curl -u "meekyhwang1:VKXS5VqUBPwVnudAMifE" -H "Content-Type: application/json" -H "Accept: application/json"  -d '{"browsers": [{"os": "Windows", "os_version": "7", "browser_version": "8.0", "browser": "ie"}], "url": "'"$SITE_URL"'"}' https://www.browserstack.com/screenshots
+    loud "Copy staging files to production deploy directory"
+    rsync -avtC --delete ~/wpengine-staging/ ~/wpengine-production
+    cd ~/wpengine-production
 
-    cd ~/wpengine-staging
-    git push -f production master
+    git add --all
+    git commit -m "Deployment for $REPO $DEPLOY_ENV"
+    git push -f origin master
     loud "Deployment Complete ($DEPLOY_ENV/$REPO)!"
 
 }
@@ -61,7 +67,7 @@ function deploy_staging {
     cd ~/clone
 
     echo -e "\nWP Engine Deployment ($DEPLOY_ENV)"
-    rsync -rcz --delete-excluded ~/clone/ ~/wpengine-staging/wp-content/ \
+    rsync -rcz --delete-excluded ~/clone/ ~/wpengine-staging/wp-content \
     --exclude=".editorconfig" \
     --exclude=".gitignore" \
     --exclude=".DS_Store" \
@@ -69,8 +75,7 @@ function deploy_staging {
     --exclude="README.md" \
     --exclude="readme.txt" \
     --exclude="package.json" \
-    --exclude="index.php" \
-    --exclude="ndevr-deploy/"
+    --exclude="plugins/ndevr-deploy/"
 
     cp ~/ndevr-plugins/ndevr-deploy/wpengine-gitignore-no-wp.txt ~/wpengine-staging/.gitignore
 
@@ -79,10 +84,6 @@ function deploy_staging {
     git commit -m "Deployment for $REPO $DEPLOY_ENV"
     git push -f origin master
     loud "Deployment Complete ($DEPLOY_ENV/$REPO)!"
-
-    local SITE_URL=$STAGING_URL
-    curl -u "meekyhwang1:VKXS5VqUBPwVnudAMifE" -H "Content-Type: application/json" -H "Accept: application/json"  -d '{"browsers": [{"os": "Windows", "os_version": "7", "browser_version": "8.0", "browser": "ie"}], "url": "'"$SITE_URL"'"}' https://www.browserstack.com/screenshots
-
 }
 
 #####################
@@ -96,5 +97,6 @@ function loud {
 function quiet {
   echo -e "\t${1}"
 }
+
 
 deploy
