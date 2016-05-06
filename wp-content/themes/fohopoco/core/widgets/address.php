@@ -124,15 +124,15 @@ class X_Address_Widget extends WP_Widget {
     extract($args);
     extract($instance);
 
-    $url = apply_filters('widget_url', $url);
-    $org = apply_filters('widget_org', $org);
-	$street = apply_filters('widget_street', $street);
-    $locality = apply_filters('widget_locality', $locality);
-    $region = apply_filters('widget_region', $region);
-    $postal = apply_filters('widget_postal', $postal);
-    $email = apply_filters('widget_email', $email);
-	$phone = apply_filters('widget_phone', $phone);
-	$fax = apply_filters('widget_fax', $fax);
+    $url = isset( $url ) ? apply_filters('widget_url', $url) : '';
+    $org = isset( $org ) ? apply_filters('widget_org', $org) : '';
+	$street = isset( $street ) ? apply_filters('widget_street', $street): '';
+    $locality = isset( $locality ) ? apply_filters('widget_locality', $locality): '';
+    $region = isset( $region ) ? apply_filters('widget_region', $region): '';
+    $postal = isset( $postal ) ? apply_filters('widget_postal', $postal): '';
+    $email = isset( $email ) ? apply_filters('widget_email', $email): '';
+	$phone = isset( $phone ) ? apply_filters('widget_phone', $phone): '';
+	$fax = isset( $fax ) ? apply_filters('widget_fax', $fax): '';
 	
 	echo $before_widget;
 	echo "<p class='vcard'>";
