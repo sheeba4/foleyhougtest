@@ -53,9 +53,8 @@ function deploy_production {
     rsync -avtC --delete ~/wpengine-staging/ ~/wpengine-production
     cd ~/wpengine-production
 
-    git add --all
-    git commit -m "Deployment for $REPO $DEPLOY_ENV"
-    git push -f origin master
+    cd ~/wpengine-staging
+    git push production master
     loud "Deployment Complete ($DEPLOY_ENV/$REPO)!"
 
 }
