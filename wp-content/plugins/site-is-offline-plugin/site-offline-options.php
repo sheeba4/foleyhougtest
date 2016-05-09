@@ -4,7 +4,7 @@
     <div id="poststuff"><div id="post-body">
 
     <div class="premium_plugin_notice">
-        <h3 style="margin:5px;"><a href="http://wp-ecommerce.net/wp-coming-soon-plugin-easily-create-a-coming-soon-page-for-your-wordpress-blog-2328" target="_blank">Premium Version: WordPress Site offline/Coming Soon Plus Plugin</a></h3>
+        <h3 style="margin:5px;"><a href="https://wp-ecommerce.net/wordpress-coming-soon-plugin" target="_blank">Premium Version: WordPress Site offline/Coming Soon Plus Plugin</a></h3>
     </div>
     <div id="icon-options-general" class="icon32"><br /></div>
 
