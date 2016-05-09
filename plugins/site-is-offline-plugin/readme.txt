@@ -1,10 +1,10 @@
 === Site Offline or Coming Soon ===
 Contributors: wpecommerce
-Donate link: http://wp-ecommerce.net/
+Donate link: https://wp-ecommerce.net/
 Tags: coming soon, site is down, maintenance, maintenance mode, offline, google, post, page, admin, aweber, mailchimp, administration, construction, mode, unavailable, coming soon page, under construction, login, landing page, launch, launch page, newsletter
 Requires at least: 3.0
-Tested up to: 3.9
-Stable tag: 1.6.4
+Tested up to: 4.4
+Stable tag: 1.6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Once you have installed the plugin you can enable "offline/maintenance mode" in 
 
 This section contains a textarea which allows you to customize the page that your visitors will see when your site is offline. You can customize the message as well as the look and feel of the page.
 
-For more advanced features be sure to check out our premium version of the plugin, <a href="http://wp-ecommerce.net/wp-coming-soon-plugin-easily-create-a-coming-soon-page-for-your-wordpress-blog-2328">WordPress Site offline/Coming Soon Plugin</a>
+For more advanced features be sure to check out our premium version of the plugin, <a href="https://wp-ecommerce.net/wordpress-coming-soon-plugin">WordPress Site offline/Coming Soon Plugin</a>
 
 = Site offline/Coming Soon Premium =
 
@@ -48,7 +48,7 @@ For more advanced features be sure to check out our premium version of the plugi
 * Create a gallery of images which will automatically slide in the background
 * Easily add HTML content to your coming soon page
 
-Check out the [coming soon pro plugin](http://wp-ecommerce.net/wordpress-coming-soon-plugin)
+Check out the [coming soon pro plugin](https://wp-ecommerce.net/wordpress-coming-soon-plugin)
 
 == Installation ==
 
@@ -68,6 +68,12 @@ Yes.
 1. Site offline Plugin settings
 
 == Changelog ==
+
+= 1.6.6 =
+* Coming soon plugin is now compatible with WordPress 4.4.
+
+= 1.6.5 =
+* Coming soon plugin is now compatible with WordPress 4.3.
 
 = 1.6.4 =
 * Updated the site offline check logic to be more robust.
