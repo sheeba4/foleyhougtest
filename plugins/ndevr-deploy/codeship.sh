@@ -74,7 +74,7 @@ function deploy_staging {
     --exclude="README.md" \
     --exclude="readme.txt" \
     --exclude="package.json" \
-    --exclude="plugins/ndevr-deploy/"
+    --exclude="ndevr-deploy/"
 
     cp ~/ndevr-plugins/ndevr-deploy/wpengine-gitignore-no-wp.txt ~/wpengine-staging/.gitignore
 
