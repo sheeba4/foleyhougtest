@@ -39,5 +39,6 @@ require_once($widgets_path . 'twitter.php');
 require_once($widgets_path . 'button.php');
 require_once($widgets_path . 'address.php');
 require_once($widgets_path . 'address_extended.php');
+require_once($widgets_path . 'foley_authors.php');
 require_once($widgets_path . 'author.php');
 require_once($widgets_path . 'feedburner_extended.php');
