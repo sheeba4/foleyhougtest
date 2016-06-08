@@ -16,7 +16,7 @@ class Foley_Author_Widget extends WP_Widget {
 	}
 
 	// Widget Form
-	public function form( $instance ) { print_r($instance);
+	public function form( $instance ) { 
 		extract( $instance );
 		?>
 		<p>
