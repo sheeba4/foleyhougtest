@@ -19,6 +19,7 @@ require_once($functions_path . 'widget_classes.php');
 * theme options
 */
 require($options_path . 'options.php');
+require($options_path . 'user_profile.php');
 
 
 /*
