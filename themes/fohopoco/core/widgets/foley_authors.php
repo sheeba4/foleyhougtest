@@ -18,7 +18,7 @@ class Foley_Author_Widget extends WP_Widget {
 
 	}
 
-	function foley_random_user_query( $class ) {
+	public function foley_random_user_query( $class ) {
 		if( 'rand' == $class->query_vars['orderby'] )
 			$class->query_orderby = str_replace( 'user_login', 'RAND()', $class->query_orderby );
 
