@@ -13,6 +13,16 @@ class Foley_Author_Widget extends WP_Widget {
 			'name'        => 'Foley Author'
 		);
 		parent::__construct( 'Foley_Author_Widget', '', $options ); // ID, Name, Options
+
+		add_action( 'pre_user_query', array( $this, 'foley_random_user_query' ) );
+
+	}
+
+	function foley_random_user_query( $class ) {
+		if( 'rand' == $class->query_vars['orderby'] )
+			$class->query_orderby = str_replace( 'user_login', 'RAND()', $class->query_orderby );
+
+		return $class;
 	}
 
 	// Widget Form
