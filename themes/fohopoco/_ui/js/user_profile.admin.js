@@ -18,7 +18,8 @@
             frame.on('select', function () {
                 var media_attachment = frame.state().get('selection').first().toJSON();
                 //title  = media_attachment.title;
-                $('#profile_image').val(media_attachment.url);
+                $('#profile_image').val(media_attachment.sizes.thumbnail.url);
+                console.log(media_attachment);
             });
 
             frame.open();
