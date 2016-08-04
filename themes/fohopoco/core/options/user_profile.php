@@ -15,7 +15,7 @@ class User_Profile {
 	 */
 	function admin_scripts() {
 		wp_enqueue_media();
-		wp_register_script('foley_download', get_template_directory_uri() . '/_ui/js/user_profile.admin.js', array('jquery','media-upload','thickbox'));
+		wp_register_script('foley_download', get_template_directory_uri() . '/_ui/js/user_profile.admin.js', array('jquery','media-upload','thickbox'), '1.0.2' );
 		wp_enqueue_script('foley_download');
 	}
 
