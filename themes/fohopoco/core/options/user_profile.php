@@ -2,7 +2,7 @@
 
 class User_Profile {
 	public function __construct() {
-//		add_action( 'admin_print_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_print_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'show_user_profile', array( $this, 'render_user_form' ) );
 		add_action( 'edit_user_profile', array( $this, 'render_user_form' ) );
 		add_action( 'personal_options_update', array( $this, 'save_user_form' ) );
