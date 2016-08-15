@@ -66,7 +66,7 @@ function deploy_staging {
     cd ~/clone
 
     echo -e "\nWP Engine Deployment ($DEPLOY_ENV)"
-    rsync -rcz --delete-excluded ~/clone ~/wpengine-staging/wp-content \
+    rsync -rcz --delete-excluded ~/clone/ ~/wpengine-staging/wp-content \
     --exclude=".editorconfig" \
     --exclude=".gitignore" \
     --exclude=".DS_Store" \
