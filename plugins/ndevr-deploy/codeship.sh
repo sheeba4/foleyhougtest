@@ -23,7 +23,7 @@ function deploy_init_production {
 function deploy_init_staging {
     echo -e "\nCreating staging deploy directory"
     cd ~/
-    git clone git@git.wpengine.com:staging/$REPO.git wpengine-staging
+    git clone git@git.wpengine.com:staging/$REPO.git clone
     cd ~/wpengine-staging/
     echo -e "\nSetting up git"
 
