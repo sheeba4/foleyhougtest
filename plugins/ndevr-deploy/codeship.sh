@@ -30,7 +30,7 @@ function deploy_init_staging {
     echo -e "\nSetting up git"
 
     git config user.email "codeship@ndevr.io"
-    git config user.name "ndevr-codeship2"
+    git config user.name "ndevr-codeship-foley"
     pwd
     loud "Staging directory for $REPO set up!"
 }
@@ -71,6 +71,7 @@ function deploy_staging {
     rsync -rcz --delete-excluded ~/clone/ ~/wpengine-staging/wp-content \
     --exclude=".editorconfig" \
     --exclude=".gitignore" \
+    --exclude=".git" \
     --exclude=".DS_Store" \
     --exclude="*.sql" \
     --exclude="README.md" \
