@@ -1,10 +1,10 @@
 <?php
 /*
   Plugin Name: Site Offline or Coming Soon
-  Version: 1.6.4
-  Plugin URI: http://wp-ecommerce.net/
+  Version: 1.6.6
+  Plugin URI: https://wp-ecommerce.net/
   Author: wpecommerce
-  Author URI: http://wp-ecommerce.net/
+  Author URI: https://wp-ecommerce.net/
   Description: Make safe changes to your site by enabling site offline mode with this plugin you'll be able to navigate your site normally but your regular visitor will se a site offline or coming soon page
  */
 

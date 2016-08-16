@@ -3,7 +3,7 @@
 Plugin Name: MailChimp
 Plugin URI: http://www.mailchimp.com/plugins/mailchimp-wordpress-plugin/
 Description: The MailChimp plugin allows you to quickly and easily add a signup form for your MailChimp list.
-Version: 1.4.2
+Version: 1.4.5
 Author: MailChimp and Crowd Favorite
 Author URI: http://mailchimp.com/api/
 */
@@ -25,7 +25,7 @@ Author URI: http://mailchimp.com/api/
 */
 
 // Version constant for easy CSS refreshes
-define('MCSF_VER', '1.4.2');
+define('MCSF_VER', '1.4.5');
 
 // What's our permission (capability) threshold
 define('MCSF_CAP_THRESHOLD', 'manage_options');
@@ -110,7 +110,7 @@ function mailchimpSF_load_resources() {
 		wp_enqueue_script('datepicker', MCSF_URL.'/js/datepicker.js', array('jquery','jquery-ui-core'));
 	}
 
-	wp_enqueue_style('mailchimpSF_main_css', home_url('?mcsf_action=main_css&ver='.MCSF_VER));
+	wp_enqueue_style('mailchimpSF_main_css', home_url('?mcsf_action=main_css&ver='.MCSF_VER, 'relative'));
 	wp_enqueue_style('mailchimpSF_ie_css', MCSF_URL.'css/ie.css');
 	global $wp_styles;
 	$wp_styles->add_data( 'mailchimpSF_ie_css', 'conditional', 'IE' );
@@ -347,6 +347,7 @@ function mailchimpSF_request_handler() {
 	}
 }
 add_action('init', 'mailchimpSF_request_handler');
+
 
 function mailchimpSF_auth_nonce_key($salt = null) {
 	if (is_null($salt)) {
@@ -1254,9 +1255,12 @@ function mailchimpSF_signup_submit() {
 
 	// Loop through our Merge Vars, and if they're empty, but required, then print an error, and mark as failed
 	foreach($mv as $var) {
+		// We also want to create an array where the keys are the tags for easier validation later
+		$mv_tag_keys[$var['tag']] = $var;
+		
 		$opt = 'mc_mv_'.$var['tag'];
-
-		$opt_val = isset($_POST[$opt]) ? $_POST[$opt] : '';
+		
+		$opt_val = isset($_POST[$opt]) ? stripslashes_deep($_POST[$opt]) : '';
 
 		if (is_array($opt_val) && isset($opt_val['area'])) {
 			// This filters out all 'falsey' elements
@@ -1296,9 +1300,6 @@ function mailchimpSF_signup_submit() {
 				$merge[$var['tag']] = $opt_val;
 			}
 		}
-
-		// We also want to create an array where the keys are the tags for easier validation later
-		$mv_tag_keys[$var['tag']] = $var;
 
 	}
 
@@ -1414,7 +1415,7 @@ function mailchimpSF_signup_submit() {
 							$uid = $account['user_id'];
 							$username = preg_replace('/\s+/', '-', $account['username']);
 							$eid = base64_encode($email);
-							$msg .= ' ' . sprintf(__('<a href="%s">Click here to update your profile.</a>', 'mailchimp_i18n'), "http://$username.$dc.list-manage.com/subscribe/send-email?u=$uid&id=$listId&e=$eid");
+							$msg .= ' ' . sprintf(__('<a href="%s">Click here to update your profile.</a>', 'mailchimp_i18n'), "http://$dc.list-manage.com/subscribe/send-email?u=$uid&id=$listId&e=$eid");
 						}
 
 						$errs[] = $msg;
