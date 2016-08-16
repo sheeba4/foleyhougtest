@@ -23,6 +23,10 @@
 
 	4. PRINT
 
+
+	5. WIDGETS
+		5.1 Foley Authors
+
 *******************************************************************************/
 
 
@@ -1445,3 +1449,21 @@ display: block;
 #footer .col { min-height: 215px; height: auto!important; height: 215px; }
 #footer .col.footerLinkFoley { min-height: 135px; height: auto!important; height: 135px; }
 .tag-links > .mrgn { display: block; margin-bottom: 6px;}
+
+
+
+/* 5. WIDGETS
+--------------------------------------------------------------------------------
+==============================================================================*/
+
+
+/* 5.1 Foley Authors
+------------------------------------------------------------------------------*/
+
+.foley-authors {
+	list-style-type: none;
+}
+.foley-authors li img.avatarThumb {
+	margin: 3px 10px 0 0;
+	float: left;
+}
