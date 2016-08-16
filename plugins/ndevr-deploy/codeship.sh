@@ -6,6 +6,8 @@
 
 if [ -z ${REPO} ]; then echo "REPO is set to default."; REPO="foleyhoag"; fi
 if [ -z ${DEPLOY_ENV} ]; then echo "DEPLOY_ENV is set to default."; DEPLOY_ENV="staging"; fi
+if [ -z ${STAGING_URL} ]; then echo "STAGING_URL is set to default."; STAGING_URL="https://tradecop.foleyhoag.staging.wpengine.com"; fi
+if [ -z ${PRODUCTION_URL} ]; then echo "PRODUCTION_URL is set to default."; PRODUCTION_URL="http://tradecop.foleyhoag.wpengine.com"; fi
 
 function deploy_init_production {
     echo -e "\nCreating production deploy directory"
@@ -23,7 +25,7 @@ function deploy_init_production {
 function deploy_init_staging {
     echo -e "\nCreating staging deploy directory"
     cd ~/
-    git clone git@git.wpengine.com:staging/$REPO.git clone
+    git clone git@git.wpengine.com:staging/$REPO.git wpengine-staging
     cd ~/wpengine-staging/
     echo -e "\nSetting up git"
 
