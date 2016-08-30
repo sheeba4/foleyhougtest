@@ -131,10 +131,8 @@ class Foley_Author_Widget extends WP_Widget {
 			echo "<li class='clearfix'>";
 			echo $avatar;
 			echo "<h4><a href='$author_profile_url' rel='author'>$display_name</a></h4>";
-			echo "<p>";
-			echo ShortenText( $description );
-			echo "<a rel='author' class='more' href='$author_profile_url'>More</a>";
-			echo "</p>";
+			echo "<p>ShortenText( $description )</p>";
+			echo "<p><a rel='author' class='more' href='$author_profile_url'>More</a></p>";
 			echo "</li>";
 		}
 		echo "</ul>";
