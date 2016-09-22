@@ -10,27 +10,27 @@ add_action('after_setup_theme', 'fohopoco_setup');
 
 if (!function_exists('fohopoco_setup')):
 	function fohopoco_setup() {
-		
+
 		// Add default posts and comments RSS feed links to <head>.
 		add_theme_support('automatic-feed-links');
-		
+
 		// Add post thumbnails
 		add_theme_support('post-thumbnails');
-		
+
 		// Add support for custom backgrounds
 		add_theme_support( 'custom-background' );
-		
+
 		// Add editor style via editor-style.css
 		add_editor_style('editor-style.css');
-		
+
 		// This theme uses wp_nav_menu() in two locations.
-		register_nav_menus( 
+		register_nav_menus(
 			array (
 				'nav-main' => __('Main Navigation Menu', 'fohopoco'),
 				'info-links' => __('Footer Info Links', 'fohopoco'),
 			)
 		);
-		
+
 		// Theme supports shortcode usage in widgets
 		add_filter('widget_text', 'do_shortcode');
 		add_filter('widget_text', 'shortcode_unautop');
@@ -76,12 +76,12 @@ class Fohopoco_Clean_Walker_Nav extends Walker {
 		$indent = str_repeat("\t", $depth);
 		$output .= "\n$indent<ul class=\"sub-menu\">\n";
 	}
-	
+
 	function end_lvl(&$output,  $depth = 0, $args = array() ) {
 		$indent = str_repeat("\t", $depth);
 		$output .= "$indent</ul>\n";
 	}
-	
+
     function start_el(&$output, $item, $depth = 0, $args = array(), $current_object_id = 0) {
 		global $wp_query;
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
@@ -106,7 +106,7 @@ class Fohopoco_Clean_Walker_Nav extends Walker {
 		$item_output .= isset( $args->after ) ? $args->after : '';
 		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 	}
-	
+
 	function end_el(&$output, $item, $depth = 0, $args = array()) {
 		$output .= "</li>\n";
 	}
@@ -117,7 +117,7 @@ class Fohopoco_Clean_Walker_Nav extends Walker {
  Register sidebars and widgetized areas
 ********************************************************************************/
 function fohopoco_widgets_init() {
-	
+
 	register_sidebar(array(
 		'name' => __('Main sidebar', 'fohopoco'),
 		'id' => 'sidebar-main',
@@ -126,7 +126,7 @@ function fohopoco_widgets_init() {
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	) );
-	
+
 	register_sidebar(array(
 		'name' => __('Footer Widgetized Area', 'fohopoco'),
 		'id' => 'footer-widgets',
@@ -135,7 +135,7 @@ function fohopoco_widgets_init() {
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	) );
-	
+
 	register_sidebar(array(
 		'name' => __('Contact Page Widgetized Area', 'fohopoco'),
 		'id' => 'contact-widgets',
@@ -222,7 +222,7 @@ function ShortenText($text)
 	$text = $text." ";
 	$text = substr($text,0,$chars_limit);
 	$text = substr($text,0,strrpos($text,' '));
-	
+
 	if ($chars_text > $chars_limit)
 	{
 		$text = $text."...";
@@ -259,10 +259,10 @@ $array['gurl'] = 'Google profile URL';
  }
  add_filter( 'user_contactmethods', 'fohopoco_user_contactmethods' );
 
- 
+
 /*******************************************************************************
  Rich Text Editor for User Page
-********************************************************************************/ 
+********************************************************************************/
 
 function kpl_user_bio_visual_editor( $user ) {
 	if ( function_exists('wp_editor') && current_user_can('publish_posts') ):
@@ -276,9 +276,9 @@ function kpl_user_bio_visual_editor( $user ) {
 		<tr>
 			<th><label for="description"><?php _e('Biographical Info'); ?></label></th>
 			<td>
-				<?php 
+				<?php
 				$description = get_user_meta( $user->ID, 'description', true);
-				wp_editor( $description, 'description' ); 
+				wp_editor( $description, 'description' );
 				?>
 				<p class="description"><?php _e('Share a little biographical information to fill out your profile. This may be shown publicly.'); ?></p>
 			</td>
@@ -289,7 +289,7 @@ function kpl_user_bio_visual_editor( $user ) {
 }
 add_action('show_user_profile', 'kpl_user_bio_visual_editor');
 add_action('edit_user_profile', 'kpl_user_bio_visual_editor');
- 
+
 function kpl_user_bio_visual_editor_unfiltered() {
 	remove_all_filters('pre_user_description');
 }
@@ -318,7 +318,7 @@ if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) {
 			$wpse_excerpt = strip_tags($wpse_excerpt, wpse_allowedtags()); /*IF you need to allow just certain tags. Delete if all tags are allowed */
 
 			//Set the excerpt word count and only break after sentence is complete.
-			$excerpt_word_count = 70;
+			$excerpt_word_count = 75;
 			$excerpt_length = apply_filters('excerpt_length', $excerpt_word_count);
 			$tokens = array();
 			$excerptOutput = '';
@@ -402,7 +402,7 @@ if ( ! function_exists( 'fohopoco_display_option_metabox' ) ) {
 	    <label>
 	      <?php _e( 'Display Option for Homepage:', 'fohopoco' ); ?>
 	    </label><br />
-	    <?php foreach( $fields as $key => $label ){ 
+	    <?php foreach( $fields as $key => $label ){
 	        printf(
 	            '<input type="radio" name="_fohopoco_display_option" value="%1$s" id="_fohopoco_display_option[%1$s]" %3$s />'.
 	            '<label for="_fohopoco_display_option[%1$s]"> %2$s ' .
@@ -440,13 +440,13 @@ if ( ! function_exists( 'fohopoco_save_metadata' ) ) {
 	  // Secondly we need to check if the user intended to change this value.
 	  $fohopoco_custom_fields = array( 'fohopoco_display_option' );
 	  foreach ( $fohopoco_custom_fields as $fohopoco_custom ) {
-	    if ( isset( $_POST[$fohopoco_custom . '_noncename'] ) && wp_verify_nonce( $_POST[ $fohopoco_custom . '_noncename'], $fohopoco_custom )  ) {	     
+	    if ( isset( $_POST[$fohopoco_custom . '_noncename'] ) && wp_verify_nonce( $_POST[ $fohopoco_custom . '_noncename'], $fohopoco_custom )  ) {
 	      // clean and validate data.
 	      ${$fohopoco_custom} =  $_POST['_' . $fohopoco_custom];
 	      if ( isset( ${$fohopoco_custom} ) && ! empty( ${$fohopoco_custom} ) )
 	        update_post_meta( $post_ID, '_' . $fohopoco_custom, ${$fohopoco_custom} );
 	      else
-	        delete_post_meta( $post_ID, '_' . $fohopoco_custom );	      	
+	        delete_post_meta( $post_ID, '_' . $fohopoco_custom );
 	    }
 	  }
 	}
