@@ -323,22 +323,19 @@ add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 //remove_filter('get_the_excerpt', 'wp_trim_excerpt');
 //add_filter('get_the_excerpt', 'fohopoco_wp_trim_excerpt');
 //
-//function fohopoco_excerpt_more( $more ) {
-//	global $post;
-//	return '... <a href="' . get_permalink( $post->ID ) .'">More</a>';
-//}
-//add_filter('excerpt_more', 'fohopoco_excerpt_more');
 
-
-
+function fohopoco_excerpt_more( $more ) {
+	global $post;
+	return '... <a href="' . get_permalink( $post->ID ) .'">More</a>';
+}
+add_filter('excerpt_more', 'fohopoco_excerpt_more');
 
 function wpse_allowedtags() {
 	// Add custom tags to this string
 	return '<script>,<style>,<br>,<em>,<i>,<ul>,<ol>,<li>,<a>,<p>,<img>,<video>,<audio>';
 }
 
-if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) :
-
+if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) {
 	function wpse_custom_wp_trim_excerpt($wpse_excerpt) {
 		$raw_excerpt = $wpse_excerpt;
 		if ( '' == $wpse_excerpt ) {
@@ -376,7 +373,7 @@ if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) :
 
 			$wpse_excerpt = trim(force_balance_tags($excerptOutput));
 
-			$excerpt_end = '... <a href="'. esc_url( get_permalink() ) . '">More</a>';
+			$excerpt_end = '';
 			$excerpt_more = apply_filters('excerpt_more', ' ' . $excerpt_end);
 
 			//$pos = strrpos($wpse_excerpt, '</');
@@ -392,8 +389,7 @@ if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) :
 		}
 		return apply_filters('wpse_custom_wp_trim_excerpt', $wpse_excerpt, $raw_excerpt);
 	}
-
-endif;
+}
 
 remove_filter('get_the_excerpt', 'wp_trim_excerpt');
 add_filter('get_the_excerpt', 'wpse_custom_wp_trim_excerpt');
