@@ -326,7 +326,7 @@ add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
 
 function fohopoco_excerpt_more( $more ) {
 	global $post;
-	return '... <a href="' . esc_url( get_permalink( $post->ID ) ) .'">More</a>';
+	return '<a href="' . esc_url( get_permalink( $post->ID ) ) .'">More</a>';
 }
 add_filter('excerpt_more', 'fohopoco_excerpt_more');
 
@@ -373,17 +373,17 @@ if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) {
 
 			$wpse_excerpt = trim(force_balance_tags($excerptOutput));
 
-			$excerpt_end = '';
+			$excerpt_end = '...';
 			$excerpt_more = apply_filters('excerpt_more', ' ' . $excerpt_end);
 
-			$pos = strrpos($wpse_excerpt, '</');
-			if ($pos !== false){
-				//Inside last HTML tag
-				$wpse_excerpt = substr_replace($wpse_excerpt, $excerpt_end, $pos, 0); /* Add read more next to last word */
-			} else {
+//			$pos = strrpos($wpse_excerpt, '</');
+//			if ($pos !== false){
+//				//Inside last HTML tag
+//				$wpse_excerpt = substr_replace($wpse_excerpt, $excerpt_end, $pos, 0); /* Add read more next to last word */
+//			} else {
 				// After the content
 				$wpse_excerpt .= $excerpt_more; /*Add read more in new paragraph */
-			}
+//			}
 
 			return $wpse_excerpt;
 
