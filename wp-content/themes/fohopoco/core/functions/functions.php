@@ -294,39 +294,10 @@ function kpl_user_bio_visual_editor_unfiltered() {
 	remove_all_filters('pre_user_description');
 }
 add_action('admin_init','kpl_user_bio_visual_editor_unfiltered');
-//
-//function fohopoco_wp_trim_excerpt( $text ) {
-//	$raw_excerpt = $text;
-//	if ( '' == $text ) {
-//		$text = get_the_content('');
-//
-//		$text = strip_shortcodes( $text );
-//
-//
-//		$text = apply_filters('the_content', $text);
-//		$text = str_replace(']]>', ']]&gt;', $text);
-//		$text = strip_tags( $text, '<p><a><img>' );
-//
-//		$excerpt_length = apply_filters('excerpt_length', 100);
-//		$excerpt_more = apply_filters('excerpt_more', ' ' . '[...]');
-//		$words = preg_split("/[\n\r\t ]+/", $text, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY);
-//		if ( count($words) > $excerpt_length ) {
-//			array_pop($words);
-//			$text = implode(' ', $words);
-//			$text = $text . $excerpt_more;
-//		} else {
-//			$text = implode(' ', $words);
-//		}
-//	}
-//	return $text;
-//}
-//remove_filter('get_the_excerpt', 'wp_trim_excerpt');
-//add_filter('get_the_excerpt', 'fohopoco_wp_trim_excerpt');
-//
 
 function fohopoco_excerpt_more( $more ) {
 	global $post;
-	return '<a class="read-more" href="' . esc_url( get_permalink( $post->ID ) ) .'">More</a>';
+	return ' <a class="read-more" href="' . esc_url( get_permalink( $post->ID ) ) .'">More</a>';
 }
 add_filter('excerpt_more', 'fohopoco_excerpt_more');
 
@@ -361,6 +332,8 @@ if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) {
 				if ($count >= $excerpt_length && preg_match('/[\,\;\?\.\!]\s*$/uS', $token)) {
 					// Limit reached, continue until , ; ? . or ! occur at the end
 					$excerptOutput .= trim($token);
+					//Add ellipis
+					$excerptOutput .= "&hellip;";
 					break;
 				}
 
@@ -373,17 +346,17 @@ if ( ! function_exists( 'wpse_custom_wp_trim_excerpt' ) ) {
 
 			$wpse_excerpt = trim(force_balance_tags($excerptOutput));
 
-			$excerpt_end = '...';
+			$excerpt_end = '';
 			$excerpt_more = apply_filters('excerpt_more', ' ' . $excerpt_end);
 
-//			$pos = strrpos($wpse_excerpt, '</');
-//			if ($pos !== false){
-//				//Inside last HTML tag
-//				$wpse_excerpt = substr_replace($wpse_excerpt, $excerpt_end, $pos, 0); /* Add read more next to last word */
-//			} else {
+			$pos = strrpos($wpse_excerpt, '</');
+			if ($pos !== false){
+				//Inside last HTML tag
+				$wpse_excerpt = substr_replace($wpse_excerpt, $excerpt_more, $pos, 0); /* Add read more next to last word */
+			} else {
 				// After the content
 				$wpse_excerpt .= $excerpt_more; /*Add read more in new paragraph */
-//			}
+			}
 
 			return $wpse_excerpt;
 
