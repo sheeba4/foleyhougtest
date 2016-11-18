@@ -97,6 +97,9 @@ class Foley_Author_Widget extends WP_Widget {
 			}
 			$exclude   = implode( ',', $exclude );
 			$blogusers = get_users( 'exclude=' . $exclude . '&orderby=' . $orderby . '&role=' . $role );
+			if( $orderby === 'rand' ){
+				shuffle( $blogusers );
+			}
 		}
 		$authors = array();
 		foreach ( $blogusers as $bloguser ) {
