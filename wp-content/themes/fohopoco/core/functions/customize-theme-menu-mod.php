@@ -515,7 +515,7 @@ function fohopoco_customize_add_customizer_css() {
 			clear: both;
 			position: relative;
 			<?php if ($footercontainer_bg_image) { ?>
-				background: #393b3e url(<?php echo $footercontainer_bg_image; ?>) repeat-x 0 0; 
+				background: #393b3e url(<?php echo $footercontainer_bg_image; ?>) repeat-x 0 -1px;
 			<?php } ?>
 		}
 		.footer-container #footer{
