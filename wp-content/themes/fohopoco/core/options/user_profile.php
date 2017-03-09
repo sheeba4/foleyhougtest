@@ -7,6 +7,8 @@ class User_Profile {
 		add_action( 'edit_user_profile', array( $this, 'render_user_form' ) );
 		add_action( 'personal_options_update', array( $this, 'save_user_form' ) );
 		add_action( 'edit_user_profile_update', array( $this, 'save_user_form' ) );
+
+		add_filter( 'get_terms_orderby',array( $this, 'coauthor_sort' ), 10, 3 );
 	}
 
 	/**
@@ -17,6 +19,25 @@ class User_Profile {
 		wp_enqueue_media();
 		wp_register_script('foley_user', get_template_directory_uri() . '/_ui/js/user_profile.admin.js', array('jquery','media-upload','thickbox'), '1.0.3' );
 		wp_enqueue_script('foley_user');
+	}
+
+	/**
+     * Forcing the sorting order to term_order
+     *
+     * @see https://github.com/Automattic/Co-Authors-Plus/issues/390
+     *
+	 * @param $orderby
+	 * @param $query_vars
+	 * @param $taxonomies
+	 *
+	 * @return string
+	 */
+	public function coauthor_sort( $orderby, $query_vars, $taxonomies ) {
+		if ( ! empty( $query_vars['object_ids'] ) && ( 1 === count( $taxonomies ) ) && 'author' === $taxonomies[0] ) {
+			$orderby = 'tr.term_order';
+		}
+
+		return $orderby;
 	}
 
 	/**
