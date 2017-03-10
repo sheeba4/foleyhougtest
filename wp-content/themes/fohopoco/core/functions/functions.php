@@ -451,3 +451,23 @@ if ( ! function_exists( 'fohopoco_save_metadata' ) ) {
 	  }
 	}
 }
+
+add_filter( 'get_terms_orderby', 'coauthor_sort', 10, 3 );
+/**
+ * Forcing the sorting order to term_order
+ *
+ * @see https://github.com/Automattic/Co-Authors-Plus/issues/390
+ *
+ * @param $orderby
+ * @param $query_vars
+ * @param $taxonomies
+ *
+ * @return string
+ */
+function coauthor_sort( $orderby, $query_vars, $taxonomies ) {
+	if ( ! empty( $query_vars['object_ids'] ) && ( 0 < count( $taxonomies ) ) ) {
+		$orderby = 'tr.term_order';
+	}
+
+	return $orderby;
+}
