@@ -1,11 +1,11 @@
 var epdofitvids = epdofitvids || function ($)
 {
-    if (_EPYT_.epresponsiveselector.constructor !== Array)
-    {
-        _EPYT_.epresponsiveselector = JSON.parse(_EPYT_.epresponsiveselector);
-    }
 
     $.fn.fitVidsEP = function (options) {
+        if (_EPYT_.epresponsiveselector.constructor !== Array)
+        {
+            _EPYT_.epresponsiveselector = JSON.parse(_EPYT_.epresponsiveselector);
+        }
         var settings = {
             customSelector: null
         };
@@ -69,6 +69,13 @@ var epdofitvids = epdofitvids || function ($)
 
     $(document).ready(function () {
         $("body").fitVidsEP();
+
+        $(document).ajaxSuccess(function (e, xhr, settings) {
+            if (xhr && xhr.responseText && xhr.responseText.indexOf('<iframe ') !== -1)
+            {
+                $("body").fitVidsEP();
+            }
+        });
     });
     return true;
 };

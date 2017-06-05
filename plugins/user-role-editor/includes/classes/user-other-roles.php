@@ -33,7 +33,8 @@ class URE_User_Other_Roles {
             add_action( 'user_new_form', array($this, 'user_new_form'), 10, 1 );
             add_action( 'profile_update', array($this, 'update'), 10 );
         }
-        if ($this->lib->multisite) {          
+        $multisite = $this->lib->get('multisite');
+        if ($multisite) {          
             add_action( 'wpmu_activate_user', array($this, 'add_other_roles'), 10, 1 );
         }
         add_action( 'user_register', array($this, 'add_other_roles'), 10, 1 );
@@ -70,7 +71,10 @@ class URE_User_Other_Roles {
             return;
         }
         
-        wp_enqueue_script('jquery-ui-dialog', false, array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
+        
+        $select_primary_role = apply_filters('ure_users_select_primary_role', true);
+        
+        wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
         wp_register_script('ure-jquery-multiple-select', plugins_url('/js/jquery.multiple.select.js', URE_PLUGIN_FULL_PATH));
         wp_enqueue_script('ure-jquery-multiple-select');
         wp_register_script('ure-user-profile-other-roles', plugins_url('/js/ure-user-profile-other-roles.js', URE_PLUGIN_FULL_PATH));
@@ -78,14 +82,15 @@ class URE_User_Other_Roles {
         wp_localize_script('ure-user-profile-other-roles', 'ure_data_user_profile_other_roles', array(
             'wp_nonce' => wp_create_nonce('user-role-editor'),
             'other_roles' => esc_html__('Other Roles', 'user-role-editor'),
-            'select_roles' => esc_html__('Select additional roles for this user', 'user-role-editor')
+            'select_roles' => esc_html__('Select additional roles for this user', 'user-role-editor'),
+            'select_primary_role' => ($select_primary_role || $this->lib->is_super_admin()) ? 1: 0
         ));
     }
     // end of load_js()
     
     
     /**
-     * Returns list of user roles, except 1st one, and bbPress assigned as they are shown by WordPress and bbPress theirselves.
+     * Returns list of user roles, except 1st one, and bbPress assigned as they are shown by WordPress and bbPress themselves.
      * 
      * @param type $user WP_User from wp-includes/capabilities.php
      * @return array
