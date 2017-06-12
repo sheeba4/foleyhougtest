@@ -3,8 +3,8 @@ Contributors: embedplus
 Plugin Name: YouTube Embed
 Tags: youtube gallery, video gallery, youtube channel, youtube live, live stream
 Requires at least: 3.6.1
-Tested up to: 4.7
-Stable tag: 11.8
+Tested up to: 4.8
+Stable tag: 11.8.1
 License: GPLv3 or later
 
 YouTube Embed WordPress Plugin. Embed a responsive video, YouTube channel gallery, playlist gallery, or YouTube.com live stream
@@ -144,6 +144,9 @@ You can also start and end each individual video at particular times. Like the a
 9. YouTube Embed Screenshot 9: Optional YouTube channel subscription button above gallery thumbnails
 
 == Changelog ==
+
+= WordPress YouTube Embed 11.8.1 =
+* Fix playlist gallery issue
 
 = WordPress YouTube Embed 11.8 =
 * Improved AJAX theme compatability
