@@ -3,7 +3,7 @@
   Plugin Name: YouTube
   Plugin URI: http://www.embedplus.com/dashboard/pro-easy-video-analytics.aspx
   Description: YouTube Embed and YouTube Gallery WordPress Plugin. Embed a responsive video, YouTube channel, playlist gallery, or live stream
-  Version: 11.8
+  Version: 11.8.1
   Author: EmbedPlus Team
   Author URI: http://www.embedplus.com
  */
@@ -33,7 +33,7 @@ class YouTubePrefs
 {
 
     public static $curltimeout = 20;
-    public static $version = '11.8';
+    public static $version = '11.8.1';
     public static $opt_version = 'version';
     public static $optembedwidth = null;
     public static $optembedheight = null;
@@ -1947,8 +1947,11 @@ class YouTubePrefs
 
         if (isset($jsonResult->items) && $jsonResult->items != null && is_array($jsonResult->items))
         {
-            // sort items
-            usort($jsonResult->items, array(get_class(), 'compare_vid_date')); // sorts in place
+            if (strpos($options->playlistId, 'UU') === 0)
+            {
+                // sort only channels
+                usort($jsonResult->items, array(get_class(), 'compare_vid_date')); // sorts in place                
+            }
 
             foreach ($jsonResult->items as $item)
             {
@@ -2604,11 +2607,11 @@ class YouTubePrefs
         $new_pointer_content .= '<p>'; // ooopointer
         if (!(self::$alloptions[self::$opt_pro] && strlen(trim(self::$alloptions[self::$opt_pro])) > 0))
         {
-            $new_pointer_content .= __("This update includes role settings for the wizard, improved AJAX theme compatibility, and many more bug fixes for the Free and <a target=_blank href=" . self::$epbase . '/dashboard/pro-easy-video-analytics.aspx?ref=frompointer' . ">Pro versions &raquo;</a>");
+            $new_pointer_content .= __("This update fixes a playlist gallery issue for Free and <a target=_blank href=" . self::$epbase . '/dashboard/pro-easy-video-analytics.aspx?ref=frompointer' . ">Pro versions &raquo;</a>");
         }
         else
         {
-            $new_pointer_content .= __("This update includes role settings for the wizard, improved AJAX theme compatibility, and many more bug fixes for the Free and Pro versions. " . '<strong>Important message to YouTube Pro users</strong>: From version 11.7 onward, you must <a href="https://www.embedplus.com/youtube-pro/download/?prokey=' . esc_attr(self::$alloptions[self::$opt_pro]) . '" target="_blank">download the separate plugin here</a> to regain your Pro features. All your settings will automatically migrate after installing the separate Pro download. Thank you for your support and patience during this transition.');
+            $new_pointer_content .= __("This update fixes a playlist gallery issue for Free and Pro versions. " . '<strong>Important message to YouTube Pro users</strong>: From version 11.7 onward, you must <a href="https://www.embedplus.com/youtube-pro/download/?prokey=' . esc_attr(self::$alloptions[self::$opt_pro]) . '" target="_blank">download the separate plugin here</a> to regain your Pro features. All your settings will automatically migrate after installing the separate Pro download. Thank you for your support and patience during this transition.');
         }
         $new_pointer_content .= '</p>';
 
@@ -2878,7 +2881,7 @@ class YouTubePrefs
 
             update_option(self::$opt_alloptions, $all);
             ?>
-            <div class="updated"><p><strong><?php _e('Changes saved.'); ?></strong></p></div>
+            <div class="updated"><p><strong><?php _e('Changes saved.'); ?> <em>If you're using a separate caching plugin and you do not see your changes after saving, <strong class="orange">you need to reset your cache.</strong></em></strong></p></div>
             <?php
         }
 
@@ -3930,7 +3933,7 @@ class YouTubePrefs
         ?>
         <p class="submit">
             <input type="submit" onclick="return savevalidate();" name="Submit" class="button-primary ytprefs-submit" value="<?php _e($button_label) ?>" />
-            <em>If you're using a separate caching plugin and you do not see your changes after saving, you might want to reset your cache.</em>
+            <em>If you're using a separate caching plugin and you do not see your changes after saving, <strong class="orange">you need to reset your cache.</strong></em>
         </p>
         <?php
     }
