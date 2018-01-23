@@ -24,7 +24,7 @@
 	
 	<link rel="stylesheet" media="all" href="<?php echo get_template_directory_uri(); ?>/_ui/css/main.css">
 	<!--[if lt IE 9]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<![endif]-->
 	
 	<?php wp_head(); ?>
