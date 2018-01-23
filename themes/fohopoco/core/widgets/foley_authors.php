@@ -125,7 +125,7 @@ class Foley_Author_Widget extends WP_Widget {
 			if( empty( $profile_image ) ){
 				$avatar = get_avatar( $author['ID'], $avatar_size, '', '', array('class'=> 'avatarThumb alignnone') );
 			}else{
-				$avatar = '<img class="avatarThumb alignnone" src="' . esc_url( $profile_image ) .'" alt="' . esc_html( $display_name ) .'" width="47" height="47">';
+				$avatar = '<img class="avatarThumb alignnone" src="' . esc_url( str_replace( 'http://', 'https://', $profile_image ) ) .'" alt="' . esc_html( $display_name ) .'" width="47" height="47">';
 			}
 
 			$author_profile_url = isset( $author['data']->user_url ) ? $author['data']->user_url : get_author_posts_url($author['ID']);
