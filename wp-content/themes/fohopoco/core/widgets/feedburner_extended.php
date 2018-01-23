@@ -79,7 +79,7 @@ if( class_exists('FeedburnerEmailWidget') ){
                 // Putting onSubmit code together
                 $onsubmit = array();
                 // Default feedburner window
-                $onsubmit[] = 'window.open(\'http://feedburner.google.com/fb/a/mailverify?' . $uri . '\', \'popupwindow\', \'scrollbars=yes,width=550,height=520\');';
+                $onsubmit[] = 'window.open(\'https://feedburner.google.com/fb/a/mailverify?' . $uri . '\', \'popupwindow\', \'scrollbars=yes,width=550,height=520\');';
                 // Google Analytics support
                 if ($analytics_cat && $analytics_act) {
                     $analytics_array = array();
@@ -95,7 +95,7 @@ if( class_exists('FeedburnerEmailWidget') ){
                 }
                 $onsubmit[] = 'return true;';
                 // Open Form
-                $html .= '<form id="' . trim($form_id) . '" action="http://feedburner.google.com/fb/a/mailverify" method="post" onsubmit="' . implode('', $onsubmit) . '" target="popupwindow">';
+                $html .= '<form id="' . trim($form_id) . '" action="https://feedburner.google.com/fb/a/mailverify" method="post" onsubmit="' . implode('', $onsubmit) . '" target="popupwindow">';
                 if ($above_email) {
                     $html .= '<label>' . trim($above_email) . '</label>';
                 }
@@ -113,7 +113,7 @@ if( class_exists('FeedburnerEmailWidget') ){
                 }
                 $html .= '<input id="' . trim($form_id) . '_submit" type="submit" value="' . htmlentities(trim($subscribe_btn)) . '" />';
                 if ($show_link) {
-                    $html .= '<label>Delivered by <a href="http://feedburner.google.com" target="_blank">FeedBurner</a></label>';
+                    $html .= '<label>Delivered by <a href="https://feedburner.google.com" target="_blank">FeedBurner</a></label>';
                 }
                 $html .= '</form>';
             }
