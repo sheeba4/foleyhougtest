@@ -79,12 +79,10 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 							<td>
 								<label>
 									<input type="checkbox" name="cptch_use_la_whitelist" value="1" "<?php echo $disabled . $checked; ?>/>
-									<?php echo $limit_attempts_info['label']; ?>
+									use the whitelist of Limit Attempts
 								</label>
 								<?php $content = sprintf( __( 'With this option, CAPTCHA will not be displayed for IP-addresses from the whitelist of %s', 'captcha' ), $limit_attempts_info['name'] );
-								if ( ! empty( $limit_attempts_info['notice'] ) )
-									$content .=  '<p class="bws_info">' . $limit_attempts_info['notice'] . '</p>';
-								echo bws_add_help_box( $content ); ?>
+								 ?>
 							<td>
 						</tr>
 						<tr>
@@ -95,10 +93,10 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 								<div class="alignleft">
 									<input type="submit" name="cptch_load_limit_attempts_whitelist" class="button" value="<?php _e( 'Load IP to the whitelist', 'captcha' ); ?>" style="float: left;<?php echo $hidden ? 'display: none;' : ''; ?>" <?php echo $disabled; ?> />
 									<?php if ( ! $hidden ) {
-										$content = sprintf( __( 'By click on this button, all IP-addresses from the whitelist of %s will be loaded to the whitelist of %s', 'captcha' ), $limit_attempts_info['name'], 'Captcha by BestWebSoft' );
+										$content = sprintf( __( 'By click on this button, all IP-addresses from the whitelist of %s will be loaded to the whitelist of %s', 'captcha' ), $limit_attempts_info['name'], 'Captcha by mysimplewp' );
 										if ( ! empty( $limit_attempts_info['notice'] ) )
 											$content .=  '<p class="bws_info">' . $limit_attempts_info['notice'] . '</p>';
-										echo bws_add_help_box( $content, 'cptch_thumb_block' );
+										
 									} ?>
 								</div>
 								<noscript>
@@ -441,7 +439,7 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 		}
 
 		/*
-		 * Get info about plugins Limit Attempts ( Free or Pro ) by BestWebSoft
+		 * Get info about plugins Limit Attempts ( Free or Pro ) by mysimplewp
 		 */
 		function get_limit_attempts_info() {
 			global $wp_version, $cptch_plugin_info;
@@ -464,9 +462,9 @@ if ( ! class_exists( 'Cptch_Whitelist' ) ) {
 			} elseif ( 'not_installed' == $this->la_info['status'] ) {
 				$data = array(
 					'active'          => false,
-					'name'             => 'Limit Attempts by BestWebSoft',
-					'label'            => sprintf( __( 'use the whitelist of %s', 'captcha' ), 'Limit Attempts by BestWebSoft' ),
-					'notice'           => sprintf( __( 'you should install %s to use this functionality', 'captcha' ), '<a href="https://bestwebsoft.com/products/wordpress/plugins/limit-attempts?k=7f52b8ba74b49875aeb687556c04efd8&pn=75&v=' . $cptch_plugin_info["Version"] . '&wp_v=' . $wp_version . '" target="_blank">Limit Attempts by BestWebSoft</a>' ),
+					'name'             => 'Limit Attempts by mysimplewp',
+					'label'            => sprintf( __( 'use the whitelist of %s', 'captcha' ), 'Limit Attempts by mysimplewp' ),
+					'notice'           => sprintf( __( 'you should install %s to use this functionality', 'captcha' ), '<a href="#">Limit Attempts by mysimplewp</a>' ),
 					'disabled'         => true,
 				);
 			}

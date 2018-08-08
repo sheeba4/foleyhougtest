@@ -1,7 +1,7 @@
 <?php
 /**
  * Load images for CAPTCHA
- * @package Captcha by BestWebSoft
+ * @package Captcha by mysimplewp
  * @since 4.2.0
  */
 if ( ! defined( 'ABSPATH' ) )
@@ -43,8 +43,6 @@ if ( ! class_exists( 'Cptch_Package_Loader' ) ) {
 					$this->error = __( 'Can not load images in to the "uploads" folder. Please, check your permissions', 'captcha' );
 			}
 			$this->basename = plugin_basename( __FILE__ );
-			if ( isset( $_POST['cptch_install_package_submit'] ) )
-				$this->upload_archive();
 		}
 
 		/**
@@ -62,40 +60,7 @@ if ( ! class_exists( 'Cptch_Package_Loader' ) ) {
 					}
 				</style>
 			</noscript>
-			<div class="upload-plugin cptch_install_package_wrap">
-				<form id="cptch_install_package_form" class="bws_form wp-upload-form" method="post" enctype="multipart/form-data" action="admin.php?page=captcha_pro.php&amp;action=packages&amp;cptch_action=new">
-					<fieldset>
-						<p>
-							<label>
-								<input id="cptch_install_package_input" type="file" name="cptch_packages" />
-							</label>
-						</p>
-						<p><?php _e( 'If the package already exists', 'captcha' ); ?></p>
-						<p>
 
-							<label for="cptch_skip_existed">
-								<input type="radio" name="cptch_existed_package" value="skip" checked="checked" id="cptch_skip_existed" class="cptch_install_disabled" />
-								<?php _e( 'Skip it', 'captcha' ); ?>
-							</label><br/>
-							<label for="cptch_update_existed">
-								<input type="radio" name="cptch_existed_package" value="update" id="cptch_update_existed" class="cptch_install_disabled" />
-								<?php _e( 'Update the existed one', 'captcha' ); ?>
-							</label><br/>
-							<label for="cptch_save_as_new_existed">
-								<input type="radio" name="cptch_existed_package" value="save_as_new" id="cptch_save_as_new_existed" class="cptch_install_disabled" />
-								<?php _e( 'Save it as new', 'captcha' ); ?>
-							</label>
-						</p>
-						<p>
-							<label>
-								<input class="button-primary cptch_install_disabled" name="cptch_install_package_submit" type="submit" value="<?php _e( 'Install Now', 'captcha' ); ?>" />
-							</label>
-							<a class="cptch_add_ons_link" href="https://bestwebsoft.com/products/wordpress/plugins/captcha/#addons" target="_blank"><?php _e( 'Browse packages', 'captcha' ); ?></a>
-						</p>
-						<?php wp_nonce_field( $this->basename, 'cptch_load_package' ); ?>
-					</fieldset>
-				</form>
-			</div>
 		<?php }
 
 
@@ -117,59 +82,6 @@ if ( ! class_exists( 'Cptch_Package_Loader' ) ) {
 			if ( $this->message ) { ?>
 				<div class="updated fade below-h2"><p><?php echo $this->message; ?></p></div>
 			<?php }
-		}
-
-		/**
-		 * Check data that have been recieved from install package form
-		 * @since   1.6.9
-		 * @param   void
-		 * @return  array    $result    'error' - error message, 'path' - absolute path to the package
-		 */
-		private function upload_archive() {
-			check_admin_referer( $this->basename, 'cptch_load_package' );
-
-			$error_part  = __( "Error during package uploading", 'captcha' ) . ':&nbsp;';
-			$zip_formats = array( 'application/zip', 'application/x-zip', 'application/x-zip-compressed', 'application/octet-stream' );
-			$max_size    = wp_max_upload_size();
-			$file        = $_FILES[ 'cptch_packages' ];
-			$is_zip = (
-				in_array( $file['type'], $zip_formats ) &&
-				'.zip' == strtolower( substr ( $file['name'], -4 ) ) &&
-				'PK' == file_get_contents( $file['tmp_name'], FALSE, NULL, 0, 2)
-			) ? true : false;
-
-			/* Archive verification before uploading */
-			if ( ! is_uploaded_file( $file['tmp_name'] ) )
-				$this->error = $error_part . __( "check your archive", 'captcha' ) . '.';
-			elseif ( ! $is_zip )
-				$this->error = $error_part . __( "file format should be ZIP-archive", 'captcha' ) . '.';
-			elseif ( $file['size'] > $max_size )
-				$this->error = $error_part . __( "file size should not exceed", 'captcha' ) . $this->get_human_readeble_file_size( $max_size ) . '.';
-
-			if ( $this->error )
-				return false;
-
-			/* Remove previoiusly loaded archive */
-			$copied = "{$this->upload_dir}/{$file['name']}";
-			if ( file_exists( $copied ) )
-				unlink( $copied );
-
-			if( ! move_uploaded_file( $file['tmp_name'], $copied ) ) {
-				$this->error = $error_part . __( "it is impossible to upload the archive to the server", 'captcha' ) . '.';
-				return false;
-			}
-
-			/* Unzip archive */
-			WP_Filesystem();
-			$this->packages_dir = $this->get_dir( 'unzip_temp' );
-			$unzip_result       = unzip_file( $copied, $this->packages_dir );
-			if ( $unzip_result ) {
-				$this->save_packages();
-				unlink( $copied );
-			} else {
-				$this->error = is_wp_error( $unzip_result ) ? $unzip_result->get_error_message() : $error_part .  __( "archive can not be unzipped", 'captcha' ) . '.';
-			}
-			return true;
 		}
 
 		/**
