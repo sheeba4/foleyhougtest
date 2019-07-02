@@ -98,39 +98,153 @@
 
     window._EPYTA_.adstxtLookup = function ()
     {
+        window._EPYTA_.adstxtLoading(true);
+
         $.ajax({
-            url: location.protocol + "//" + location.hostname + "/ads.txt", //?c=" + Math.random(),
+            url: location.protocol + "//" + location.hostname + "/ads.txt?c=" + Date.now(),
             dataType: 'text',
             type: 'get',
-            async: true,
-            cache: false,
-            statusCode: {
-                200: function (response)
-                {
-                    $('.ytvi-login-adstxt').val($("<div/>").html(response).text());
-                },
-                301: function (response)
-                {
-                    $('.ytvi-login-adstxt').val($("<div/>").html(response).text());
-                },
-                302: function (response)
-                {
-                    $('.ytvi-login-adstxt').val($("<div/>").html(response).text());
-                },
-                304: function (response)
-                {
-                    $('.ytvi-login-adstxt').val($("<div/>").html(response).text());
-                },
-                307: function (response)
-                {
-                    $('.ytvi-login-adstxt').val($("<div/>").html(response).text());
-                }
+            data: '',
+            headers: {
+                'Cache-Control': 'no-cache'
             },
-            error: function (jqXHR, status, errorThrown)
+            async: true
+        }).always(function (data_jqXHR, textStatus, jqXHR_errorThrown)
+        {
+            if (textStatus === 'success')
             {
-                //alert(errorThrown);
+                var jqXHR = jqXHR_errorThrown;
+                var data = data_jqXHR;
+                switch (jqXHR.status)
+                {
+                    case 200:
+                    case 301:
+                    case 302:
+                    case 304:
+                    case 307:
+                        window._EPYTA_.adstxtVerify(data);
+                        break;
+                    default:
+                        window._EPYTA_.adstxtVerify('');
+                        break;
+                }
+            }
+            else
+            {
+                var jqXHR = data_jqXHR;
+                var errorThrown = jqXHR_errorThrown;
+                if (jqXHR.status == 404)
+                {
+                    // retry
+                    $.ajax({
+                        url: location.protocol + "//" + location.hostname + "/ads.txt",
+                        dataType: 'text',
+                        type: 'get',
+                        data: '',
+                        headers: {
+                            'Cache-Control': 'no-cache'
+                        },
+                        async: true
+                    }).always(function (data_jqXHR, textStatus, jqXHR_errorThrown)
+                    {
+                        if (textStatus === 'success')
+                        {
+                            var jqXHR = jqXHR_errorThrown;
+                            var data = data_jqXHR;
+                            switch (jqXHR.status)
+                            {
+                                case 200:
+                                case 301:
+                                case 302:
+                                case 304:
+                                case 307:
+                                    window._EPYTA_.adstxtVerify(data);
+                                    break;
+                                default:
+                                    window._EPYTA_.adstxtVerify('');
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            window._EPYTA_.adstxtVerify('');
+                        }
+                    }
+                    );
+                }
+                else
+                {
+                    window._EPYTA_.adstxtVerify('');
+                }
             }
         });
+    };
+
+    window._EPYTA_.adstxtVerify = function (current_adstxt)
+    {
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            timeout: 120000,
+            url: window._EPYTA_.wpajaxurl,
+            data: {
+                security: window._EPYTA_.security,
+                action: 'my_embedplus_vi_adstxt_status_soft_ajax',
+                current_adstxt: current_adstxt
+            },
+            success: function (response)
+            {
+                if (response.code == 2)
+                {
+                    $('.nav-tab-adstxt').addClass('nav-tab-valid');
+                }
+                else if (response.code <= 0)
+                {
+                    $('.nav-tab-adstxt').addClass('nav-tab-invalid');
+                }
+                $('.adstxt-verify-message').html(response.message);
+            },
+            error: function (xhr, ajaxOptions, thrownError)
+            {
+                $('.nav-tab-adstxt').addClass('nav-tab-invalid');
+                $('.adstxt-verify-message').html('Could not validate ads.txt: ' + thrownError);
+            },
+            complete: function ()
+            {
+                window._EPYTA_.adstxtLoading(false);
+            }
+        });
+    };
+
+    window._EPYTA_.adstxtLoading = function (show)
+    {
+        if (show)
+        {
+            $('.nav-tab-adstxt').addClass('nav-tab-loading');
+        }
+        else
+        {
+            $('.nav-tab-adstxt').removeClass('nav-tab-loading');
+        }
+    };
+
+    window._EPYTA_.gbPreviewSetup = function ()
+    {
+        window._EPADashboard_.loadYTAPI();
+        window._EPADashboard_.apiInit();
+        window._EPADashboard_.log("YT API GB");
+        window._EPADashboard_.pageReady();
+        jQuery('body').fitVidsEP();
+    };
+
+    window._EPYTA_.iabAdd = function (iabVal, iabText, iabTextParent)
+    {
+        var tagText = $('<div class="iab-cat-tag-button" data-tag="' + iabVal + '">' + iabTextParent + ' : ' + iabText + ' &times;</div>');
+        $('.iab-cat-tags-display').append(tagText);
+        $('.iab-cat-tags-display .iab-cat-tag-button').sort(function (a, b)
+        {
+            return $(a).text() > $(b).text() ? 1 : -1;
+        }).appendTo('.iab-cat-tags-display');
     };
 
     $.fn.ytprefsFormJSON = function ()
@@ -172,7 +286,7 @@
             var embedcode = "";
             try
             {
-                if (e.data.indexOf("youtubeembedplus") === 0)
+                if (e.data.indexOf("youtubeembedplus") === 0 && e.data.indexOf('clientId=') < 0)
                 {
                     embedcode = e.data.split("|")[1];
                     if (embedcode.indexOf("[") !== 0)
@@ -182,6 +296,17 @@
 
                     if (window.tinyMCE !== null && window.tinyMCE.activeEditor !== null && !window.tinyMCE.activeEditor.isHidden())
                     {
+                        if (window._EPYTA_.mceBookmark)
+                        {
+                            try
+                            {
+                                window.tinyMCE.activeEditor.selection.moveToBookmark(window._EPYTA_.mceBookmark);
+                            }
+                            catch (err)
+                            {
+                            }
+                        }
+
                         if (typeof window.tinyMCE.execInstanceCommand !== 'undefined')
                         {
                             window.tinyMCE.execInstanceCommand(
@@ -194,6 +319,11 @@
                         {
                             send_to_editor(embedcode);
                         }
+
+                        setTimeout(function ()
+                        {
+                            window._EPYTA_.mceBookmark = null;
+                        }, 500);
                     }
                     else
                     {
@@ -246,7 +376,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        if ($('.ytvi-step.ytvi-step-1').length)
+        if ($('.wrap-vi-settings').length)
         {
             window._EPYTA_.adstxtLookup();
         }
@@ -405,6 +535,10 @@
                                             $('.ytvi-step-2').show('fade', {}, 500);
                                         });
                                     }, 3000);
+
+                                    var date_attempt = new Date(), date_expire = new Date();
+                                    date_expire.setTime(date_expire.getTime() + (365 * 24 * 60 * 60 * 1000));
+                                    document.cookie = "vi_signup_attempt=" + date_attempt.toUTCString() + ";expires=" + date_expire.toUTCString() + ";path=" + window._EPYTA_.admin_url;
                                 }
                                 else if (response.type === 'error')
                                 {
@@ -449,7 +583,6 @@
 
             var loginEmail = $.trim($('.ytvi-login-email').val());
             var loginPassword = $.trim($('.ytvi-password').val());
-            var loginAdstxt = $('.ytvi-login-adstxt').val();
             var errorMessage = "";
 
             errorMessage += loginEmail.length ? "" : "Please enter your email address. ";
@@ -476,23 +609,20 @@
                                 security: window._EPYTA_.security,
                                 action: 'my_embedplus_vi_login_ajax',
                                 email: loginEmail,
-                                password: loginPassword,
-                                adstxt: loginAdstxt
+                                password: loginPassword
                             },
                             success: function (response)
                             {
                                 if (response.type === 'error')
                                 {
-                                    alertify.alert(response.message, function ()
-                                    {
-                                        window._EPYTA_.adstxtLookup();
-                                    });
+                                    alertify.alert(response.message);
                                     window._EPYTA_.ytvi_cancel();
                                 }
                                 else
                                 {
                                     $('.ytvi-login-loading').hide('fade', {}, 500, function ()
                                     {
+                                        document.cookie = 'vi_signup_attempt=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                                         $('.ytvi-login-success-message').html(response.message);
                                         $('.ytvi-login-success').show('fade', {}, 500, function ()
                                         {});
@@ -502,16 +632,12 @@
                             },
                             error: function (xhr, ajaxOptions, thrownError)
                             {
-                                alertify.alert('Sorry, there was a network error. Please try again. If the issue persists, please contact ext@embedplus.com', function ()
-                                {
-                                    window._EPYTA_.adstxtLookup();
-                                });
+                                alertify.alert('Sorry, there was a network error. Please try again. If the issue persists, please contact ext@embedplus.com');
                                 window._EPYTA_.ytvi_cancel();
                             },
                             complete: function ()
                             {
                                 $('.ytvi-step-1--submit-login').prop('disabled', false);
-                                window._EPYTA_.adstxtLookup();
                             }
                         });
                     });
@@ -521,7 +647,7 @@
 
         $('a.vi-logged-in-goto').each(function ()
         {
-            if ($(this).attr('href').indexOf(window.location.pathname + window.location.search) > 0)
+            if ($(this).attr('href').indexOf(window.location.pathname + window.location.search) > 0 || window.location.search.indexOf('youtube-my-preferences') > 0)
             {
                 $(this).removeAttr('target');
             }
@@ -546,33 +672,71 @@
             });
 
 
-            var iab = $('.iab-cat-child').val();
-            if (iab.length > 0)
+            var iabValRaw = $('.iab-cat-tags').val();
+            if (iabValRaw.length > 0)
             {
-                var iabPrefix = iab.split('-')[0];
-                $('.iab-cat-child-box').removeClass('hidden');
-
-                $('.iab-cat-parent option[value="' + iabPrefix + '"]').prop('selected', true);
-                $('.iab-cat-child option').addClass('hidden');
-                $('.iab-cat-child option[value^="' + iabPrefix + '-"], .iab-cat-child option[value="' + iabPrefix + '"]').removeClass('hidden');
+                var iabCurrent = iabValRaw.split(',');
+                iabCurrent.forEach(function (iabVal)
+                {
+                    var iabText = $('.iab-cat-child option[value="' + iabVal + '"]').text();
+                    var iabTextParent = $('.iab-cat-parent option[value="' + (iabVal.split('-')[0]) + '"]').text();
+                    window._EPYTA_.iabAdd(iabVal, iabText, iabTextParent);
+                });
             }
 
             $('.iab-cat-parent').on('change', function ()
             {
-                $('.iab-cat-child').val('');
                 var iabPrefix = $(this).val();
+                $('.iab-cat-child').val(iabPrefix);
                 if (iabPrefix == "")
                 {
                     $('.iab-cat-child-box').addClass('hidden');
+                    $('.iab-cat-child-box select').prop('disabled', true);
                 }
                 else
                 {
                     $('.iab-cat-child-box').removeClass('hidden');
+                    $('.iab-cat-child-box select').prop('disabled', false);
                     $('.iab-cat-child option').addClass('hidden');
-                    $('.iab-cat-child option[value^="' + iabPrefix + '-"], .iab-cat-child option[value="' + iabPrefix + '"]').removeClass('hidden');
+                    $('.iab-cat-child option[value^="' + iabPrefix + '-"], .iab-cat-child option[value="' + iabPrefix + '"], .iab-cat-child option[value=""]').removeClass('hidden');
+                    $('.iab-cat-child-box select').val('');
                 }
 
 
+            });
+
+            $('.iab-cat-child').on('change', function ()
+            {
+                var iabCurrent = $('.iab-cat-tags').val() ? $('.iab-cat-tags').val().split(',') : [];
+                if (iabCurrent.length < 4)
+                {
+                    var iabVal = $(this).val();
+                    var iabText = $(this).find('option:selected').text();
+                    var iabTextParent = $('.iab-cat-parent').find('option:selected').text();
+                    if (iabVal && iabCurrent.indexOf(iabVal) == -1)
+                    {
+                        iabCurrent.push(iabVal);
+                        $('.iab-cat-tags').val(iabCurrent.join(','));
+                        window._EPYTA_.iabAdd(iabVal, iabText, iabTextParent);
+                    }
+                }
+                else
+                {
+                    alertify.alert('You can choose up to 4 categories maximum. In order to add a new one, you must remove one of the existing ones.');
+                }
+            });
+
+            $('.iab-cat-tags-display').on('click', '.iab-cat-tag-button', function ()
+            {
+                var $tag = $(this);
+                var iabVal = $tag.data('tag');
+                var iabCurrent = $('.iab-cat-tags').val() ? $('.iab-cat-tags').val().split(',') : [];
+                iabCurrent = iabCurrent.filter(function (ele)
+                {
+                    return ele != iabVal;
+                });
+                $('.iab-cat-tags').val(iabCurrent.join(','));
+                $tag.remove();
             });
 
             window._EPYTA_.demoBackgroundColor();
@@ -600,7 +764,7 @@
                 },
                 success: function (response)
                 {
-                    if (response.type === 'error' || !response.data.mtdReport.length)
+                    if (response.type === 'error' || !response.data.mtdReport.length || typeof (response.data.mtdReport[0].date) === 'undefined')
                     {
                         $('.vi-report-error').removeClass('hide');
                         $('.vi-report').addClass('hide');
@@ -722,9 +886,15 @@
 
             $('.ytvi-btn-logout').on('click', function ()
             {
+                var multiCatWarning = '';
+                var iabValRaw = $('.iab-cat-tags').val();
+                if (iabValRaw.length > 0 && iabValRaw.split(',').length > 1)
+                {
+                    multiCatWarning = ' (Note: If you selected more than one video category, you must stay logged in to this settings page for your categories to automatically add variety to your ads)';
+                }
                 alertify.confirm().set({
                     title: "Logout of Monetize settings",
-                    message: "Logging out won't delete your settings. However, it will require you (or any other admins) to re-login to change vi ad settings in the future.<br><br>To actually disable vi ads, make sure the '<strong>vi ads are: On/Off</strong>' button is set to '<strong>Off</strong>.'",
+                    message: "Logging out won't delete your settings. However, it will require you or any other admins to re-login to change vi ad settings in the future" + multiCatWarning + ".<br><br>To actually disable monetization, make sure the '<strong>vi ads are: On/Off</strong>' button is set to '<strong>Off</strong>.'",
                     onok: function ()
                     {
                         $.ajax({
@@ -790,6 +960,14 @@
                             {
                                 $btn.find('strong').text(response.button_text);
                                 $btn.toggleClass('ytvi-btn-active ytvi-btn-inactive');
+                                if ($btn.hasClass('ytvi-btn-active'))
+                                {
+                                    $('.ytvi-msg-congrats').show(200);
+                                }
+                                else
+                                {
+                                    $('.ytvi-msg-congrats').hide();
+                                }
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError)

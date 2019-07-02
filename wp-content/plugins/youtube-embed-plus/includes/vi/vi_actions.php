@@ -5,6 +5,7 @@ add_action("wp_ajax_my_embedplus_vi_toggle_ajax", array(get_class(), 'vi_toggle_
 add_action("wp_ajax_my_embedplus_vi_hide_feature_ajax", array(get_class(), 'vi_hide_feature_ajax'));
 
 add_action('admin_init', array(get_class(), 'vi_adstxt_download'));
+add_action('admin_notices', array(get_class(), 'vi_notice_login_reminder'));
 
 if (function_exists('tenup_display_ads_txt'))
 {
@@ -23,6 +24,9 @@ if (self::vi_logged_in())
 {
     add_action("wp_ajax_my_embedplus_vi_logout_ajax", array(get_class(), 'vi_logout_ajax'));
     add_action("wp_ajax_my_embedplus_vi_reports_ajax", array(get_class(), 'vi_reports_ajax'));
+    add_action("wp_ajax_my_embedplus_vi_adstxt_status_soft_ajax", array(get_class(), 'vi_adstxt_status_soft_ajax'));
+
+    add_action('admin_init', array(get_class(), 'vi_token_expire'), 9);
 
     add_filter('cron_schedules', array(get_class(), 'vi_cron_interval'));
     add_action('ytvi_cron_cache_js_hook', array(get_class(), 'vi_cron_cache_js'));

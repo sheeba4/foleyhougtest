@@ -132,7 +132,7 @@ input.ui-widget[type=text] {
 }
 
 .ytprefs-ob-content {
-    max-width: 768px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -237,4 +237,24 @@ iframe#gdpr_consent_message_ifr {
     /*    max-width: 600px;
         text-align: center;
         margin: 0 auto;*/
+}
+
+.wiztab-screenshots {
+    float: right;
+    max-width: 50%;
+    height: auto;
+    clear: right;
+    margin-left: 30px;
+    margin-bottom: 15px;
+    display: block;
+    border: 5px solid #dddddd;
+}
+
+.ytprefs-ob-success {
+    color: #00a000;
+    font-weight: bold;
+}
+
+.ytprefs-ob-success:after {
+    content: url('../images/adstxt-valid.png');
 }

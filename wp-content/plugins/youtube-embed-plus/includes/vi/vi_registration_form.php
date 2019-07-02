@@ -30,10 +30,38 @@
 </div>
 <div class="vi-demo-col-content">
     <div class="vi-demo">
+        <?php
+        $multiCatWarning = '';
+        if (!empty(self::$alloptions[self::$opt_vi_js_settings]['iabCategory']))
+        {
+            $iabCategoryList = explode(',', self::$alloptions[self::$opt_vi_js_settings]['iabCategory']);
+            if (count($iabCategoryList) > 1)
+            {
+                $multiCatWarning = ' Note: If you selected more than one video category, you must stay logged in to this settings page for your categories to automatically add variety to your ads.';
+            }
+        }
+        if (self::$alloptions[self::$opt_vi_token] === false)
+        {
+            ?>
+            <div class="login-expire">
+                For your security, your session has expired. Please login to vi again below to view your settings. <?php echo $multiCatWarning; ?>
+            </div>
+            <?php
+        }
+        else if ((self::vi_script_setup_done() && !self::vi_last_login_valid()))
+        {
+            ?>
+            <div class="login-expire">
+                For your security, your session expires every 30 days. Please login to vi again below to view your settings. <?php echo $multiCatWarning; ?>
+            </div>
+            <?php
+        }
+        ?>
         <p class="vi-demo-lede">
             You now have the option to make money embedding quality video ads that offer up to 10 times higher CPMs than display advertising. The ads that you will embed are privacy/GDPR friendly,
             powered by <img class="vi-logo-text" alt="vi" src="<?php echo plugins_url(self::$folder_name . '/images/vi_logo.svg'); ?>">
-            <a href="https://www.vi.ai/publisher-video-monetization/?aid=WP_embedplus&utm_source=Wordpress&utm_medium=WP_embedplus" target="_blank">video intelligence</a>,
+            video intelligence,
+            <!--            <a href="https://www.vi.ai/publisher-video-monetization/?aid=WP_embedplus&utm_source=Wordpress&utm_medium=WP_embedplus" target="_blank">video intelligence</a>,-->
             completely separate from your YouTube embeds, and can provide extra income on top of revenue from your current ads.
         </p>
         <p>
@@ -49,8 +77,8 @@
         <div class="ytvi-step ytvi-step-1">
             <div class="ytvi-step-1--form">
                 <div class="side-signup ytprefs-ajax-form">
-                    <h1>Sign up with vi.ai</h1>
-                    <h2>Join 30,000+ publishers</h2>
+                    <h1>Start earning today</h1>
+                    <h2>Earn 10x higher CPMs</h2>
                     <p class="description">Where should we send your welcome and revenue info?</p>
                     <p>
                         <input class="textinput regular-text ytvi-register-email" type="text" placeholder="Your email" />
@@ -63,12 +91,11 @@
                     </p>
                     <p>
                         <input disabled class="button-primary ytvi-step-1--submit-register ytprefs-ajax-form--submit" type="button" value="Next &raquo;"/>
-                        <a class="vi-forgot-pw" href="https://www.vi.ai/legals/?aid=WP_embedplus&utm_source=Wordpress&utm_medium=WP_embedplus" target="_blank">vi.ai Terms & Privacy &raquo;</a>
                     </p>
                 </div>
                 <div class="side-login ytprefs-ajax-form">
-                    <h1>Log in to vi.ai</h1>
-                    <h2>Earn 10x higher CPMs</h2>
+                    <h1>Log in to vi</h1>
+                    <h2>Join 40,000+ publishers</h2>
                     <p class="description">Already signed up? Login here using the info from your welcome email.</p>
                     <p>
                         <input class="textinput regular-text ytvi-login-email" type="text" placeholder="Your email" />
@@ -79,16 +106,23 @@
                     <p>
                         <input class="button-primary ytvi-step-1--submit-login ytprefs-ajax-form--submit" type="button" value="Log In &raquo;">
                         <a class="vi-forgot-pw" href="https://dashboard.vi.ai/resetPassword/" target="_blank">Forgot Password?</a>
-                        <input type="hidden" value="" class="ytvi-login-adstxt" />
                     </p>
                 </div>
                 <div class="vi-contact-support">
                     <p class="center"><em>Need help signing up or signing in? Contact support at <strong><a href="mailto:ext@embedplus.com">ext@embedplus.com</a></strong></em></p>
+                    <p class="center"><a href="https://www.vi.ai/legals/?aid=WP_embedplus&utm_source=Wordpress&utm_medium=WP_embedplus" target="_blank">vi.ai Terms & Privacy</a></p>
                 </div>
             </div>
-            <p class="box-vi-not-interested">
-                Not interested? You can hide this by <button class="button button-small vi-cover-prompt-no" type="button">clicking here</button> or checking <a class="vi-not-interested" target="_top" href="<?php echo admin_url('admin.php?page=youtube-my-preferences#vi_hide_monetize_tab') ?>"><em>Hide "Monetize" Feature</em></a> found in the YouTube Settings "Defaults" tab.
-            </p>
+           <?php
+            if (!self::vi_script_setup_done())
+            {
+                ?>
+                <p class="box-vi-not-interested">
+                    Not interested? You can hide this by checking <a class="vi-not-interested" target="_top" href="<?php echo admin_url('admin.php?page=youtube-my-preferences#vi_hide_monetize_tab') ?>"><em>Hide "Monetize" Feature</em></a> found in the YouTube Settings "Defaults" tab.
+                </p>            
+                <?php
+            }
+            ?>
         </div>
         <div class="ytvi-step ytvi-step-2-loading">
             <p class="ytvi-loading--message">
@@ -100,14 +134,17 @@
             <div class="ytvi-registration">
                 <div class="ytvi-step-2-msg">
                     <ol>
-                        <li><strong>Fill out</strong> the below</li>
-                        <li><strong>Check your email</strong> for a confirmation link</li>
-                        <li><strong>Come back</strong> and
+                        <li><strong>Register</strong> below.</li>
+                        <li><strong>Check your email</strong> for a confirmation link. Vi will verify your site for quality standards, so it may take about 48 hours for approval. Weekend signups will be processed starting on Monday.</li>
+                        <li><strong>Come right back here</strong> after creating your password
                             <?php
                             $curr_screen = get_current_screen();
-                            echo strpos($curr_screen->id, 'youtube-ep-vi') !== false ? 'refresh this page' : '<a target="_blank" href="' . admin_url('admin.php?page=youtube-ep-vi') . '">click here</a>'
-                            ?> to login
-                        </li>                            
+                            echo strpos($curr_screen->id, 'youtube-ep-vi') !== false || strpos($curr_screen->id, 'youtube-my-preferences') !== false ? 'and refresh this page.' : 'and <a target="_blank" href="' . admin_url('admin.php?page=youtube-ep-vi') . '">click here</a>.'
+                            ?> (Note: <u><strong>Skip</strong> the "integration tags" step</u> that you might see after confirmation, because this plugin will automatically do that step for you.)
+                        </li>
+                        <li>
+                            <strong>Login below</strong> to complete the setup.
+                        </li>
                     </ol>
                 </div>
                 <iframe frameborder="0"></iframe>
