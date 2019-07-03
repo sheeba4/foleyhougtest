@@ -471,3 +471,6 @@ function coauthor_sort( $orderby, $query_vars, $taxonomies ) {
 
 	return $orderby;
 }
+
+//disable gutenberg
+add_filter('use_block_editor_for_post', '__return_false', 10);
