@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * The Template for displaying all single posts
  *
@@ -6,26 +6,31 @@
  * @subpackage fohopoco
  * @since fohopoco 1.0
  */
+
  get_header(); ?>
 <div id="content" role="main">
-	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	<?php
+	if ( have_posts() ) :
+		while ( have_posts() ) :
+			the_post();
+			?>
 	<article class="clearfix post">
 		<header class="entry-header">
 			<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 			<div class="entry-meta">
 				<span class="sep">Posted on </span>
-				<a href="<?php the_permalink(); ?>" title="Posted on <?php the_time('F jS, Y') ?>" rel="bookmark">
-					<time class="entry-date" datetime="<?php the_time('F jS, Y') ?>"><?php the_time('F jS, Y') ?></time>
+				<a href="<?php the_permalink(); ?>" title="Posted on <?php the_time( 'F jS, Y' ); ?>" rel="bookmark">
+					<time class="entry-date" datetime="<?php the_time( 'F jS, Y' ); ?>"><?php the_time( 'F jS, Y' ); ?></time>
 				</a>
 				<!-- / bookmark -->
 				
 				<span class="by-author">
 					<span class="sep"> by </span>
 					<span class="author vcard">
-						<?php if ( function_exists( 'coauthors_posts_links' ) ): ?>
+						<?php if ( function_exists( 'coauthors_posts_links' ) ) : ?>
 							<?php coauthors_posts_links(); ?>
-						<?php else: ?>
-							<a class="url fn n" href="<?php echo get_author_posts_url(get_the_author_meta( 'ID' )); ?>" title="View all posts by <?php the_author() ?>" rel="author"><?php the_author_meta('display_name'); ?></a>
+						<?php else : ?>
+							<a class="url fn n" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" title="View all posts by <?php the_author(); ?>" rel="author"><?php the_author_meta( 'display_name' ); ?></a>
 						<?php endif; ?>
 					</span>
 				</span>
@@ -40,14 +45,17 @@
 		</div>
 		<!-- / entry-content -->
 		
-		<?php $o = get_option('minify_theme_options'); ?>
-		<p class="print-disclaimer clearfix"><?php echo stripslashes($o['minify_copyright_text']); ?></p>
+			<?php $o = get_option( 'minify_theme_options' ); ?>
+		<p class="print-disclaimer clearfix"><?php echo stripslashes( $o['minify_copyright_text'] ); ?></p>
 
 		<footer class="entry-meta">
 			
 			<span class="tag-links">
-				<?php if ( has_tag() ){ ?><span class="mrgn"><?php the_tags('<span class="entry-utility-prep entry-utility-prep-tag-links">Tags:</span> ', ', ', ''); ?></span><?php } ?>
-				<span class="entry-utility-prep entry-utility-prep-category-links">Categories:</span> <?php the_category(', '); ?>
+				<?php
+				if ( has_tag() ) {
+					?>
+					<span class="mrgn"><?php the_tags( '<span class="entry-utility-prep entry-utility-prep-tag-links">Tags:</span> ', ', ', '' ); ?></span><?php } ?>
+				<span class="entry-utility-prep entry-utility-prep-category-links">Categories:</span> <?php the_category( ', ' ); ?>
 			</span>
 			<!-- / tag-links -->
 
@@ -67,7 +75,7 @@
 	</article>
 	<!-- / post -->
 	
-	<?php comments_template( '', true ); ?>
+			<?php comments_template( '', true ); ?>
 	
 	<?php endwhile; ?>
 		

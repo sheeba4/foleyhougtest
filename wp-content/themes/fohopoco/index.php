@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * The main template file
  *
@@ -12,43 +12,51 @@
  * @subpackage fohopoco
  * @since fohopoco 1.0
  */
+
 get_header(); ?>
 
 <div id="content" role="main">
-	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	<?php
+	if ( have_posts() ) :
+		while ( have_posts() ) :
+			the_post();
+			?>
 	<article class="clearfix post">
 		<header class="entry-header">
 			<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 			<div class="entry-meta">
 				<span class="sep">Posted on </span>
-				<a href="<?php the_permalink(); ?>" title="Posted on <?php the_time('F jS, Y') ?>" rel="bookmark">
-					<time class="entry-date" datetime="<?php the_time('F jS, Y') ?>"><?php the_time('F jS, Y') ?></time>
+				<a href="<?php the_permalink(); ?>" title="Posted on <?php the_time( 'F jS, Y' ); ?>" rel="bookmark">
+					<time class="entry-date" datetime="<?php the_time( 'F jS, Y' ); ?>"><?php the_time( 'F jS, Y' ); ?></time>
 				</a>
 				<!-- / bookmark -->
 
-<?php $authorrole = esc_attr(get_the_author_meta
-
-('user_level') );
-	if ($authorrole == 1) { ?>
+			<?php
+			$authorrole = esc_attr( get_the_author_meta( 'user_level' ) );
+			if ( $authorrole == 1 ) {
+				?>
 <span class="by-author">
 	<span class="sep"> by </span>
 
-    <span class="author vcard"><strong><?php
+	<span class="author vcard"><strong>
+				<?php
 
-the_author_meta('display_name'); ?></strong></span>
+				the_author_meta( 'display_name' );
+				?>
+	</strong></span>
 </span>
 
-	<?php } else {?>
+			<?php } else { ?>
 
 		<span class="by-author">
 	<span class="sep"> by </span>
-    <span class="author vcard">
-        <?php if ( function_exists( 'coauthors_posts_links' ) ): ?>
-	        <?php coauthors_posts_links(); ?>
-        <?php else: ?>
-            <a class="url fn n" href="<?php echo get_author_posts_url(get_the_author_meta( 'ID' )); ?>" title="View all posts by <?php the_author() ?>" rel="author"><?php the_author_meta('display_name'); ?></a>
-        <?php endif; ?>
-    </span>
+	<span class="author vcard">
+				<?php if ( function_exists( 'coauthors_posts_links' ) ) : ?>
+					<?php coauthors_posts_links(); ?>
+		<?php else : ?>
+			<a class="url fn n" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" title="View all posts by <?php the_author(); ?>" rel="author"><?php the_author_meta( 'display_name' ); ?></a>
+		<?php endif; ?>
+	</span>
 </span>
 <!-- / by-author -->
 
@@ -59,15 +67,15 @@ the_author_meta('display_name'); ?></strong></span>
 		<!-- / header -->
 
 		<div class="entry-content">
-			<?php 
+			<?php
 			$display_option = get_post_meta( $post->ID, '_fohopoco_display_option', true );
-	
-			if( $display_option == 'content' ){
-				the_content(); 
-			}else {
+
+			if ( $display_option == 'content' ) {
+				the_content();
+			} else {
 				the_excerpt();
 			}
-			
+
 			?>
 		</div>
 		<!-- / entry-content -->
@@ -75,8 +83,11 @@ the_author_meta('display_name'); ?></strong></span>
 		<footer class="entry-meta">
 			
 			<span class="tag-links">
-				<?php if ( has_tag() ){ ?><span class="mrgn"><?php the_tags('<span class="entry-utility-prep entry-utility-prep-tag-links">Tags:</span> ', ', ', ''); ?></span><?php } ?>
-				<span class="entry-utility-prep entry-utility-prep-category-links">Categories:</span> <?php the_category(', '); ?>
+				<?php
+				if ( has_tag() ) {
+					?>
+					<span class="mrgn"><?php the_tags( '<span class="entry-utility-prep entry-utility-prep-tag-links">Tags:</span> ', ', ', '' ); ?></span><?php } ?>
+				<span class="entry-utility-prep entry-utility-prep-category-links">Categories:</span> <?php the_category( ', ' ); ?>
 			</span>
 			<!-- / tag-links -->
 			
@@ -100,7 +111,7 @@ the_author_meta('display_name'); ?></strong></span>
 	<?php else : ?>
 	
 	<?php endif; ?>
-<div class="navigation"><p><?php posts_nav_link(' &mdash; ','&laquo; Newer Posts','Older Posts &raquo;'); ?></p></div>
+<div class="navigation"><p><?php posts_nav_link( ' &mdash; ', '&laquo; Newer Posts', 'Older Posts &raquo;' ); ?></p></div>
 
 </div>
 <!-- / content -->
