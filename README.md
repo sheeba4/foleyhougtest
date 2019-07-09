@@ -1,3 +1,3 @@
-# foleyhoag-wpcontent
+# Foley Hoag Blogs
 
-This is a wp-content directory for FoleyHoag blogs multisite
+FoleyHoag blogs
