@@ -36,7 +36,7 @@ class youtube_embed_widget_default{
 			"youtube_embed_widget_show_progress_bar_color" => "red",
 			"youtube_embed_widget_autohide_parameters"  	=> "1",
 			"youtube_embed_widget_set_initial_volume" => "",
-				"youtube_embed_widget_initial_volume" 		=> "80",
+				"youtube_embed_widget_initial_volume" 		=> "60",
 			"youtube_embed_widget_disable_keyboard"  	=>"0"
 		);
 	$kk=1;	

@@ -3,8 +3,8 @@ Contributors: wpdevart
 Donate link: http://wpdevart.com/wordpress-youtube-embed-plugin
 Tags:  youtube, youtube playlist, youtube player, youtube widget, youtube embed
 Requires at least: 3.2.0
-Tested up to: 5.1.1
-Stable tag: 2.1.2
+Tested up to: 5.2.4
+Stable tag: 2.1.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
