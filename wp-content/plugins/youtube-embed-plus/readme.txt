@@ -1,10 +1,10 @@
-=== YouTube ===
+=== Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream ===
 Contributors: embedplus
-Plugin Name: YouTube Embed
+Plugin Name: Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream
 Tags: youtube gallery, video gallery, youtube channel, youtube live, live stream
 Requires at least: 4.0
-Tested up to: 5.2
-Stable tag: 13.1
+Tested up to: 5.3
+Stable tag: 13.1.2.4
 License: GPLv3 or later
 
 YouTube Embed WordPress Plugin. Embed a responsive video, YouTube channel gallery, playlist gallery, or YouTube.com live stream (with GDPR options)
@@ -13,7 +13,7 @@ YouTube Embed WordPress Plugin. Embed a responsive video, YouTube channel galler
 
 **Your WordPress YouTube embed, YouTube gallery (channel and playlist), and even YouTube live stream can be customized in a wide variety of ways with this plugin. Here are a few recently added features:**
 
-* Compatible with the WordPress 5.0 Gutenberg block editor (it also stays backwards-compatible with the classic editor). Both the Gutenberg block selector and the Gutenberg classic block will show the YouTube wizard button.  For the Gutenberg block selector, click on the (+) sign for the block editor list. The YouTube Wizard block is located under the "Embeds" category (make sure you choose "YouTube **Wizard**"). See more on [how to embed a YouTube video, gallery, or livestream with the WordPress Gutenberg block editor here >>](https://www.embedplus.com/embed-youtube-video-gallery-livestream-wordpress-gutenberg-block-editor.aspx)
+* Compatible with the WordPress 5.0+ Gutenberg block editor (it also stays backwards-compatible with the classic editor). Both the Gutenberg block selector and the Gutenberg classic block will show the YouTube wizard button.  For the Gutenberg block selector, click on the (+) sign for the block editor list. The YouTube Wizard block is located under the "Embeds" category (make sure you choose "YouTube **Wizard**"). See more on [how to embed a YouTube video, gallery, or livestream with the WordPress Gutenberg block editor here >>](https://www.embedplus.com/embed-youtube-video-gallery-livestream-wordpress-gutenberg-block-editor.aspx)
 * Privacy and Consent - Improved privacy and GDPR compliance options like YouTube no cookie, YouTube API restrictions, and a customizable GDPR consent message
 * YouTube gallery capability (channel and playlist) – The ability to make playlist and channel embeds have a gallery layout. By default, the plugin can generate a grid-based [responsive playlist or channel gallery >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx). Your visitors can browse through pages of video thumbnails and choose from videos that are pulled from an entire YouTube channel or playlist.
 * YouTube gallery auto continuous play - embed a playlist or channel gallery and allow it to play one video after the next without requiring viewers to click a thumbnail
@@ -97,7 +97,7 @@ You can also start and end each individual video at particular times. Like the a
 
 See more details after installing. Enjoy!
 
-[Maintained by EmbedPlus for YouTube >>](https://www.embedplus.com/)
+[Maintained by Embed Plus for YouTube >>](https://www.embedplus.com/)
 
 == Installation ==
 
@@ -120,7 +120,6 @@ See more details after installing. Enjoy!
 * rel - Set this to 0 to not show related videos at the end of playing (or 1 to show them). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&rel=0"`
 * showinfo - Set this to 0 to hide the video title and other info (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&showinfo=0"`
 * fs - Set this to 0 to hide the fullscreen button (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&fs=0"`
-* autohide - Set this to 1 to slide away the control bar after the video starts playing. It will automatically slide back in again if you mouse over the video. (Set to  2 to always show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&autohide=1"`
 
 You can also start and end each individual video at particular times. Like the above, each option should begin with '&'
 
@@ -148,7 +147,33 @@ You can also start and end each individual video at particular times. Like the a
 
 == Changelog ==
 
-= WordPress YouTube Embed 13.1 =
+= Embed Plus for YouTube WordPress Plugin 13.1.2.4 =
+* Pagination and autonext allow the current video to play
+* Pagination on mobile fix
+* vi deprecation announcement
+
+= Embed Plus for YouTube WordPress Plugin 13.1.2.3 =
+* gallery thumbnail mobile tap/scroll fix
+
+= Embed Plus for YouTube WordPress Plugin 13.1.2.2 =
+* Wizard open/close fix
+* iOS gallery thumbnail click fix
+* class-oembed deprecation fix
+
+= Embed Plus for YouTube WordPress Plugin 13.1.2.1 =
+* Compatibility with legacy versions of PHP
+
+= Embed Plus for YouTube WordPress Plugin 13.1.2 =
+* More descriptive plugin name
+* Gallery column size and YouTube API message fixes
+
+= Embed Plus for YouTube WordPress Plugin 13.1.1 =
+* Fixes gallery autonext issue
+* Fixes deprecated controls parameter
+* Fixes "not live" content issue
+* Remove deprecated showinfo parameter
+
+= Embed Plus for YouTube WordPress Plugin 13.1 =
 * Brings back the ability to hide related/suggested videos at end of playback
 * Allows monetized sites to select multiple IAB categories
 * Option to run shortcode in admin (compatibility tab)
@@ -156,62 +181,62 @@ You can also start and end each individual video at particular times. Like the a
 * Fixes "missing dependencies" block editor CSS reference
 * Fixes default dimensions issue
 
-= WordPress YouTube Embed 13.0.1 =
+= Embed Plus for YouTube WordPress Plugin 13.0.1 =
 * Clearer instructions
 * Feature deprecation (rel, showinfo)
 
-= WordPress YouTube Embed 13.0 =
+= Embed Plus for YouTube WordPress Plugin 13.0 =
 * Compatible with the new Gutenberg block editor, and stays backwards-compatible with the classic editor
 * Marked deprecated features
 * Improved wizard instructions
 
-= WordPress YouTube Embed 12.2 =
+= Embed Plus for YouTube WordPress Plugin 12.2 =
 * Improved ads.txt verification management
 * Fixed gallery box-sizing bug
 * Remove some deprecated YouTube parameters
 
-= WordPress YouTube Embed 12.1 =
+= Embed Plus for YouTube WordPress Plugin 12.1 =
 * Improved autoplay compatibility
 * Improved sign-up process for the new monetization feature
 
-= WordPress YouTube Embed 12.0.1 =
+= Embed Plus for YouTube WordPress Plugin 12.0.1 =
 * Force HTTPS for the YouTube API if the API is enabled
 * Makes the wizard's lightbox expand/contract responsively for different size screens
 
-= WordPress YouTube Embed 12.0 =
+= Embed Plus for YouTube WordPress Plugin 12.0 =
 * Improves the admin interface, and includes a new optional feature for users that want to monetize their sites through contextual video from vi.ai.
 
-= WordPress YouTube Embed 11.9.2 =
+= Embed Plus for YouTube WordPress Plugin 11.9.2 =
 * Makes the GDPR consent message display more compatible with other plugins (fixes content filter)
 
-= WordPress YouTube Embed 11.9.1 =
+= Embed Plus for YouTube WordPress Plugin 11.9.1 =
 Improved GDPR compliance, with new Privacy section containing:
 * GDPR consent mode
 * YouTube no cookie
 * YouTube API loading restrictions
 
-= WordPress YouTube Embed 11.8.7 =
+= Embed Plus for YouTube WordPress Plugin 11.8.7 =
 * Helps with GDPR compliance by allowing you to choose when YouTube.com's API is loaded
 
-= WordPress YouTube Embed 11.8.6.1 =
+= Embed Plus for YouTube WordPress Plugin 11.8.6.1 =
 * Rollback jQuery Updater plugin compatability
 
-= WordPress YouTube Embed 11.8.6 =
+= Embed Plus for YouTube WordPress Plugin 11.8.6 =
 * Updated YouTube API key video tutorial
 * Improved channel wizard process
 * Better compatibility with jQuery Updater plugin
 
-= WordPress YouTube Embed 11.8.5 =
+= Embed Plus for YouTube WordPress Plugin 11.8.5 =
 * Adds the YouTube wizard button to the new built-in WordPress text widget
 * Fixes a Mac/iOS gallery scrolling issue
 
-= WordPress YouTube Embed 11.8.4 =
+= Embed Plus for YouTube WordPress Plugin 11.8.4 =
 * Fixes gallery AJAX issue
 * Adds ability to hide fullscreen button
 * Adds ability to hide private videos from galleries
 * Changes localized script dependency to jquery
 
-= WordPress YouTube Embed 11.8.3 =
+= Embed Plus for YouTube WordPress Plugin 11.8.3 =
 * Improved compatability with PHP 7
 * Improved compatability with Divi theme
 * Improved AJAX compatibility
@@ -221,28 +246,28 @@ Improved GDPR compliance, with new Privacy section containing:
 * Modernize and improve wizard interface (Pro)
 * Ability to hide thumbnail images from galleries (Pro)
 
-= WordPress YouTube Embed 11.8.2 =
+= Embed Plus for YouTube WordPress Plugin 11.8.2 =
 * Fix auto-next gallery issue
 * Make settings form more secure
 
-= WordPress YouTube Embed 11.8.1 =
+= Embed Plus for YouTube WordPress Plugin 11.8.1 =
 * Fix playlist gallery issue
 
-= WordPress YouTube Embed 11.8 =
+= Embed Plus for YouTube WordPress Plugin 11.8 =
 * Improved AJAX theme compatability
 * Ability to choose which roles can use the editor wizard
 * Volume + autoplay fix
 
-= WordPress YouTube Embed 11.7.1 =
+= Embed Plus for YouTube WordPress Plugin 11.7.1 =
 * Remove gallery thumbnail translucency
 * Various bug fixes for galleries and the wizard
 
-= WordPress YouTube Embed 11.7 =
+= Embed Plus for YouTube WordPress Plugin 11.7 =
 * Separate Free and Pro codebases
 * Remove deprecated features
 * Clean up code
 
-= WordPress YouTube Embed 11.6 =
+= Embed Plus for YouTube WordPress Plugin 11.6 =
 * Fixed issue where Free version had some remnants of Pro analytics codebase supporting features here: https://www.embedplus.com/dashboard/easy-youtube-analytics-preview.aspx?platform=sim
 * New feature: live streaming from a channel
 * Optimized player and gallery loading that may improve GTMetrix reports
@@ -252,236 +277,236 @@ Improved GDPR compliance, with new Privacy section containing:
 * Gallery pagination enhancement
 * PHP 7 compatibility testing
 
-= WordPress YouTube Embed 11.5 =
+= Embed Plus for YouTube WordPress Plugin 11.5 =
 * thumbnail stacking for mobile galleries
 * better support for ajax themes
 * alt text to images
 
-= WordPress YouTube Embed 11.4 =
+= Embed Plus for YouTube WordPress Plugin 11.4 =
 * (Free) Improved subscribe button CSS and a new migration option.
 * (Pro) Improved accessibility for popup lightbox galleries.
 
-= WordPress YouTube Embed 11.3.1 =
+= Embed Plus for YouTube WordPress Plugin 11.3.1 =
 * (Free) improved debug mode messages
 * (Pro) autonext for popup lightbox galleries and hide clear cache button option
 
-= WordPress YouTube Embed 11.3 =
+= Embed Plus for YouTube WordPress Plugin 11.3 =
 * Improved responsive sizing for AJAX-based themes
 * Popup lightbox display option for Pro galleries
 
-= WordPress YouTube Embed 11.2 =
+= Embed Plus for YouTube WordPress Plugin 11.2 =
 * Adds improved wizard and gallery options for Free and Pro users.
 * Improved handling of PHP notices.
 * Clear cache shortcut added for Pro users.
 
-= WordPress YouTube Embed 11.1 =
+= Embed Plus for YouTube WordPress Plugin 11.1 =
 * Automatic continuous play for playlist and channel gallery embeds.
 * Ability to add a YouTube channel subscription link to all galleries.
 * Ability to hide Previous/Next buttons and page numbers.
 * Featured images can now be pulled from playlists (using the thumbnail of the first video).
 
-= WordPress YouTube Embed 11.0.1 =
+= Embed Plus for YouTube WordPress Plugin 11.0.1 =
 Improves HTTPS support for structured data tags, and HTTPS support in Firefox.
 
-= WordPress YouTube Embed 11.0 =
+= Embed Plus for YouTube WordPress Plugin 11.0 =
 Improves playlist and gallery embedding functionality.
 
-= WordPress YouTube Embed 10.9 =
+= Embed Plus for YouTube WordPress Plugin 10.9 =
 This version offers a host of updates: compatibility fixes, higher quality featured images, selective responsive sizing, wizard enhancements, and circular shaped thumbnails.
 
-= WordPress YouTube Embed 10.8 =
+= Embed Plus for YouTube WordPress Plugin 10.8 =
 This update improves compatibility and adds features to Free and Pro galleries.
 
-= WordPress YouTube Embed 10.7 =
+= Embed Plus for YouTube WordPress Plugin 10.7 =
 Adds legacy option.
 
-= WordPress YouTube Embed 10.6 =
+= Embed Plus for YouTube WordPress Plugin 10.6 =
 Enhanced debugging support for galleries.
 
-= WordPress YouTube Embed 10.5 =
+= Embed Plus for YouTube WordPress Plugin 10.5 =
 Enhanced gallery settings for scrolling, video titles, and thumbnail styling.
 
-= WordPress YouTube Embed 10.4 =
+= Embed Plus for YouTube WordPress Plugin 10.4 =
 Addresses limitations some users were getting when pasting a YouTube channel and/or playlist gallery.
 
-= WordPress YouTube Embed 10.3 =
+= Embed Plus for YouTube WordPress Plugin 10.3 =
 Adds the ability to make playlist and channel embeds have a gallery layout. By the default, the plugin can generate a grid-based [responsive playlist and channel gallery >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx)
 
-= WordPress YouTube Embed 10.2 =
+= Embed Plus for YouTube WordPress Plugin 10.2 =
 Adds start video settings for playlist embeds. You can now choose to start a playlist with a specific video or have the plugin automatically start with the most recently added video.
 
-= WordPress YouTube Embed 10.1 =
+= Embed Plus for YouTube WordPress Plugin 10.1 =
 Adds the ability to automatically migrate from another plugin's shortcode. Caching feature now allows lifetime settings. Improved compatibility with other plugins using the YouTube API.
 
-= WordPress YouTube Embed 10.0 =
+= Embed Plus for YouTube WordPress Plugin 10.0 =
 This update includes improved tips (Free and Pro) and adds caching to the Pro version for faster page loading.
 
-= WordPress YouTube Embed 9.8 =
+= Embed Plus for YouTube WordPress Plugin 9.8 =
 Upgraded code to use YouTube API v3.
 
-= WordPress YouTube Embed 9.7 =
+= Embed Plus for YouTube WordPress Plugin 9.7 =
 Adds improved accessibility for screen readers and video thumbnail as featured image support.  
 
-= WordPress YouTube Embed 9.5 =
+= Embed Plus for YouTube WordPress Plugin 9.5 =
 Site origin information with each embed code as an extra security measure. In YouTube's/Google's own words, checking this option "protects against malicious third-party JavaScript being injected into your page and hijacking control of your YouTube player." We especially recommend checking it as it adds higher security than the built-in YouTube embedding method that comes with the current version of WordPress (i.e. oembed).
 
-= WordPress YouTube Embed 9.4 =
+= Embed Plus for YouTube WordPress Plugin 9.4 =
 Adds Autofit Widget option for Free and PRO users. Also adds slide from left animation to [PRO effects >>](https://www.embedplus.com/add-special-effects-to-youtube-embeds-in-wordpress.aspx)
 
-= WordPress YouTube Embed 9.3 =
+= Embed Plus for YouTube WordPress Plugin 9.3 =
 Improved volume functionality and interface updates (Free and PRO).  [Special effects added to PRO version >>](https://www.embedplus.com/add-special-effects-to-youtube-embeds-in-wordpress.aspx)
 
-= WordPress YouTube Embed 9.2 =
+= Embed Plus for YouTube WordPress Plugin 9.2 =
 HTTPS/SSL detection is now fully automatic. The manual checkbox is no longer needed.
 
-= WordPress YouTube Embed 9.1 =
+= Embed Plus for YouTube WordPress Plugin 9.1 =
 With this version, the plugin can now automatically detect your site's default language and set the interface of the embedded YouTube player to match.
 
-= WordPress YouTube Embed 9.0 =
+= Embed Plus for YouTube WordPress Plugin 9.0 =
 Adds automatic localization/internationalization so you can set the player's interface language from English to another.
 
-= WordPress YouTube Embed 8.9 =
+= Embed Plus for YouTube WordPress Plugin 8.9 =
 Allows volume level initialization.
 
-= WordPress YouTube Embed 8.8 =
+= Embed Plus for YouTube WordPress Plugin 8.8 =
 * Better embedplus plugin conflict notifications.
 * Greater emphasis on HTTPS support due to Google's recent announcement about [HTTPS/SSL as an SEO/SERP signal](https://embedplus.com/convert-old-youtube-embeds-to-https-ssl.aspx).
 * Supports latest version of WordPress (3.9.2).
 
-= WordPress YouTube Embed 8.7 =
+= Embed Plus for YouTube WordPress Plugin 8.7 =
 (PRO) Extends the plugin's existing tagging capabilities by also adding Open Graph markup to enhance Facebook sharing/discovery of your pages.
 
-= WordPress YouTube Embed 8.6 =
+= Embed Plus for YouTube WordPress Plugin 8.6 =
 Expanded HTTPS/SSL support.
 
-= WordPress YouTube Embed 8.5 =
+= Embed Plus for YouTube WordPress Plugin 8.5 =
 This update features a new iOS related option for both Free and PRO users. PRO users additionally have the new mobile compatibility checker.
 
-= WordPress YouTube Embed 8.4 =
+= Embed Plus for YouTube WordPress Plugin 8.4 =
 This update features improved responsive theme support for both Free and PRO versions.  It also adds refined schema tag support to the Pro SEO feature.
 
-= WordPress YouTube Embed 8.3 =
+= Embed Plus for YouTube WordPress Plugin 8.3 =
 Now compatible with WordPress 3.9.
 
-= WordPress YouTube Embed 8.2 =
+= Embed Plus for YouTube WordPress Plugin 8.2 =
 An at a glance regex impromevent (all users). Dashboard now warns you of embeds that are blocked from your visitors in other countries (PRO).
 
-= WordPress YouTube Embed 8.1 =
+= Embed Plus for YouTube WordPress Plugin 8.1 =
 Fixes rare YouTube ID issue.
 
-= WordPress YouTube Embed 8.0 =
+= Embed Plus for YouTube WordPress Plugin 8.0 =
 Fixes rare ajax issue.
 
-= WordPress YouTube Embed 7.9 =
+= Embed Plus for YouTube WordPress Plugin 7.9 =
 YouTube searching and inserting now works in Text mode of the editor too.
 
-= WordPress YouTube Embed 7.8 =
+= Embed Plus for YouTube WordPress Plugin 7.8 =
 "At a Glance" direct access to YouTube posts/pages.
 
-= WordPress YouTube Embed 7.7 =
+= Embed Plus for YouTube WordPress Plugin 7.7 =
 Fixes black bar issue when no height/width is specified.
 
-= WordPress YouTube Embed 7.6 =
+= Embed Plus for YouTube WordPress Plugin 7.6 =
 Added notice about Google's HD problem.
 
-= WordPress YouTube Embed 7.5 =
+= Embed Plus for YouTube WordPress Plugin 7.5 =
 Ability to embed an entire channel as a playlist embed.
 
-= WordPress YouTube Embed 7.3 =
+= Embed Plus for YouTube WordPress Plugin 7.3 =
 Change the color of the progress bar from red to white.
 
-= WordPress YouTube Embed 7.2 =
+= Embed Plus for YouTube WordPress Plugin 7.2 =
 Added music video extras to inspire your posts (PRO).
 
-= WordPress YouTube Embed 7.1 =
+= Embed Plus for YouTube WordPress Plugin 7.1 =
 Added autohide controls feature
 
-= WordPress YouTube Embed 7.0 =
+= Embed Plus for YouTube WordPress Plugin 7.0 =
 Shortcode support for embedding multiple videos on one line
 
-= WordPress YouTube Embed 6.4 =
+= Embed Plus for YouTube WordPress Plugin 6.4 =
 Fixes for some users of WordPress 3.8
 
-= WordPress YouTube Embed 6.3 =
+= Embed Plus for YouTube WordPress Plugin 6.3 =
 Removed possible e_notices.
 
-= WordPress YouTube Embed 6.2 =
+= Embed Plus for YouTube WordPress Plugin 6.2 =
 Given the increasing focus on privacy, the no-cookies options was added as a free option to all users.  Priority support enhancements also made.
 
-= WordPress YouTube Embed 6.1 =
+= Embed Plus for YouTube WordPress Plugin 6.1 =
 Easier access to general settings and dashboard.
 
-= WordPress YouTube Embed 6.0 =
+= Embed Plus for YouTube WordPress Plugin 6.0 =
 This version opens up the ability to view Internet video discussions to all wizard users.
 **Also, due to numerous users being unable to find the wizard button, we moved it up next to the "Add Media" button.**
 Finally, we added Video SEO tags as a PRO option. 
 
-= WordPress YouTube Embed 5.1 =
+= Embed Plus for YouTube WordPress Plugin 5.1 =
 Added ability to set default dimensions.
 Enhanced compatibility with SSL sites.
 
-= WordPress YouTube Embed 5.0 =
+= Embed Plus for YouTube WordPress Plugin 5.0 =
 Built-in YouTube video search, viewing, and insertion right from your editor tab (for all users).
 The ability to review the latest web discussions about a video you want to embed before embedding it (PRO users).
 Other minor optimizations.
 
-= WordPress YouTube Embed 4.8 =
+= Embed Plus for YouTube WordPress Plugin 4.8 =
 Works when pasting embed link in sidebar text widgets
 
-= WordPress YouTube Embed 4.7 =
+= Embed Plus for YouTube WordPress Plugin 4.7 =
 Improved separation of PRO and Free features in the UI
 
-= WordPress YouTube Embed 4.6 =
+= Embed Plus for YouTube WordPress Plugin 4.6 =
 Added optional responsive video layout to fit all screen sizes. (smart phone, PC and tablet)
 
-= WordPress YouTube Embed 4.5 =
+= Embed Plus for YouTube WordPress Plugin 4.5 =
 Added support for playlists.
 added support for wmode.
 
-= WordPress YouTube Embed 4.1 =
+= Embed Plus for YouTube WordPress Plugin 4.1 =
 Fixed spacing issue. Also added ability to fall back to old spacing format.
 
-= WordPress YouTube Embed 4.0 =
+= Embed Plus for YouTube WordPress Plugin 4.0 =
 New features for all users: lazy loading for the flash player by default and the ability to hide player controls for a cleaner look.
 
-= WordPress YouTube Embed 3.7 =
+= Embed Plus for YouTube WordPress Plugin 3.7 =
 Enhanced deleted video checker for PRO users
 
-= WordPress YouTube Embed 3.5 =
+= Embed Plus for YouTube WordPress Plugin 3.5 =
 Added ability to try to force HTML5 player to speed up page loading
 
-= WordPress YouTube Embed 3.3 =
+= Embed Plus for YouTube WordPress Plugin 3.3 =
 HTTPS: Added secure YouTube embedding
 
-= WordPress YouTube Embed 3.2 =
+= Embed Plus for YouTube WordPress Plugin 3.2 =
 Ensures video-specific height overrides defaults properly
 
-= WordPress YouTube Embed 3.1 =
+= Embed Plus for YouTube WordPress Plugin 3.1 =
 Fixed obscure height problem
 
-= WordPress YouTube Embed 3.0 =
+= Embed Plus for YouTube WordPress Plugin 3.0 =
 Added Visual YouTube Wizard for PRO users
 Added autologin to analytics for PRO users
 Added priority support form for PRO users
 
-= WordPress YouTube Embed 2.6 =
+= Embed Plus for YouTube WordPress Plugin 2.6 =
 Compatible with WP 3.6
 
-= WordPress YouTube Embed 2.4 =
+= Embed Plus for YouTube WordPress Plugin 2.4 =
 Added auto HD support
 Support for shorthand (i.e. `"https://www.youtu.be"`)
 Fixed editor issue
 
-= WordPress YouTube Embed 2.3 =
+= Embed Plus for YouTube WordPress Plugin 2.3 =
 Start/end time shortcut bug fix
 
-= WordPress YouTube Embed 2.2 =
+= Embed Plus for YouTube WordPress Plugin 2.2 =
 Minor changes
 
-= WordPress YouTube Embed 2.1 =
+= Embed Plus for YouTube WordPress Plugin 2.1 =
 By request from several users, we've added easier access to the video analytics dashboard
 
-= WordPress YouTube Embed 2.0 =
+= Embed Plus for YouTube WordPress Plugin 2.0 =
 
 This upgrade specifically integrates a user-friendly YouTube Analytics Dashboard to this plugin so you can learn a lot more about the videos you post.  Download it if you would like it to use your site's YouTube-related activity to help answer questions like:
  
@@ -492,10 +517,10 @@ This upgrade specifically integrates a user-friendly YouTube Analytics Dashboard
 
 We think these are all interesting questions; however, note that there's no need to upgrade if you don't.
 
-= WordPress YouTube Embed 1.1 =
+= Embed Plus for YouTube WordPress Plugin 1.1 =
 Fixed minor bug.
 
-= WordPress YouTube Embed 1.0 =
+= Embed Plus for YouTube WordPress Plugin 1.0 =
 First release uploaded to the plugin repository.
 
 == Other Notes ==

@@ -7,6 +7,7 @@
 #wpadminbar {display:none;}
 html.wp-toolbar {padding: 0px;}
 #footer, #wpfooter, .auto-fold #wpfooter {display: none;}
+#screen-meta-links {display: none;}
 #wpfooter {clear: both}                
 .clearboth {clear: both;}
 .pad20 {padding: 20px;}

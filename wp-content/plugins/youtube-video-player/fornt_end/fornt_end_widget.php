@@ -82,7 +82,7 @@ class youtube_embed_widget extends WP_Widget {
 			"youtube_embed_widget_show_progress_bar_color" => "red",
 			"youtube_embed_widget_autohide_parameters"  	=> "1",
 			"youtube_embed_widget_set_initial_volume" => "",
-				"youtube_embed_widget_initial_volume" 		=> "80",
+				"youtube_embed_widget_initial_volume" 		=> "60",
 			"youtube_embed_widget_disable_keyboard"  	=>"0"
 		);
 		$initial_values['title']	= strip_tags($new_instance['title']);
@@ -110,7 +110,7 @@ class youtube_embed_widget extends WP_Widget {
 			"youtube_embed_widget_show_progress_bar_color" => "red",
 			"youtube_embed_widget_autohide_parameters"  	=> "1",
 			"youtube_embed_widget_set_initial_volume" => "",
-				"youtube_embed_widget_initial_volume" 		=> "80",
+				"youtube_embed_widget_initial_volume" 		=> "60",
 			"youtube_embed_widget_disable_keyboard"  	=>"0"
 		);
 		foreach($initial_values as $key => $value){

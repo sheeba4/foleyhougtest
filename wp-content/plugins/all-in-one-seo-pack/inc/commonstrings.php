@@ -4,9 +4,15 @@
  *
  * This is just for Pro strings to be translated.
  *
- * @package All-in-One-SEO-Pack
+ * @package All_in_One_SEO_Pack
+ * @since ?
  */
 
+/**
+ * Class AIOSP_Common_Strings
+ *
+ * @since ?
+ */
 class AIOSP_Common_Strings {
 
 	/**
@@ -14,7 +20,6 @@ class AIOSP_Common_Strings {
 	 *
 	 * We'll just put all the strings in the contruct for lack of a better place.
 	 */
-
 	private function __construct() {
 
 		// From aioseop-helper-filters.php.
@@ -28,7 +33,7 @@ class AIOSP_Common_Strings {
 		__( 'Check this to move the %s menu item to the top of your WordPress Dashboard menu.', 'all-in-one-seo-pack' );
 		__( 'Check this if you want to track outbound forms with Google Analytics.', 'all-in-one-seo-pack' );
 		__( 'Check this if you want to track events with Google Analytics.', 'all-in-one-seo-pack' );
-		__( 'Check this if you want to track url changes for single pages with Google Analytics.', 'all-in-one-seo-pack' );
+		__( 'Check this if you want to track URL changes for single pages with Google Analytics.', 'all-in-one-seo-pack' );
 		__( 'Check this if you want to track how long pages are in visible state with Google Analytics.', 'all-in-one-seo-pack' );
 		/* translators: 'This option allows users to track media queries, allowing them to find out if users are viewing a responsive layout or not and which layout changes have been applied if the browser window has been resized by the user, see https://github.com/googleanalytics/autotrack/blob/master/docs/plugins/media-query-tracker.md. */
 		__( 'Check this if you want to track media query matching and queries with Google Analytics.', 'all-in-one-seo-pack' );
@@ -50,14 +55,13 @@ class AIOSP_Common_Strings {
 		__( 'Click here for documentation on this setting.', 'all-in-one-seo-pack' );
 		__( 'Create RSS Sitemap as well.', 'all-in-one-seo-pack' );
 		__( 'Notify search engines based on the selected schedule, and also update static sitemap daily if in use. (this uses WP-Cron, so make sure this is working properly on your server as well)', 'all-in-one-seo-pack' );
-		__( 'Organize sitemap entries into distinct files in your sitemap. Enable this only if your sitemap contains over 50,000 URLs or the file is over 5MB in size.', 'all-in-one-seo-pack' );
+		__( 'Organize sitemap entries into distinct files in your sitemap. We recommend you enable this setting if your sitemap contains more than 1,000 URLs.', 'all-in-one-seo-pack' );
 		__( 'Allows you to specify the maximum number of posts in a sitemap (up to 50,000).', 'all-in-one-seo-pack' );
 		__( 'Select which Post Types appear in your sitemap.', 'all-in-one-seo-pack' );
 		__( 'Select which taxonomy archives appear in your sitemap', 'all-in-one-seo-pack' );
 		__( 'Include Date Archives in your sitemap.', 'all-in-one-seo-pack' );
 		__( 'Include Author Archives in your sitemap.', 'all-in-one-seo-pack' );
 		__( 'Exclude Images in your sitemap.', 'all-in-one-seo-pack' );
-		__( 'Create a compressed sitemap file in .xml.gz format.', 'all-in-one-seo-pack' );
 		__( 'Places a link to your Sitemap.xml into your virtual Robots.txt file.', 'all-in-one-seo-pack' );
 		__( 'Dynamically creates the XML sitemap instead of using a static file.', 'all-in-one-seo-pack' );
 		__( 'If checked, only posts that have videos in them will be displayed on the sitemap.', 'all-in-one-seo-pack' );
@@ -88,7 +92,7 @@ class AIOSP_Common_Strings {
 		__( 'Display Menu At The Top:', 'all-in-one-seo-pack' );
 		__( 'Track Outbound Forms:', 'all-in-one-seo-pack' );
 		__( 'Track Events:', 'all-in-one-seo-pack' );
-		__( 'Track Url Changes:', 'all-in-one-seo-pack' );
+		__( 'Track URL Changes:', 'all-in-one-seo-pack' );
 		__( 'Track Page Visibility:', 'all-in-one-seo-pack' );
 		__( 'Track Media Query:', 'all-in-one-seo-pack' );
 		__( 'Track Elements Visibility:', 'all-in-one-seo-pack' );

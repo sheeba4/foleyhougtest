@@ -112,10 +112,10 @@ if ( ! class_exists( 'AIOSEOP_Notices' ) ) {
 		 * @since 3.0
 		 */
 		public function __construct() {
-			
+
 			// DirectoryIterator::getExtension() was added in PHP 5.3.6. We can remove this once we drop support < PHP 5.3.
 			if ( version_compare( phpversion(), '5.3.6', '<' ) ) {
-			    return false;
+				return false;
 			}
 
 			$this->_requires();
@@ -547,9 +547,9 @@ if ( ! class_exists( 'AIOSEOP_Notices' ) ) {
 				update_user_meta( $current_user_id, 'aioseop_notice_display_time_' . $slug, $display_time );
 			}
 
-			$this->notices[ $slug ]['time_set'] = $time_set;
+			$this->notices[ $slug ]['time_set']   = $time_set;
 			$this->notices[ $slug ]['time_start'] = $display_time;
-			$this->active_notices[ $slug ]      = $display_time;
+			$this->active_notices[ $slug ]        = $display_time;
 
 			return true;
 		}

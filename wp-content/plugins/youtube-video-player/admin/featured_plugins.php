@@ -75,13 +75,13 @@ class youtube_embed_featured_plugins{
             'facebook-comments'=>array(
 						'image_url'		=>	$this->plugin_url.'admin/images/featured_plugins/facebook-comments-icon.png',
 						'site_url'		=>	'http://wpdevart.com/wordpress-facebook-comments-plugin/',
-						'title'			=>	'WordPress Facebook comments',
+						'title'			=>	'Wpdevart Social comments',
 						'description'	=>	'Facebook comments plugin will help you to display Facebook Comments on your website. You can use Comments Box on pages/posts or in Php code.'
 						),							
 			'facebook'=>array(
 						'image_url'		=>	$this->plugin_url.'admin/images/featured_plugins/facebook.jpg',
 						'site_url'		=>	'http://wpdevart.com/wordpress-facebook-like-box-plugin',
-						'title'			=>	'Facebook Like Box',
+						'title'			=>	'Social Like Box',
 						'description'	=>	'Facebook like box plugin will help you to display Facebook like box on your wesite, just add Like box widget into your sidebar or insert it into your website posts/pages and use it.'
 						),
 			'poll'=>array(
