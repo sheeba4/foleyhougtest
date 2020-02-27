@@ -101,14 +101,23 @@ class youtube_embed_content_default{
 			<?php echo $youtube_embed_show_popup?'':'display:none;'; ?>
 		}
         </style>
-        <h2 style="width:640px">YouTube Embed Pages/posts default settings <a target="blank" href="<?php echo wpdevart_youtube_support_url; ?>" class="wp_support">Support</a></h2>	
+		<div class="wpdevart_plugins_header div-for-clear">
+			<div class="wpdevart_plugins_get_pro div-for-clear">
+				<div class="wpdevart_plugins_get_pro_info">
+					<h3>WpDevArt YouTube Premium</h3>
+					<p>Powerful and Customizable YouTube</p>
+				</div>
+					<a target="blank" href="https://wpdevart.com/wordpress-youtube-embed-plugin/" class="wpdevart_upgrade">Upgrade</a>
+			</div>
+			<a target="blank" href="<?php echo wpdevart_youtube_support_url; ?>" class="wpdevart_support">Have any Questions? Get quick support!</a>
+		</div>
+        <h2 style="width:640px">YouTube Embed Pages/posts default settings</h2>	
         <div class="main_yutube_plus_params">	
-        <table class="wp-list-table widefat fixed posts youtube_settings_table" style="width: 640px; min-width:320px !important;table-layout: fixed;">
+        <table class="wp-list-table widefat fixed posts youtube_settings_table" style="width:75%; min-width:820px !important;table-layout: fixed;">
             <thead>
                 <tr>
                     <th colspan="2" width="50%">
                    		<span> YouTube Embed Pages/posts default settings </span>
-                        <a href="http://wpdevart.com/wordpress-youtube-embed-plugin/" target="_blank" style="float:right; color: rgba(10, 154, 62, 1);; font-weight: bold; font-size: 18px; text-decoration: none;">Upgrade to Pro Version</a>
                     </th>                  
                              
                 </tr>

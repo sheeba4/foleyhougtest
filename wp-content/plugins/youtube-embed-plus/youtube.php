@@ -3,14 +3,14 @@
   Plugin Name: Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream
   Plugin URI: https://www.embedplus.com/dashboard/pro-easy-video-analytics.aspx?ref=plugin
   Description: YouTube Embed and YouTube Gallery WordPress Plugin. Embed a responsive video, YouTube channel, playlist gallery, or live stream
-  Version: 13.1.2.4
+  Version: 13.2.0.2
   Author: Embed Plus for YouTube Team
   Author URI: https://www.embedplus.com
  */
 
 /*
   Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream
-  Copyright (C) 2019 EmbedPlus.com
+  Copyright (C) 2020 EmbedPlus.com
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ class YouTubePrefs
 
     public static $folder_name = 'youtube-embed-plus';
     public static $curltimeout = 30;
-    public static $version = '13.1.2.4';
+    public static $version = '13.2.0.2';
     public static $opt_version = 'version';
     public static $optembedwidth = null;
     public static $optembedheight = null;
@@ -106,8 +106,11 @@ class YouTubePrefs
     public static $opt_gallery_customprev = 'gallery_customprev';
     public static $opt_gallery_customnext = 'gallery_customnext';
     public static $opt_not_live_content = 'not_live_content';
+    public static $opt_not_live_on = 'not_live_on';
     public static $opt_admin_off_scripts = 'admin_off_scripts';
+    public static $opt_ajax_save = 'ajax_save';
     public static $opt_onboarded = 'onboarded';
+    public static $opt_show_pointer = 'show_pointer';
     public static $opt_alloptions = 'youtubeprefs_alloptions';
     public static $alloptions = null;
     public static $yt_options = array();
@@ -175,10 +178,10 @@ class YouTubePrefs
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static $oldytregex = '@^\s*https?://(?:www\.)?(?:(?:youtube.com/(?:(?:watch)|(?:embed)|(?:playlist))/{0,1}\?)|(?:youtu.be/))([^\s"]+)\s*$@im';
-    public static $ytregex = '@^[\r\t ]*https?://(?:www\.)?(?:(?:youtube.com/(?:(?:watch)|(?:embed)|(?:playlist))/{0,1}\?)|(?:youtu.be/))([^\s"]+)[\r\t ]*$@im';
-    public static $justurlregex = '@https?://(?:www\.)?(?:(?:youtube.com/(?:(?:watch)|(?:embed)|(?:playlist))/{0,1}\?)|(?:youtu.be/))([^\[\s"]+)@i';
-
+    public static $oldytregex = '@^\s*https?://(?:www\.)?(?:(?:youtube.com/(?:(?:watch)|(?:embed)|(?:playlist))(?:/live_stream){0,1}/{0,1}\?)|(?:youtu.be/))([^\s"]+)\s*$@im';
+    public static $ytregex = '@^[\r\t ]*https?://(?:www\.)?(?:(?:youtube.com/(?:(?:watch)|(?:embed)|(?:playlist))(?:/live_stream){0,1}/{0,1}\?)|(?:youtu.be/))([^\s"]+)[\r\t ]*$@im';
+    public static $justurlregex = '@https?://(?:www\.)?(?:(?:youtube.com/(?:(?:watch)|(?:embed)|(?:playlist))(?:/live_stream){0,1}/{0,1}\?)|(?:youtu.be/))([^\[\s"]+)@i';
+    
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,7 +231,8 @@ class YouTubePrefs
             'index',
             'list',
             'start',
-            'end'
+            'end',
+            'channel'
         );
 
         add_action('media_buttons', array(get_class(), 'media_button_wizard'), 11);
@@ -253,6 +257,7 @@ class YouTubePrefs
         add_filter('ytprefs_filter_the_content_light', array(get_class(), 'filter_the_content_light'));
 
         add_action("wp_ajax_my_embedplus_onboarding_save_ajax", array(get_class(), 'onboarding_save_ajax'));
+        add_action("wp_ajax_my_embedplus_settings_save_ajax", array(get_class(), 'settings_save_ajax'));
         add_action("wp_ajax_my_embedplus_onboarding_save_apikey_ajax", array(get_class(), 'onboarding_save_apikey_ajax'));
         add_action("wp_ajax_my_embedplus_glance_vids", array(get_class(), 'my_embedplus_glance_vids'));
         add_action("wp_ajax_my_embedplus_glance_count", array(get_class(), 'my_embedplus_glance_count'));
@@ -665,6 +670,9 @@ class YouTubePrefs
             $step1_channel_error_invalid = 'Sorry, that does not seem to be a link to an existing video. ' . $step1_api_error_msg;
             $step1_live_errors = '';
             $step1_live_error_invalid = 'Sorry, that does not seem to be a valid link to an existing live video. ' . $step1_api_error_msg;
+            $step1_livechannel_errors = '';
+            $step1_livechannel_error_invalid = 'Sorry, that does not seem to be a link to an existing channel.';
+
             $if_live_preview = false;
 
             $theytid = null;
@@ -968,6 +976,86 @@ class YouTubePrefs
                         $acc_expand = 'h3_channel';
                     }
                 }
+                else if ($submit_type === 'step1_livechannel')
+                {
+                    $search = sanitize_text_field(trim($_POST['txtUrlLiveChannel']));
+                    try
+                    {
+                        if (empty($search))
+                        {
+                            throw new Exception();
+                        }
+                        if (preg_match('@/channel/(.+)@', $search))
+                        {
+                            try
+                            {
+                                $thechannelid = null;
+                                // channel id
+                                $chanmatch = array();
+                                preg_match('@/channel/(.+)@', $search, $chanmatch);
+                                if (!empty($chanmatch))
+                                {
+                                    $thechannelid = $chanmatch[1];
+                                    //$thechannel = self::get_channel_snippet($chanmatch[1]);
+                                }
+                                if (!empty($thechannelid))
+                                {
+                                    $rel = 'https://www.youtube.com/embed/live_stream?channel=' . (esc_attr($thechannelid));
+
+                                    $final_title = esc_url('https://www.youtube.com/channel/' . $thechannelid);
+                                    $final_title_prefix = 'Live stream from channel';
+                                    $doing_live = true;
+                                    ?>
+
+                                    <div id="step2_livechannel" class="center">
+                                        <h2>
+                                            <?php
+                                            echo 'Live stream from channel: ' . esc_url('https://www.youtube.com/channel/' . $thechannelid);
+                                            ?>
+                                        </h2>
+                                        <p class="center">
+                                            <a class="ui-button ui-widget ui-corner-all inserttopost" rel="[embedyt] https://www.youtube.com/embed/live_stream?channel=<?php echo esc_attr($thechannelid) ?>[/embedyt]"><span class="ui-icon ui-icon-arrowthickstop-1-s"></span> Insert Into Editor</a>
+                                            &nbsp;
+                                            <a class="ui-button ui-widget ui-corner-all" href="<?php echo $get_pro_link; ?>" target="_blank"><span class="ui-icon ui-icon-gear"></span> Customize (PRO)</a>
+                                        </p>
+                                        &nbsp; Or Copy Code:
+                                        <span class="copycode">[embedyt] https://www.youtube.com/embed/live_stream?channel=<?php echo esc_attr($thechannelid) ?>[/embedyt]</span>
+                                        <div class="clearboth" style="height: 10px;">
+                                        </div>
+                                        <div class="center relative">
+                                            <iframe src="https://www.youtube.com/embed/live_stream?channel=<?php echo esc_attr($thechannelid) ?>" allowfullscreen="" width="854" height="480" frameborder="0"></iframe>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                else
+                                {
+                                    $form_valid = false;
+                                    $step1_livechannel_errors = $step1_livechannel_error_invalid;
+                                    $acc_expand = 'h3_live';
+                                }
+                            }
+                            catch (Exception $ex)
+                            {
+                                $form_valid = false;
+                                $step1_livechannel_errors = $step1_livechannel_error_invalid;
+                                $acc_expand = 'h3_live';
+                            }
+                        }
+                        else
+                        {
+                            $form_valid = false;
+                            $step1_livechannel_errors = $step1_livechannel_error_invalid;
+                            $acc_expand = 'h3_live';
+                        }
+                    }
+                    catch (Exception $ex)
+                    {
+                        $form_valid = false;
+                        $step1_livechannel_errors = $step1_livechannel_error_invalid;
+                        $acc_expand = 'h3_live';
+                    }
+                }                
                 else if ($submit_type === 'step1_live')
                 {
                     $search = sanitize_text_field(trim($_POST['txtUrlLive']));
@@ -1077,12 +1165,12 @@ class YouTubePrefs
                     <div>
                         <h4 class="center">Single video directions</h4>
                         <p>
-                            Search YouTube videos by title below (example: <em>TED talks</em>). Or, if you already have the URL for the video, you can paste it below (example: <em>https://www.youtube.com/watch?v=YVvn8dpSAt0</em> )
+                            Paste the url of a single video below (example: <em>https://www.youtube.com/watch?v=YVvn8dpSAt0</em> )
                         </p>
                         <form name="wizform_video" method="post" action="" class="wizform" id="wizform_video">
                             <?php wp_nonce_field('_epyt_wiz', '_epyt_nonce', true); ?>
                             <div class="center txt-button-align">
-                                <input name="txtUrl" maxlength="200" id="txtUrl" class="txturlpastecustom ui-widget ui-widget-content ui-corner-all" placeholder="Search by title or paste URL here" type="text"> <button name="wizform_submit" class="ui-button ui-widget ui-corner-all" type="submit" value="step1_video">Submit</button>
+                                <input name="txtUrl" maxlength="200" id="txtUrl" class="txturlpastecustom ui-widget ui-widget-content ui-corner-all" placeholder="Paste URL here" type="text"> <button name="wizform_submit" class="ui-button ui-widget ui-corner-all" type="submit" value="step1_video">Submit</button>
                             </div>
                             <p class="badpaste orange bold" style="display: none;">
                                 Please do not paste full embedcode above, only simple links to the YouTube video.
@@ -1091,6 +1179,7 @@ class YouTubePrefs
                             </p>
                         </form>
                         <?php echo $step1_video_errors ? '<p class="orange bold">' . $step1_video_errors . '</p>' : ''; ?>
+                        <p><em>Note: You can also search YouTube videos by title in the text box above (example: <em>TED talks</em>). However, searching will use a significant amount of your YouTube API quota.</em></p>
                     </div>
                     <h3 id="h3_playlist"> <a href="#">Embed a playlist. </a></h3>
                     <div>
@@ -1181,30 +1270,57 @@ class YouTubePrefs
                                 If you're trying to embed a livestream from your own channel, you can check make sure it is <strong>Eligible</strong> and <strong>Enabled</strong> by <a href="https://www.youtube.com/features" target="_blank">visiting here.</a>
                                 You are verified if you see the word "Enabled" at the bottom of the box that is labeled "Embed live streams." Note that verification can only be done directly through YouTube/Google with the link above, and this plugin cannot automatically do that.
                             </p>
-                            <p>
-                                Once you have the link for a live stream, follow the steps below.
-                            </p>
-                            <ol>
-                                <li>
-                                    Paste in the direct URL of the live stream below and click Submit. Example: https://www.youtube.com/watch?v=<strong>hHW1oY26kxQ</strong>
-                                </li>
-                                <li>
-                                    On the next screen, customize or insert your video.
-                                </li>
-                            </ol>
-                            <form name="wizform_live" method="post" action="" class="wizform" id="wizform_live">
-                                <?php wp_nonce_field('_epyt_wiz', '_epyt_nonce', true); ?>
-                                <div class="center txt-button-align">
-                                    <input name="txtUrlLive" maxlength="200" id="txtUrlLive" class="ui-widget ui-widget-content ui-corner-all" placeholder="Paste YouTube link here" type="text"> <button name="wizform_submit" class="ui-button ui-widget ui-corner-all" type="submit" value="step1_live">Submit</button>
+                            
+                            <div class="livestream-tabs">
+                                <ul>
+                                    <li><a href="#livestream-tabs-2">Channel-based livestream (recommended)<sup class="orange">new</sup></a></li>
+                                    <li><a href="#livestream-tabs-1">Direct link to livestream</a></li>
+                                </ul>
+                                <div id="livestream-tabs-1">
+                                    <p>
+                                        This will embed a specific live stream video.
+                                    </p>
+                                    <ol>
+                                        <li>
+                                            Paste in the direct URL of the live stream below and click Submit. Example: https://www.youtube.com/watch?v=<strong>hHW1oY26kxQ</strong>
+                                        </li>
+                                        <li>
+                                            On the next screen, customize or insert your video.
+                                        </li>
+                                    </ol>
+                                    <form name="wizform_live" method="post" action="" class="wizform" id="wizform_live">
+                                        <?php wp_nonce_field('_epyt_wiz', '_epyt_nonce', true); ?>
+                                        <div class="center txt-button-align">
+                                            <input name="txtUrlLive" maxlength="200" id="txtUrlLive" class="ui-widget ui-widget-content ui-corner-all" placeholder="Paste YouTube link here" type="text"> <button name="wizform_submit" class="ui-button ui-widget ui-corner-all" type="submit" value="step1_live">Submit</button>
+                                        </div>
+                                    </form>
+                                    <?php echo $step1_live_errors ? '<p class="orange bold">' . $step1_live_errors . '</p>' : ''; ?>
                                 </div>
-                            </form>
-                            <?php echo $step1_live_errors ? '<p class="orange bold">' . $step1_live_errors . '</p>' : ''; ?>
+                                <div id="livestream-tabs-2">
+                                    <p>
+                                        This will embed a video that will automatically display the next upcoming live stream from a channel. 
+                                    </p>
+                                    <p>
+                                        Enter the link to the channel page below (note the word "channel" should be in the link).<br>Example: https://www.youtube.com/<strong>channel</strong>/UCL0iAkpqV5YaIVG7xkDtS4Q
+                                    </p>                                    
+                                    <form name="wizform_livechannel" method="post" action="" class="wizform" id="wizform_livechannel">
+                                        <?php wp_nonce_field('_epyt_wiz', '_epyt_nonce', true); ?>
+                                        <div class="center txt-button-align">
+                                            <input name="txtUrlLiveChannel" maxlength="200" id="txtUrlLiveChannel" class="ui-widget ui-widget-content ui-corner-all" placeholder="Paste channel link here" type="text"> <button name="wizform_submit" class="ui-button ui-widget ui-corner-all" type="submit" value="step1_livechannel">Get Channel</button>
+                                        </div>                                        
+                                    </form>
+                                    <?php echo $step1_livechannel_errors ? '<p class="orange bold">' . $step1_livechannel_errors . '</p>' : ''; ?>
+                                    <p class="smallnote">
+                                        <strong class="orange">Note</strong>: For now, the "Not Live" custom content feature is not available for channel-based embeds. YouTube's standard countdown will appear in the video until the scheduled stream goes live.
+                                    </p>
+                                </div>
+                            </div>
                             <?php
                         }
                         ?>
                     </div>
                     <?php
-                    if (current_user_can('manage_options') && !self::vi_logged_in() && !(bool) (self::$alloptions[self::$opt_vi_hide_monetize_tab]))
+                    if (false && current_user_can('manage_options') && !self::vi_logged_in() && !(bool) (self::$alloptions[self::$opt_vi_hide_monetize_tab]))
                     {
                         ?>
                         <h3 id="h3_vi_monetize"> <a href="#"> Earn money embedding videos. </a></h3>
@@ -1324,9 +1440,13 @@ class YouTubePrefs
 
     public static function clean_api_error_html($raw_message, $add_boilerplate)
     {
-        $clean_html = '<div>Sorry, there was a YouTube API error: <em>' . self::clean_api_error($raw_message) . '</em>' .
-                ( $add_boilerplate ? self::$boilerplate_api_error_message : '' ) .
-                '</div>';
+        $clean_html = '<div>Sorry, there was a YouTube error.</div>';
+        if (current_user_can('manage_options'))
+        {
+            $clean_html = '<div>Sorry, there was a YouTube API error: <em>' . self::clean_api_error($raw_message) . '</em>' .
+                    ( $add_boilerplate ? self::$boilerplate_api_error_message : '' ) .
+                    '</div>';
+        }
         return $clean_html;
     }
 
@@ -1748,8 +1868,11 @@ class YouTubePrefs
         $_gallery_customnext = 'Next';
         $_gallery_pagesize = 15;
         $_not_live_content = '';
+        $_not_live_on = 1;
         $_debugmode = 0;
         $_admin_off_scripts = 0;
+        $_ajax_save = 1;
+        $_show_pointer = 1;
         $_onboarded = 0;
         $_old_script_method = 0;
 
@@ -1835,7 +1958,11 @@ class YouTubePrefs
             $_gallery_customnext = self::tryget($arroptions, self::$opt_gallery_customnext, $_gallery_customnext);
             $_gallery_customprev = self::tryget($arroptions, self::$opt_gallery_customprev, $_gallery_customprev);
             $_not_live_content = self::tryget($arroptions, self::$opt_not_live_content, $_not_live_content);
+            $_not_live_content = empty($_not_live_content) ? $_not_live_content : trim($_not_live_content);
+            $_not_live_on = self::tryget($arroptions, self::$opt_not_live_on, empty($_not_live_content) ? 0 : 1);
             $_admin_off_scripts = self::tryget($arroptions, self::$opt_admin_off_scripts, $_admin_off_scripts);
+            $_ajax_save = self::tryget($arroptions, self::$opt_ajax_save, $_ajax_save);
+            $_show_pointer = self::tryget($arroptions, self::$opt_show_pointer, $_show_pointer);
             $_onboarded = 0; // self::tryget($arroptions, self::$opt_onboarded, $_onboarded);
 
             $_vi_active = self::tryget($arroptions, self::$opt_vi_active, $_vi_active);
@@ -1920,8 +2047,11 @@ class YouTubePrefs
             self::$opt_gallery_customprev => $_gallery_customprev,
             self::$opt_gallery_pagesize => $_gallery_pagesize,
             self::$opt_not_live_content => $_not_live_content,
+            self::$opt_not_live_on => $_not_live_on,
             self::$opt_debugmode => $_debugmode,
             self::$opt_admin_off_scripts => $_admin_off_scripts,
+            self::$opt_ajax_save => $_ajax_save,
+            self::$opt_show_pointer => $_show_pointer,
             self::$opt_onboarded => $_onboarded,
             self::$opt_old_script_method => $_old_script_method,
             self::$opt_vi_active => $_vi_active,
@@ -1962,7 +2092,10 @@ class YouTubePrefs
     public static function do_ytprefs()
     {
         //add_filter('autoptimize_filter_js_exclude', array(get_class(), 'ao_override_jsexclude'), 10, 1);
-        if (!is_admin() || (self::$alloptions[self::$opt_frontend_only] != 1))
+        if (
+                !is_admin() || (self::$alloptions[self::$opt_frontend_only] != 1)
+        //|| (function_exists('wp_doing_ajax') && wp_doing_ajax())
+        )
         {
             add_filter('the_content', array(get_class(), 'apply_prefs_content'), 1);
             add_filter('widget_text', array(get_class(), 'apply_prefs_widget'), 1);
@@ -2334,42 +2467,12 @@ class YouTubePrefs
             {
                 if (isset($linkparams['channel']))
                 {
-                    try
+                    $linkparams['live_stream'] = 1;
+                    if (false) // takes up too much quota;
                     {
-                        $ytapilink_live = 'https://www.googleapis.com/youtube/v3/search?order=date&maxResults=1&type=video&eventType=live&safeSearch=none&videoEmbeddable=true&channelId=' . $linkparams['channel'] . '&part=snippet&key=' . self::$alloptions[self::$opt_apikey];
-                        $apidata_live = wp_remote_get($ytapilink_live, array('timeout' => self::$curltimeout));
-                        if (!is_wp_error($apidata_live))
+                        try
                         {
-                            $raw = wp_remote_retrieve_body($apidata_live);
-                            if (!empty($raw))
-                            {
-                                $json = json_decode($raw, true);
-                                if (!isset($json['error']) && is_array($json) && count($json['items']))
-                                {
-                                    $linkparams['v'] = $json['items'][0]['id']['videoId'];
-                                }
-                                else if (isset($json['error']))
-                                {
-                                    return $live_error_msg; // . ' <em>(Error code ' . $json['error']->code . ': ' . $json['error']->message . ')</em>';
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception $ex)
-                    {
-                        return $live_error_msg;
-                    }
-                }
-                else if (isset($linkparams['v']))
-                {
-                    ////////////////////// process single video live stream
-                    try
-                    {
-                        // if not_live_content isn't being used, just process as a normal single video. otherwise: if not currently live (nor upcoming?), unset $linkparams['v']
-                        $not_live_content = trim(htmlspecialchars_decode(wp_strip_all_tags(self::$alloptions[self::$opt_not_live_content], true)));
-                        if (!empty($not_live_content))
-                        {
-                            $ytapilink_live = 'https://www.googleapis.com/youtube/v3/videos?id=' . $linkparams['v'] . '&part=snippet&key=' . self::$alloptions[self::$opt_apikey];
+                            $ytapilink_live = 'https://www.googleapis.com/youtube/v3/search?order=date&maxResults=1&type=video&eventType=live&safeSearch=none&videoEmbeddable=true&channelId=' . $linkparams['channel'] . '&part=snippet&key=' . self::$alloptions[self::$opt_apikey];
                             $apidata_live = wp_remote_get($ytapilink_live, array('timeout' => self::$curltimeout));
                             if (!is_wp_error($apidata_live))
                             {
@@ -2379,14 +2482,51 @@ class YouTubePrefs
                                     $json = json_decode($raw, true);
                                     if (!isset($json['error']) && is_array($json) && count($json['items']))
                                     {
-                                        if (isset($json['items'][0]['snippet']['liveBroadcastContent']) && $json['items'][0]['snippet']['liveBroadcastContent'] != 'live')
-                                        {
-                                            unset($linkparams['v']);
-                                        }
+                                        $linkparams['v'] = $json['items'][0]['id']['videoId'];
                                     }
                                     else if (isset($json['error']))
                                     {
                                         return $live_error_msg; // . ' <em>(Error code ' . $json['error']->code . ': ' . $json['error']->message . ')</em>';
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception $ex)
+                        {
+                            return $live_error_msg;
+                        }
+                    }
+                }
+                else if (isset($linkparams['v']))
+                {
+                    ////////////////////// process single video live stream
+                    try
+                    {
+                        if (self::$alloptions[self::$opt_not_live_on])
+                        {
+                            // if not_live_content isn't being used, just process as a normal single video. otherwise: if not currently live (nor upcoming?), unset $linkparams['v']
+                            $not_live_content = trim(htmlspecialchars_decode(wp_strip_all_tags(self::$alloptions[self::$opt_not_live_content], true)));
+                            if (!empty($not_live_content))
+                            {
+                                $ytapilink_live = 'https://www.googleapis.com/youtube/v3/videos?id=' . $linkparams['v'] . '&part=snippet&key=' . self::$alloptions[self::$opt_apikey];
+                                $apidata_live = wp_remote_get($ytapilink_live, array('timeout' => self::$curltimeout));
+                                if (!is_wp_error($apidata_live))
+                                {
+                                    $raw = wp_remote_retrieve_body($apidata_live);
+                                    if (!empty($raw))
+                                    {
+                                        $json = json_decode($raw, true);
+                                        if (!isset($json['error']) && is_array($json) && count($json['items']))
+                                        {
+                                            if (isset($json['items'][0]['snippet']['liveBroadcastContent']) && $json['items'][0]['snippet']['liveBroadcastContent'] != 'live')
+                                            {
+                                                unset($linkparams['v']);
+                                            }
+                                        }
+                                        else if (isset($json['error']))
+                                        {
+                                            return $live_error_msg; // . ' <em>(Error code ' . $json['error']->code . ': ' . $json['error']->message . ')</em>';
+                                        }
                                     }
                                 }
                             }
@@ -2403,10 +2543,15 @@ class YouTubePrefs
                 return $live_error_msg;
             }
 
-            if (!isset($linkparams['v']))
+            if (!isset($linkparams['v']) && !isset($linkparams['live_stream']))            
             {
                 return apply_filters('ytprefs_filter_the_content_light', wp_kses_post(self::$alloptions[self::$opt_not_live_content]));
             }
+        }
+        
+        if (stripos($linkparamstemp[0], 'live_stream') !== false)
+        {
+            $linkparams['live_stream'] = 1;
         }
 
         $youtubebaseurl = 'youtube';
@@ -2469,7 +2614,7 @@ class YouTubePrefs
                             $acctitle = $odata->title;
                         }
                     }
-                    else
+                    else if (isset($linkparams['v']))
                     {
                         $odata = self::get_oembed('https://youtube.com/watch?v=' . $linkparams['v'], 1920, 1280);
                         if (is_object($odata) && isset($odata->title))
@@ -2482,6 +2627,10 @@ class YouTubePrefs
                 if ($acctitle)
                 {
                     $acctitle = ' title="' . esc_attr($acctitle) . '" ';
+                }
+                else
+                {
+                    $acctitle = ' title="YouTube player" ';
                 }
             }
             catch (Exception $e)
@@ -2558,6 +2707,16 @@ class YouTubePrefs
         if (!empty($relstop) && isset($finalparams['rel']) && intval($finalparams['rel']) === -1)
         {
             $finalparams['rel'] = 0;
+        }
+
+        if (!empty($finalparams['live_stream']))
+        {
+            $videoidoutput = 'live_stream';
+        }
+
+        if ($finalparams[self::$opt_responsive] == 1)
+        {
+            // wrap with fluid wrapper on server side code
         }
 
         $code1 = '<iframe ' . $centercode . ' id="_ytid_' . rand(10000, 99999) . '" width="' . self::$defaultwidth . '" height="' . self::$defaultheight . '" ' .
@@ -2805,7 +2964,10 @@ class YouTubePrefs
 
     public static function custom_admin_pointers_check()
     {
-        //return false; // ooopointer shut all off;
+        if (!self::$alloptions[self::$opt_show_pointer])
+        {
+            return false;
+        }
         $admin_pointers = self::custom_admin_pointers();
         foreach ($admin_pointers as $pointer => $array)
         {
@@ -2919,10 +3081,10 @@ class YouTubePrefs
         $new_pointer_content = '<h3>' . __('New Update') . '</h3>'; // ooopointer
 
         $new_pointer_content .= '<p>'; // ooopointer
-        $new_pointer_content .= "This update fixes pagination and autonext issues for Free and <a target=_blank href=" . self::$epbase . '/dashboard/pro-easy-video-analytics.aspx?ref=frompointer' . ">Pro versions</a>.";
+        $new_pointer_content .= "This update fixes the &quot;Hide related videos at the end of playback&quot; feature for both Free and <a target=_blank href=" . self::$epbase . '/dashboard/pro-easy-video-analytics.aspx?ref=frompointer' . ">Pro versions</a>.";
         if (self::vi_logged_in())
         {
-            $new_pointer_content .= "<br><br><strong>Note:</strong> You are currently logged into the vi intelligence feature. vi support is being deprecated in the next version. Please contact ext@embedplus.com for questions.";
+            $new_pointer_content .= "<br><br><strong>Note:</strong> You are currently logged into the vi intelligence feature. vi support is being deprecated in the next version, so we recommend taking the vi ads down from your site. Please contact ext@embedplus.com for questions.";
         }
         if (!empty(self::$alloptions[self::$opt_pro]) && strlen(trim(self::$alloptions[self::$opt_pro])) > 0)
         {
@@ -3002,288 +3164,12 @@ class YouTubePrefs
 
         // See if the user has posted us some information
         // If they did, this hidden field will be set to 'Y'
-        if (isset($_POST[$ytprefs_submitted]) && $_POST[$ytprefs_submitted] == 'Y')
+        if (isset($_POST[$ytprefs_submitted]) && $_POST[$ytprefs_submitted] == 'Y' && check_admin_referer('_epyt_save', '_epyt_nonce'))
         {
-            check_admin_referer('_epyt_save', '_epyt_nonce');
-            // Read their posted values
-
-            $new_options = array();
-            $new_options[self::$opt_center] = self::postchecked(self::$opt_center) ? 1 : 0;
-            $new_options[self::$opt_glance] = self::postchecked(self::$opt_glance) ? 1 : 0;
-            $new_options[self::$opt_autoplay] = self::postchecked(self::$opt_autoplay) ? 1 : 0;
-            $new_options[self::$opt_debugmode] = self::postchecked(self::$opt_debugmode) ? 1 : 0;
-            $new_options[self::$opt_admin_off_scripts] = self::postchecked(self::$opt_admin_off_scripts) ? 1 : 0;
-            $new_options[self::$opt_old_script_method] = self::postchecked(self::$opt_old_script_method) ? 1 : 0;
-            $new_options[self::$opt_cc_load_policy] = self::postchecked(self::$opt_cc_load_policy) ? 1 : 0;
-            $new_options[self::$opt_iv_load_policy] = self::postchecked(self::$opt_iv_load_policy) ? 1 : 3;
-            $new_options[self::$opt_loop] = self::postchecked(self::$opt_loop) ? 1 : 0;
-            $new_options[self::$opt_modestbranding] = self::postchecked(self::$opt_modestbranding) ? 1 : 0;
-            $new_options[self::$opt_fs] = self::postchecked(self::$opt_fs) ? 1 : 0;
-            $new_options[self::$opt_playsinline] = self::postchecked(self::$opt_playsinline) ? 1 : 0;
-            $new_options[self::$opt_origin] = self::postchecked(self::$opt_origin) ? 1 : 0;
-            $new_options[self::$opt_controls] = self::postchecked(self::$opt_controls) ? 1 : 0;
-            $new_options[self::$opt_color] = self::postchecked(self::$opt_color) ? 'red' : 'white';
-            $new_options[self::$opt_nocookie] = self::postchecked(self::$opt_nocookie) ? 1 : 0;
-            $new_options[self::$opt_gdpr_consent] = self::postchecked(self::$opt_gdpr_consent) ? 1 : 0;
-            $new_options[self::$opt_playlistorder] = self::postchecked(self::$opt_playlistorder) ? 1 : 0;
-            $new_options[self::$opt_acctitle] = self::postchecked(self::$opt_acctitle) ? 1 : 0;
-            $new_options[self::$opt_migrate] = self::postchecked(self::$opt_migrate) ? 1 : 0;
-            $new_options[self::$opt_migrate_youtube] = self::postchecked(self::$opt_migrate_youtube) ? 1 : 0;
-            $new_options[self::$opt_migrate_embedplusvideo] = self::postchecked(self::$opt_migrate_embedplusvideo) ? 1 : 0;
-            $new_options[self::$opt_oldspacing] = self::postchecked(self::$opt_oldspacing) ? 1 : 0;
-            $new_options[self::$opt_frontend_only] = self::postchecked(self::$opt_frontend_only) ? 1 : 0;
-            $new_options[self::$opt_responsive] = self::postchecked(self::$opt_responsive) ? 1 : 0;
-            $new_options[self::$opt_widgetfit] = self::postchecked(self::$opt_widgetfit) ? 1 : 0;
-            $new_options[self::$opt_evselector_light] = self::postchecked(self::$opt_evselector_light) ? 1 : 0;
-            $new_options[self::$opt_stop_mobile_buffer] = self::postchecked(self::$opt_stop_mobile_buffer) ? 1 : 0;
-            $new_options[self::$opt_restrict_wizard] = self::postchecked(self::$opt_restrict_wizard) ? 1 : 0;
-            $new_options[self::$opt_ajax_compat] = self::postchecked(self::$opt_ajax_compat) ? 1 : 0;
-            $new_options[self::$opt_defaultdims] = self::postchecked(self::$opt_defaultdims) ? 1 : 0;
-            $new_options[self::$opt_defaultvol] = self::postchecked(self::$opt_defaultvol) ? 1 : 0;
-            $new_options[self::$opt_dohl] = self::postchecked(self::$opt_dohl) ? 1 : 0;
-            $new_options[self::$opt_onboarded] = self::postchecked(self::$opt_onboarded) ? 1 : 0;
-            $new_options[self::$opt_gallery_hideprivate] = self::postchecked(self::$opt_gallery_hideprivate) ? 1 : 0;
-            $new_options[self::$opt_gallery_showtitle] = self::postchecked(self::$opt_gallery_showtitle) ? 1 : 0;
-            $new_options[self::$opt_gallery_showpaging] = self::postchecked(self::$opt_gallery_showpaging) ? 1 : 0;
-            $new_options[self::$opt_gallery_autonext] = self::postchecked(self::$opt_gallery_autonext) ? 1 : 0;
-            $new_options[self::$opt_gallery_thumbplay] = self::postchecked(self::$opt_gallery_thumbplay) ? 1 : 0;
-            $new_options[self::$opt_gallery_channelsub] = self::postchecked(self::$opt_gallery_channelsub) ? 1 : 0;
-            $new_options[self::$opt_gallery_customarrows] = self::postchecked(self::$opt_gallery_customarrows) ? 1 : 0;
-            $new_options[self::$opt_gallery_collapse_grid] = self::postchecked(self::$opt_gallery_collapse_grid) ? 1 : 0;
-            $new_options[self::$opt_vi_hide_monetize_tab] = self::postchecked(self::$opt_vi_hide_monetize_tab) ? 1 : 0;
-
-            $_rel = 0;
-            try
-            {
-                $_rel = is_numeric(trim($_POST[self::$opt_rel])) ? intval(trim($_POST[self::$opt_rel])) : $_rel;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_rel] = $_rel;
-
-
-            $_gdpr_consent_message = '';
-            try
-            {
-                $_gdpr_consent_message = wp_kses_post(stripslashes($_POST[self::$opt_gdpr_consent_message]));
-            }
-            catch (Exception $ex)
-            {
-                $_gdpr_consent_message = '';
-            }
-            $new_options[self::$opt_gdpr_consent_message] = $_gdpr_consent_message;
-
-            $_gdpr_consent_button = '';
-            try
-            {
-                $_gdpr_consent_button = wp_kses_post(stripslashes($_POST[self::$opt_gdpr_consent_button]));
-            }
-            catch (Exception $ex)
-            {
-                $_gdpr_consent_button = '';
-            }
-            $new_options[self::$opt_gdpr_consent_button] = $_gdpr_consent_button;
-
-            $_ytapi_load = 'light';
-            try
-            {
-                $_ytapi_load_temp = $_POST[self::$opt_ytapi_load];
-                if (in_array($_ytapi_load_temp, array('always', 'light', 'never')))
-                {
-                    $_ytapi_load = $_ytapi_load_temp;
-                }
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_ytapi_load] = $_ytapi_load;
-
-            $_restrict_wizard_roles = self::$dft_roles;
-            try
-            {
-                $_restrict_wizard_roles = is_array($_POST[self::$opt_restrict_wizard_roles]) ? $_POST[self::$opt_restrict_wizard_roles] : $_restrict_wizard_roles;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_restrict_wizard_roles] = $_restrict_wizard_roles;
-
-
-            $_defaultwidth = '';
-            try
-            {
-                $_defaultwidth = is_numeric(trim($_POST[self::$opt_defaultwidth])) ? intval(trim($_POST[self::$opt_defaultwidth])) : $_defaultwidth;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_defaultwidth] = $_defaultwidth;
-
-            $_defaultheight = '';
-            try
-            {
-                $_defaultheight = is_numeric(trim($_POST[self::$opt_defaultheight])) ? intval(trim($_POST[self::$opt_defaultheight])) : $_defaultheight;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_defaultheight] = $_defaultheight;
-
-            $_responsive_all = 1;
-            try
-            {
-                $_responsive_all = is_numeric(trim($_POST[self::$opt_responsive_all])) ? intval(trim($_POST[self::$opt_responsive_all])) : $_responsive_all;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_responsive_all] = $_responsive_all;
-
-            $_vol = '';
-            try
-            {
-                $_vol = is_numeric(trim($_POST[self::$opt_vol])) ? intval(trim($_POST[self::$opt_vol])) : $_vol;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_vol] = $_vol;
-
-            $_gallery_pagesize = 15;
-            try
-            {
-                $_gallery_pagesize = is_numeric(trim($_POST[self::$opt_gallery_pagesize])) ? intval(trim($_POST[self::$opt_gallery_pagesize])) : $_gallery_pagesize;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_gallery_pagesize] = $_gallery_pagesize;
-
-
-            $_gallery_columns = 3;
-            try
-            {
-                $_gallery_columns = is_numeric(trim($_POST[self::$opt_gallery_columns])) ? intval(trim($_POST[self::$opt_gallery_columns])) : $_gallery_columns;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_gallery_columns] = $_gallery_columns;
-
-
-            $_gallery_collapse_grid_breaks = self::$dft_bpts;
-            try
-            {
-                $_gallery_collapse_grid_breaks = is_array($_POST[self::$opt_gallery_collapse_grid_breaks]) ? $_POST[self::$opt_gallery_collapse_grid_breaks] : $_gallery_collapse_grid_breaks;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_gallery_collapse_grid_breaks] = $_gallery_collapse_grid_breaks;
-
-
-
-            $_gallery_scrolloffset = 20;
-            try
-            {
-                $_gallery_scrolloffset = is_numeric(trim($_POST[self::$opt_gallery_scrolloffset])) ? intval(trim($_POST[self::$opt_gallery_scrolloffset])) : $_gallery_scrolloffset;
-            }
-            catch (Exception $ex)
-            {
-                
-            }
-            $new_options[self::$opt_gallery_scrolloffset] = $_gallery_scrolloffset;
-
-            $_gallery_channelsublink = '';
-            try
-            {
-                $_gallery_channelsublink = trim(strip_tags($_POST[self::$opt_gallery_channelsublink]));
-                $pieces = explode('?', $_gallery_channelsublink);
-                $_gallery_channelsublink = trim($pieces[0]);
-            }
-            catch (Exception $ex)
-            {
-                $_gallery_channelsublink = '';
-            }
-            $new_options[self::$opt_gallery_channelsublink] = $_gallery_channelsublink;
-
-
-            $_gallery_channelsubtext = '';
-            try
-            {
-                $_gallery_channelsubtext = stripslashes(trim($_POST[self::$opt_gallery_channelsubtext]));
-            }
-            catch (Exception $ex)
-            {
-                $_gallery_channelsubtext = '';
-            }
-            $new_options[self::$opt_gallery_channelsubtext] = $_gallery_channelsubtext;
-
-
-            $_gallery_custom_prev = 'Prev';
-            try
-            {
-                $_gallery_custom_prev = trim(strip_tags($_POST[self::$opt_gallery_customprev]));
-            }
-            catch (Exception $ex)
-            {
-                $_gallery_custom_prev = 'Prev';
-            }
-            $new_options[self::$opt_gallery_customprev] = $_gallery_custom_prev;
-
-
-            $_gallery_custom_next = 'Next';
-            try
-            {
-                $_gallery_custom_next = trim(strip_tags($_POST[self::$opt_gallery_customnext]));
-            }
-            catch (Exception $ex)
-            {
-                $_gallery_custom_next = 'Next';
-            }
-            $new_options[self::$opt_gallery_customnext] = $_gallery_custom_next;
-
-
-            $_not_live_content = '';
-            try
-            {
-                $_not_live_content = wp_kses_post(stripslashes($_POST[self::$opt_not_live_content]));
-            }
-            catch (Exception $ex)
-            {
-                $_not_live_content = '';
-            }
-            $new_options[self::$opt_not_live_content] = $_not_live_content;
-
-
-            $_apikey = '';
-            try
-            {
-                $_apikey = trim(str_replace(array(' ', "'", '"'), array('', '', ''), strip_tags($_POST[self::$opt_apikey])));
-            }
-            catch (Exception $ex)
-            {
-                $_apikey = '';
-            }
-            $new_options[self::$opt_apikey] = $_apikey;
-
-
-            $all = $new_options + $all;
-
-            update_option(self::$opt_alloptions, $all);
+            $result = self::settings_save($all);
+            $all = get_option(self::$opt_alloptions);
             ?>
-            <div class="updated"><p><strong><?php _e('Changes saved.'); ?> <em>If you're using a separate caching plugin and you do not see your changes after saving, <strong class="orange">you need to reset your cache.</strong></em></strong></p></div>
+            <div class="updated"><p><strong><?php echo wp_kses_post($result['message']) ?></strong></p></div>
             <?php
         }
         ?>
@@ -3292,7 +3178,7 @@ class YouTubePrefs
             .wrap {font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif; color: #000000;}
             .wrap-ytprefs {max-width: 1064px;}
             h1 span {vertical-align: middle;}
-            #ytform p { line-height: 20px; margin: 18px 0; }
+            #ytform p, #ytform .p { line-height: 20px; margin: 18px 0; }
             .ytindent {padding: 0px 0px 0px 20px; font-size: 13px; margin-bottom: 100px;}
             .ytindent ul, .ytindent p {font-size: 13px;}
             .shadow {-webkit-box-shadow: 0px 0px 20px 0px #000000; box-shadow: 0px 0px 20px 0px #000000;}
@@ -3327,6 +3213,14 @@ class YouTubePrefs
                 background: -ms-linear-gradient(top,  #2ea2cc 0%,#007396 98%); /* IE10+ */
                 background: linear-gradient(to bottom,  #2ea2cc 0%,#007396 98%); /* W3C */
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2ea2cc', endColorstr='#007396',GradientType=0 ); /* IE6-9 */
+            }
+            .wp-core-ui p.submit .button-primary[disabled] {
+                opacity: .4;
+                transition: opacity ease-in-out .3s;
+            }
+            .wp-core-ui p.submit .button-primary[disabled]:after {
+                content: url(<?php echo admin_url('images/wpspin_light.gif') ?>);
+                padding-left: 3px;
             }
             p.submit em {display: inline-block; padding-left: 20px; vertical-align: middle; width: 240px; margin-top: -6px;}
             #opt_pro {box-shadow: 0px 0px 5px 0px #1870D5; width: 320px;vertical-align: top;}
@@ -3451,6 +3345,23 @@ class YouTubePrefs
             .epyt-deprecated {
                 color: #aaaaaa;
             }
+
+            input[type="checkbox"] + label .check-note {
+                display: none;
+            }
+
+            input[type="checkbox"]:checked + label .check-note {
+                display: inline;
+            }
+
+            #not_live_on ~ #wp-not_live_content-wrap {
+                opacity: .3;
+            }
+
+            #not_live_on:checked ~ #wp-not_live_content-wrap {
+                opacity: 1;
+            }
+
         </style>
         <div class="wrap wrap-ytprefs">
             <h1><span class="dashicons-before dashicons-video-alt3"></span> <?php echo __('YouTube Settings') ?></h1>
@@ -3524,7 +3435,7 @@ class YouTubePrefs
                                     <br>
                                 </label>
                                 <input type="radio" name="<?php echo self::$opt_rel; ?>" id="<?php echo self::$opt_rel; ?>-1" value="-1" <?php checked($all[self::$opt_rel], -1); ?>>
-                                <label for="<?php echo self::$opt_rel; ?>-1">Hide related videos at the end of playback <sup class="orange">new</sup></label> &nbsp;&nbsp;
+                                <label for="<?php echo self::$opt_rel; ?>-1">Hide related videos at the end of playback</label> &nbsp;&nbsp;
                                 <input type="radio" name="<?php echo self::$opt_rel; ?>" id="<?php echo self::$opt_rel; ?>0" value="0" <?php checked($all[self::$opt_rel], 0); ?>>
                                 <label for="<?php echo self::$opt_rel; ?>0">Show related videos only from the video's channel</label> &nbsp;&nbsp;
                                 <input type="radio" name="<?php echo self::$opt_rel; ?>" id="<?php echo self::$opt_rel; ?>1" value="1" <?php checked($all[self::$opt_rel], 1); ?>>
@@ -3612,23 +3523,34 @@ class YouTubePrefs
                                     Check this to hide the installation setup wizard when this page loads.
                                 </label>
                             </p>
+                            <p>
+                                <input name="<?php echo self::$opt_show_pointer; ?>" id="<?php echo self::$opt_show_pointer; ?>" <?php checked($all[self::$opt_show_pointer], 1); ?> type="checkbox" class="checkbox">
+                                <label for="<?php echo self::$opt_show_pointer; ?>">
+                                    <b class="chktitle">Show New Feature Notice:</b>
+                                    Show admin notice of new plugin features after updates.
+                                </label>
+                            </p>
                             <p class="<?php echo self::vi_logged_in() || !empty($all[self::$opt_vi_active]) || !self::vi_ever_logged_in() ? 'hidden' : '' ?>">
                                 <input name="<?php echo self::$opt_vi_hide_monetize_tab; ?>" id="<?php echo self::$opt_vi_hide_monetize_tab; ?>" <?php checked($all[self::$opt_vi_hide_monetize_tab], 1); ?> type="checkbox" class="checkbox">
                                 <label for="<?php echo self::$opt_vi_hide_monetize_tab; ?>"><b class="chktitle">Hide "Monetize" Feature:</b> (deprecated) Hide the tab(s) for the deprecated video intelligence feature.</label>
                             </p>
-                            <p id="not_live_content_scroll">
-                                <label for="<?php echo self::$opt_not_live_content; ?>">
+                            <div id="not_live_content_scroll" class="p">
+                                <input name="<?php echo self::$opt_not_live_on; ?>" id="<?php echo self::$opt_not_live_on; ?>" <?php checked($all[self::$opt_not_live_on], 1); ?> type="checkbox" class="checkbox">
+                                <label for="<?php echo self::$opt_not_live_on; ?>">
                                     <b class="chktitle">Default "Not Live" Content:</b>
                                     When your channel is not streaming live, the YouTube live player will simply display a countdown.
                                     Instead of showing that player, you can display some "coming soon" content in that space for your visitors to see until your channel begins to live stream. 
                                     The plugin will automatically switch to your channel's live stream once it's active.
-                                    Below, enter what you would like to appear until then. <strong><span class="orange">NOTE:</span> Do not put another live stream embed below.</strong>
-                                    If you just want to show the standard countdown player that YouTube provides, just leave the below empty and save.
+                                    Below, enter what you would like to appear until then.                                   
+                                    If you just want to show the standard countdown player that YouTube provides, uncheck this option.
+                                    <strong class="check-note"><span class="orange">NOTE:</span> This feature uses a significant amount of your YouTube API quota. We suggest unchecking it if your site has high traffic. If you chose to use this feature, do not put another live stream embed below.</strong>
                                 </label>
+                                <br>
+                                <br>
                                 <?php
                                 wp_editor(wp_kses_post($all[self::$opt_not_live_content]), self::$opt_not_live_content, array('textarea_rows' => 7));
                                 ?> 
-                            </p>
+                            </div>
 
 
                         </div>
@@ -3942,6 +3864,13 @@ class YouTubePrefs
                         </p>
                         <div class="ytindent chx">
                             <p>
+                                <input name="<?php echo self::$opt_ajax_save; ?>" id="<?php echo self::$opt_ajax_save; ?>" <?php checked($all[self::$opt_ajax_save], 1); ?> type="checkbox" class="checkbox">
+                                <label for="<?php echo self::$opt_ajax_save; ?>">
+                                    <b class="chktitle">Save Settings with AJAX: </b> <sup class="orange">new</sup> 
+                                    Turn this option off if you are having trouble saving your settings.
+                                </label>
+                            </p>
+                            <p>
                                 <input name="<?php echo self::$opt_old_script_method; ?>" id="<?php echo self::$opt_old_script_method; ?>" <?php checked($all[self::$opt_old_script_method], 1); ?> type="checkbox" class="checkbox">
                                 <label for="<?php echo self::$opt_old_script_method; ?>">
                                     <b class="chktitle">Use Legacy Scripts: </b>
@@ -3979,7 +3908,7 @@ class YouTubePrefs
                             <p>
                                 <input name="<?php echo self::$opt_frontend_only; ?>" id="<?php echo self::$opt_frontend_only; ?>" <?php checked($all[self::$opt_frontend_only], 1); ?> type="checkbox" class="checkbox">
                                 <label for="<?php echo self::$opt_frontend_only; ?>">
-                                    <b class="chktitle">Don't Run Shortcode In Admin:</b> <sup class="orange">new</sup> 
+                                    <b class="chktitle">Don't Run Shortcode In Admin:</b>
                                     Checking this will only allow the shortcode to run on the front-end of your website, and not in the admin area.
                                 </label>
                             </p>
@@ -4248,8 +4177,9 @@ class YouTubePrefs
         <script type="text/javascript">
             (function ($)
             {
-                window.savevalidate = function ()
+                window.savevalidate = function (e)
                 {
+                    var $formDefaults = $(e.target);
                     var valid = true;
                     var $tabFocus = '';
                     var alertmessage = '';
@@ -4330,7 +4260,46 @@ class YouTubePrefs
                         var tabSelector = '.wrap-ytprefs .nav-tab-wrapper .nav-tab[href=#' + $tabFocus.attr('id') + ']';
                         $(tabSelector).click();
                     }
-                    return valid;
+                    if (!$formDefaults.find('#ajax_save').is(':checked'))
+                    {
+                        return valid;
+                    }
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////////////// MAIN PREFS AJAX SAVE                    
+                    if (valid)
+                    {
+                        e.preventDefault();
+                        (window.tinyMCE || window.tinymce).triggerSave();
+                        $formDefaults.find('.ytprefs-submit').prop('disabled', true);
+
+                        var formData = $formDefaults.ytprefsFormJSON();
+                        formData.action = 'my_embedplus_settings_save_ajax';
+
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            timeout: 30000,
+                            url: window._EPYTA_ ? window._EPYTA_.wpajaxurl : ajaxurl,
+                            data: formData,
+                            success: function (response)
+                            {
+                                alertify.alert(response ? response.message : 'Sorry, there was an error submitting your settings.', function ()
+                                {
+                                    if (response.type == 'success')
+                                    {
+                                        window.top.location.href = window._EPYTA_.admin_url_ytprefs;
+                                    }
+                                });
+                            },
+                            error: function (xhr, ajaxOptions, thrownError)
+                            {
+                                alertify.alert('Sorry, there was an error saving your settings. ' + (thrownError ? thrownError : ''));
+                            },
+                            complete: function ()
+                            {
+                                $formDefaults.find('.ytprefs-submit').prop('disabled', false);
+                            }
+                        });
+                    }
                 };
 
                 var mydomain = escape("http://" + window.location.host.toString());
@@ -4359,9 +4328,9 @@ class YouTubePrefs
                         $('.wrap-ytprefs .nav-tab-wrapper a[href="' + window.location.hash + '"]').click();
                     }
 
-                    $('#ytform').on('submit', function ()
+                    $('#ytform').on('submit', function (e)
                     {
-                        return window.savevalidate();
+                        return window.savevalidate(e);
                     });
 
                     jQuery('#<?php echo self::$opt_defaultdims; ?>').change(function ()
@@ -4528,6 +4497,309 @@ class YouTubePrefs
         }
     }
 
+    public static function settings_save($all)
+    {
+        $new_options = array();
+        $new_options[self::$opt_center] = self::postchecked(self::$opt_center) ? 1 : 0;
+        $new_options[self::$opt_glance] = self::postchecked(self::$opt_glance) ? 1 : 0;
+        $new_options[self::$opt_autoplay] = self::postchecked(self::$opt_autoplay) ? 1 : 0;
+        $new_options[self::$opt_debugmode] = self::postchecked(self::$opt_debugmode) ? 1 : 0;
+        $new_options[self::$opt_admin_off_scripts] = self::postchecked(self::$opt_admin_off_scripts) ? 1 : 0;
+        $new_options[self::$opt_ajax_save] = self::postchecked(self::$opt_ajax_save) ? 1 : 0;
+        $new_options[self::$opt_show_pointer] = self::postchecked(self::$opt_show_pointer) ? 1 : 0;
+        $new_options[self::$opt_old_script_method] = self::postchecked(self::$opt_old_script_method) ? 1 : 0;
+        $new_options[self::$opt_cc_load_policy] = self::postchecked(self::$opt_cc_load_policy) ? 1 : 0;
+        $new_options[self::$opt_iv_load_policy] = self::postchecked(self::$opt_iv_load_policy) ? 1 : 3;
+        $new_options[self::$opt_loop] = self::postchecked(self::$opt_loop) ? 1 : 0;
+        $new_options[self::$opt_modestbranding] = self::postchecked(self::$opt_modestbranding) ? 1 : 0;
+        $new_options[self::$opt_fs] = self::postchecked(self::$opt_fs) ? 1 : 0;
+        $new_options[self::$opt_playsinline] = self::postchecked(self::$opt_playsinline) ? 1 : 0;
+        $new_options[self::$opt_origin] = self::postchecked(self::$opt_origin) ? 1 : 0;
+        $new_options[self::$opt_controls] = self::postchecked(self::$opt_controls) ? 1 : 0;
+        $new_options[self::$opt_color] = self::postchecked(self::$opt_color) ? 'red' : 'white';
+        $new_options[self::$opt_nocookie] = self::postchecked(self::$opt_nocookie) ? 1 : 0;
+        $new_options[self::$opt_gdpr_consent] = self::postchecked(self::$opt_gdpr_consent) ? 1 : 0;
+        $new_options[self::$opt_playlistorder] = self::postchecked(self::$opt_playlistorder) ? 1 : 0;
+        $new_options[self::$opt_acctitle] = self::postchecked(self::$opt_acctitle) ? 1 : 0;
+        $new_options[self::$opt_migrate] = self::postchecked(self::$opt_migrate) ? 1 : 0;
+        $new_options[self::$opt_migrate_youtube] = self::postchecked(self::$opt_migrate_youtube) ? 1 : 0;
+        $new_options[self::$opt_migrate_embedplusvideo] = self::postchecked(self::$opt_migrate_embedplusvideo) ? 1 : 0;
+        $new_options[self::$opt_oldspacing] = self::postchecked(self::$opt_oldspacing) ? 1 : 0;
+        $new_options[self::$opt_frontend_only] = self::postchecked(self::$opt_frontend_only) ? 1 : 0;
+        $new_options[self::$opt_responsive] = self::postchecked(self::$opt_responsive) ? 1 : 0;
+        $new_options[self::$opt_widgetfit] = self::postchecked(self::$opt_widgetfit) ? 1 : 0;
+        $new_options[self::$opt_evselector_light] = self::postchecked(self::$opt_evselector_light) ? 1 : 0;
+        $new_options[self::$opt_stop_mobile_buffer] = self::postchecked(self::$opt_stop_mobile_buffer) ? 1 : 0;
+        $new_options[self::$opt_restrict_wizard] = self::postchecked(self::$opt_restrict_wizard) ? 1 : 0;
+        $new_options[self::$opt_ajax_compat] = self::postchecked(self::$opt_ajax_compat) ? 1 : 0;
+        $new_options[self::$opt_defaultdims] = self::postchecked(self::$opt_defaultdims) ? 1 : 0;
+        $new_options[self::$opt_defaultvol] = self::postchecked(self::$opt_defaultvol) ? 1 : 0;
+        $new_options[self::$opt_dohl] = self::postchecked(self::$opt_dohl) ? 1 : 0;
+        $new_options[self::$opt_onboarded] = self::postchecked(self::$opt_onboarded) ? 1 : 0;
+        $new_options[self::$opt_not_live_on] = self::postchecked(self::$opt_not_live_on) ? 1 : 0;
+        $new_options[self::$opt_gallery_hideprivate] = self::postchecked(self::$opt_gallery_hideprivate) ? 1 : 0;
+        $new_options[self::$opt_gallery_showtitle] = self::postchecked(self::$opt_gallery_showtitle) ? 1 : 0;
+        $new_options[self::$opt_gallery_showpaging] = self::postchecked(self::$opt_gallery_showpaging) ? 1 : 0;
+        $new_options[self::$opt_gallery_autonext] = self::postchecked(self::$opt_gallery_autonext) ? 1 : 0;
+        $new_options[self::$opt_gallery_thumbplay] = self::postchecked(self::$opt_gallery_thumbplay) ? 1 : 0;
+        $new_options[self::$opt_gallery_channelsub] = self::postchecked(self::$opt_gallery_channelsub) ? 1 : 0;
+        $new_options[self::$opt_gallery_customarrows] = self::postchecked(self::$opt_gallery_customarrows) ? 1 : 0;
+        $new_options[self::$opt_gallery_collapse_grid] = self::postchecked(self::$opt_gallery_collapse_grid) ? 1 : 0;
+        $new_options[self::$opt_vi_hide_monetize_tab] = self::postchecked(self::$opt_vi_hide_monetize_tab) ? 1 : 0;
+
+        $_rel = 0;
+        try
+        {
+            $_rel = is_numeric(trim($_POST[self::$opt_rel])) ? intval(trim($_POST[self::$opt_rel])) : $_rel;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_rel] = $_rel;
+
+
+        $_gdpr_consent_message = '';
+        try
+        {
+            $_gdpr_consent_message = wp_kses_post(stripslashes($_POST[self::$opt_gdpr_consent_message]));
+        }
+        catch (Exception $ex)
+        {
+            $_gdpr_consent_message = '';
+        }
+        $new_options[self::$opt_gdpr_consent_message] = $_gdpr_consent_message;
+
+        $_gdpr_consent_button = '';
+        try
+        {
+            $_gdpr_consent_button = wp_kses_post(stripslashes($_POST[self::$opt_gdpr_consent_button]));
+        }
+        catch (Exception $ex)
+        {
+            $_gdpr_consent_button = '';
+        }
+        $new_options[self::$opt_gdpr_consent_button] = $_gdpr_consent_button;
+
+        $_ytapi_load = 'light';
+        try
+        {
+            $_ytapi_load_temp = $_POST[self::$opt_ytapi_load];
+            if (in_array($_ytapi_load_temp, array('always', 'light', 'never')))
+            {
+                $_ytapi_load = $_ytapi_load_temp;
+            }
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_ytapi_load] = $_ytapi_load;
+
+        $_restrict_wizard_roles = self::$dft_roles;
+        try
+        {
+            $_restrict_wizard_roles = is_array($_POST[self::$opt_restrict_wizard_roles]) ? $_POST[self::$opt_restrict_wizard_roles] : $_restrict_wizard_roles;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_restrict_wizard_roles] = $_restrict_wizard_roles;
+
+
+        $_defaultwidth = '';
+        try
+        {
+            $_defaultwidth = is_numeric(trim($_POST[self::$opt_defaultwidth])) ? intval(trim($_POST[self::$opt_defaultwidth])) : $_defaultwidth;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_defaultwidth] = $_defaultwidth;
+
+        $_defaultheight = '';
+        try
+        {
+            $_defaultheight = is_numeric(trim($_POST[self::$opt_defaultheight])) ? intval(trim($_POST[self::$opt_defaultheight])) : $_defaultheight;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_defaultheight] = $_defaultheight;
+
+        $_responsive_all = 1;
+        try
+        {
+            $_responsive_all = is_numeric(trim($_POST[self::$opt_responsive_all])) ? intval(trim($_POST[self::$opt_responsive_all])) : $_responsive_all;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_responsive_all] = $_responsive_all;
+
+        $_vol = '';
+        try
+        {
+            $_vol = is_numeric(trim($_POST[self::$opt_vol])) ? intval(trim($_POST[self::$opt_vol])) : $_vol;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_vol] = $_vol;
+
+        $_gallery_pagesize = 15;
+        try
+        {
+            $_gallery_pagesize = is_numeric(trim($_POST[self::$opt_gallery_pagesize])) ? intval(trim($_POST[self::$opt_gallery_pagesize])) : $_gallery_pagesize;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_gallery_pagesize] = $_gallery_pagesize;
+
+
+        $_gallery_columns = 3;
+        try
+        {
+            $_gallery_columns = is_numeric(trim($_POST[self::$opt_gallery_columns])) ? intval(trim($_POST[self::$opt_gallery_columns])) : $_gallery_columns;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_gallery_columns] = $_gallery_columns;
+
+
+        $_gallery_collapse_grid_breaks = self::$dft_bpts;
+        try
+        {
+            $_gallery_collapse_grid_breaks = is_array($_POST[self::$opt_gallery_collapse_grid_breaks]) ? $_POST[self::$opt_gallery_collapse_grid_breaks] : $_gallery_collapse_grid_breaks;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_gallery_collapse_grid_breaks] = $_gallery_collapse_grid_breaks;
+
+
+
+        $_gallery_scrolloffset = 20;
+        try
+        {
+            $_gallery_scrolloffset = is_numeric(trim($_POST[self::$opt_gallery_scrolloffset])) ? intval(trim($_POST[self::$opt_gallery_scrolloffset])) : $_gallery_scrolloffset;
+        }
+        catch (Exception $ex)
+        {
+            
+        }
+        $new_options[self::$opt_gallery_scrolloffset] = $_gallery_scrolloffset;
+
+        $_gallery_channelsublink = '';
+        try
+        {
+            $_gallery_channelsublink = trim(strip_tags($_POST[self::$opt_gallery_channelsublink]));
+            $pieces = explode('?', $_gallery_channelsublink);
+            $_gallery_channelsublink = trim($pieces[0]);
+        }
+        catch (Exception $ex)
+        {
+            $_gallery_channelsublink = '';
+        }
+        $new_options[self::$opt_gallery_channelsublink] = $_gallery_channelsublink;
+
+
+        $_gallery_channelsubtext = '';
+        try
+        {
+            $_gallery_channelsubtext = stripslashes(trim($_POST[self::$opt_gallery_channelsubtext]));
+        }
+        catch (Exception $ex)
+        {
+            $_gallery_channelsubtext = '';
+        }
+        $new_options[self::$opt_gallery_channelsubtext] = $_gallery_channelsubtext;
+
+
+        $_gallery_custom_prev = 'Prev';
+        try
+        {
+            $_gallery_custom_prev = trim(strip_tags($_POST[self::$opt_gallery_customprev]));
+        }
+        catch (Exception $ex)
+        {
+            $_gallery_custom_prev = 'Prev';
+        }
+        $new_options[self::$opt_gallery_customprev] = $_gallery_custom_prev;
+
+
+        $_gallery_custom_next = 'Next';
+        try
+        {
+            $_gallery_custom_next = trim(strip_tags($_POST[self::$opt_gallery_customnext]));
+        }
+        catch (Exception $ex)
+        {
+            $_gallery_custom_next = 'Next';
+        }
+        $new_options[self::$opt_gallery_customnext] = $_gallery_custom_next;
+
+
+        $_not_live_content = '';
+        try
+        {
+            $_not_live_content = wp_kses_post(stripslashes($_POST[self::$opt_not_live_content]));
+        }
+        catch (Exception $ex)
+        {
+            $_not_live_content = '';
+        }
+        $new_options[self::$opt_not_live_content] = $_not_live_content;
+
+
+        $_apikey = '';
+        try
+        {
+            $_apikey = trim(str_replace(array(' ', "'", '"'), array('', '', ''), strip_tags($_POST[self::$opt_apikey])));
+        }
+        catch (Exception $ex)
+        {
+            $_apikey = '';
+        }
+        $new_options[self::$opt_apikey] = $_apikey;
+
+
+        $all = $new_options + $all;
+
+        update_option(self::$opt_alloptions, $all);
+        return array(
+            'type' => 'success',
+            'message' => 'Changes were saved. <em>If you are using a separate caching plugin and you do not see your changes after saving, <strong class="orange">you need to reset your cache.</strong></em>'
+        );
+    }
+
+    public static function settings_save_ajax()
+    {
+        $result = array();
+        if (check_ajax_referer('_epyt_save', '_epyt_nonce', false) && current_user_can('manage_options'))
+        {
+            $all = get_option(self::$opt_alloptions);
+            $result = self::settings_save($all);
+        }
+        else
+        {
+            $result['type'] = 'error';
+            $result['message'] = 'Sorry, there was a problem saving your settings.';
+        }
+        echo json_encode($result);
+        die();
+    }
+
     public static function onboarding_save_valid(&$input)
     {
         $messages = array();
@@ -4540,6 +4812,7 @@ class YouTubePrefs
             $input[self::$opt_gallery_pagesize] = intval($input[self::$opt_gallery_pagesize]);
             $input[self::$opt_gallery_columns] = intval($input[self::$opt_gallery_columns]);
             $input[self::$opt_not_live_content] = wp_kses_post(stripslashes($input[self::$opt_not_live_content]));
+            $input[self::$opt_not_live_on] = intval($input[self::$opt_not_live_on]);
 
             if (!in_array($input[self::$opt_ytapi_load], array('always', 'light', 'never')))
             {
@@ -4573,6 +4846,7 @@ class YouTubePrefs
             self::$opt_gallery_pagesize => 15,
             self::$opt_gallery_columns => 3,
             self::$opt_not_live_content => '',
+            self::$opt_not_live_on => 0,
             self::$opt_ytapi_load => 'light',
             self::$opt_gdpr_consent => 0,
             self::$opt_gdpr_consent_message => self::$dft_gdpr_consent_message,
@@ -4748,7 +5022,7 @@ class YouTubePrefs
                                     <br>
                                 </label>
                                 <input type="radio" name="<?php echo self::$opt_rel; ?>" id="<?php echo self::$opt_rel; ?>-1" value="-1" <?php checked($all[self::$opt_rel], -1); ?>>
-                                <label for="<?php echo self::$opt_rel; ?>-1">Hide related videos at the end of playback <sup class="orange">new</sup></label> &nbsp;&nbsp;
+                                <label for="<?php echo self::$opt_rel; ?>-1">Hide related videos at the end of playback</label> &nbsp;&nbsp;
                                 <input type="radio" name="<?php echo self::$opt_rel; ?>" id="<?php echo self::$opt_rel; ?>0" value="0" <?php checked($all[self::$opt_rel], 0); ?>>
                                 <label for="<?php echo self::$opt_rel; ?>0">Show related videos only from the video's channel</label> &nbsp;&nbsp;
                                 <input type="radio" name="<?php echo self::$opt_rel; ?>" id="<?php echo self::$opt_rel; ?>1" value="1" <?php checked($all[self::$opt_rel], 1); ?>>
@@ -4790,24 +5064,18 @@ class YouTubePrefs
                                 Enter how many thumbnails can fit per row.  You can later use the embedding wizard to customize this for specific galleries.
                             </div>
                             <div class="ytprefs-ob-setting yob-live">
-                                <p>
-                                    <label for="<?php echo self::$opt_not_live_content; ?>">
-                                        <b class="chktitle">Default "Not Live" Content:</b>
-                                        When your channel is not streaming live, the YouTube live player will simply display a countdown.
-                                        Instead of showing that player, you can display some "coming soon" content in that space for your visitors to see until your channel begins to live stream. 
-                                        The plugin will automatically switch to your channel's live stream once it's active.
-                                        Below, enter what you would like to appear until then. <strong><span class="orange">NOTE:</span> Do not put another live stream embed below.</strong>
-                                        <?php
-                                        if (self::vi_logged_in())
-                                        {
-                                            ?>
-                                            One new option is to embed a quality video advertisement so that you can gain revenue during times when your live stream is not active.  Simply click the "$ Video Ad" button below to enter the proper shortcode and the plugin with manage the rest.
-                                            <?php
-                                        }
-                                        ?>
-                                        If you just want to show the standard countdown player that YouTube provides, just leave the below empty.
-                                    </label>
-                                </p>
+                                <input name="<?php echo self::$opt_not_live_on; ?>" id="<?php echo self::$opt_not_live_on; ?>" <?php checked($all[self::$opt_not_live_on], 1); ?> type="checkbox" class="checkbox">
+                                <label for="<?php echo self::$opt_not_live_on; ?>">
+                                    <b class="chktitle">Default "Not Live" Content:</b>
+                                    When your channel is not streaming live, the YouTube live player will simply display a countdown.
+                                    Instead of showing that player, you can display some "coming soon" content in that space for your visitors to see until your channel begins to live stream. 
+                                    The plugin will automatically switch to your channel's live stream once it's active.
+                                    Below, enter what you would like to appear until then.                                   
+                                    If you just want to show the standard countdown player that YouTube provides, uncheck this option.
+                                    <strong class="check-note"><span class="orange">NOTE:</span> This feature uses a significant amount of your YouTube API quota. We suggest unchecking it if your site has high traffic. If you chose to use this feature, do not put another live stream embed below.</strong>
+                                </label>
+                                <br>
+                                <br>
                                 <?php
                                 wp_editor(wp_kses_post($all[self::$opt_not_live_content]), self::$opt_not_live_content, array('textarea_rows' => 7));
                                 ?> 
@@ -4975,14 +5243,14 @@ class YouTubePrefs
                 {
                     setTimeout(function ()
                     {
-                        jQuery('input.ytprefs-submit').val('Save Changes');
+                        jQuery('.ytprefs-submit').text('Save Changes');
                     }, 3000);
                 });</script>
             <?php
         }
         ?>
         <p class="submit">
-            <input type="submit" name="Submit" class="button-primary ytprefs-submit" value="<?php _e($button_label) ?>" />
+            <button type="submit" name="Submit" class="button-primary ytprefs-submit"><?php _e($button_label) ?></button>
             <em>If you're using a separate caching plugin and you do not see your changes after saving, <strong class="orange">you need to reset your cache.</strong></em>
         </p>
         <?php
@@ -5090,7 +5358,7 @@ class YouTubePrefs
         {
             if (self::$alloptions[self::$opt_responsive_all] == 1)
             {
-                $responsiveselector = '["iframe[src*=\'youtube.com\']","iframe[src*=\'youtube-nocookie.com\']","iframe[data-ep-src*=\'youtube.com\']","iframe[data-ep-src*=\'youtube-nocookie.com\']","iframe[data-ep-gallerysrc*=\'youtube.com\']"]';
+                $responsiveselector = '["iframe.__youtube_prefs__","iframe[src*=\'youtube.com\']","iframe[src*=\'youtube-nocookie.com\']","iframe[data-ep-src*=\'youtube.com\']","iframe[data-ep-src*=\'youtube-nocookie.com\']","iframe[data-ep-gallerysrc*=\'youtube.com\']"]';
             }
             else
             {

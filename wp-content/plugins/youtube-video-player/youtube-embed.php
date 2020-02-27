@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: YouTube Embed WpDevArt
- * Plugin URI: http://wpdevart.com/wordpress-youtube-embed-plugin
+ * Plugin URI: https://wpdevart.com/wordpress-youtube-embed-plugin
  * Description: YouTube Embed plugin is an convenient tool for adding video to your website. Use YouTube Embed plugin to add YouTube videos in posts/pages, widgets.
- * Version: 2.1.4
+ * Version: 2.1.6
  * Author: wpdevart
- * Author URI:    http://wpdevart.com
+ * Author URI:    https://wpdevart.com
  * License URI: GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
  
@@ -56,9 +56,13 @@ class youtube_embed{
 		$youtube_embed_fornt_end = new youtube_embed_front_end(array('menu_name' => 'Youtube','plugin_url' => $this->plugin_url,'plugin_path' => $this->plugin_path));
 		
 		require_once($this->plugin_path.'fornt_end/fornt_end_widget.php');
-		add_action('widgets_init', create_function('', 'return register_widget("youtube_embed_widget");'));
+		add_action('widgets_init',array($this,"youtube_widget"));
 	}
-
+	
+	
+	public function youtube_widget(){
+		return register_widget("youtube_embed_widget");
+	}
     /*############ Register required scripts Function ##################*/
 	
 	public function registr_requeried_scripts(){		

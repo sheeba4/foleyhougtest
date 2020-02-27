@@ -4,7 +4,7 @@ Plugin Name: Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream
 Tags: youtube gallery, video gallery, youtube channel, youtube live, live stream
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 13.1.2.4
+Stable tag: 13.2.0.2
 License: GPLv3 or later
 
 YouTube Embed WordPress Plugin. Embed a responsive video, YouTube channel gallery, playlist gallery, or YouTube.com live stream (with GDPR options)
@@ -17,7 +17,7 @@ YouTube Embed WordPress Plugin. Embed a responsive video, YouTube channel galler
 * Privacy and Consent - Improved privacy and GDPR compliance options like YouTube no cookie, YouTube API restrictions, and a customizable GDPR consent message
 * YouTube gallery capability (channel and playlist) – The ability to make playlist and channel embeds have a gallery layout. By default, the plugin can generate a grid-based [responsive playlist or channel gallery >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx). Your visitors can browse through pages of video thumbnails and choose from videos that are pulled from an entire YouTube channel or playlist.
 * YouTube gallery auto continuous play - embed a playlist or channel gallery and allow it to play one video after the next without requiring viewers to click a thumbnail
-* YouTube Live Stream - Given a link to a YouTube channel, the plugin wizard automatically finds a livestream if one is active in that channel and generates the embed code for you. On the settings page, you can also set defaults of what to automatically display if a live stream is not active at a given moment. For example, you can have your site display a gallery of a channel's entire video library so that users can have something to watch in the meantime. We hope it's a time saver.
+* YouTube Live Stream - Given a link to a YouTube channel, the plugin wizard automatically finds a livestream if one is active in that channel and displays the livestream for you. 
 * Improved accessibility by using title attributes for screen reader support. It should help your site pass functional accessibility evaluations (FAE).
 * Improved ajax theme support
 * Site origin information with each embed code as an extra security measure. In YouTube's/Google's own words, checking this option "protects against malicious third-party JavaScript being injected into your page and hijacking control of your YouTube player." We especially recommend checking it as it adds higher security than the built-in YouTube embedding method that comes with the current version of WordPress (i.e. oembed).
@@ -46,7 +46,7 @@ The settings page has plenty of default options that you can automatically apply
 * Autohide controls until hovering
 * Loop your videos
 * Show/hide related videos at the end
-* Show/hide the video title and other info
+* Show/hide the video title and other info (YouTube/Google has deprecated this feature)
 * Use the light theme
 * Show/hide player controls
 * Turn on/off closed captions by default
@@ -61,8 +61,8 @@ Customizations can be also made to each YouTube embed by adding more to the link
 * iv_load_policy - Set this to 3 to turn off annotations (or 1 to show them). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&iv_load_policy=3"`
 * loop - Set this to 1 to loop the video (or 0 to not loop). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&loop=1"`
 * modestbranding - Set this to 1 to remove the YouTube logo while playing (or 0 to show the logo). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&modestbranding=1"`
-* rel - Set this to 0 to not show related videos at the end of playing (or 1 to show them). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&rel=0"`
-* showinfo - Set this to 0 to hide the video title and other info (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&showinfo=0"`
+* rel - Set this to 0 to only show related videos from the same channel as the current video (or 1 to show videos from any channel). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&rel=0"`
+* showinfo - Set this to 0 to hide the video title and other info (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&showinfo=0"` (YouTube/Google has deprecated this feature)
 * fs - Set this to 0 to hide the fullscreen button (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&fs=0"`
 
 You can also start and end each individual video at particular times. Like the above, each option should begin with '&'
@@ -78,7 +78,7 @@ You can also start and end each individual video at particular times. Like the a
 > * [Alternate playlist and channel gallery styling >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx) (list layouts and slider layouts, popup/lightbox player, thumbnail hiding for text only paging, and more)
 > * Caching to avoid making frequent requests to YouTube.com and speed up your page loads
 > * Automatic video thumbnail images: each post or page that contains at least one video will have the thumbnail of its first video serve as its featured image
-> * [Lazy loading YouTube embeds >>](https://www.embedplus.com/add-special-effects-to-youtube-embeds-in-wordpress.aspx) with eye-catching effects and animations
+> * [Lazy load YouTube embeds >>](https://www.embedplus.com/add-special-effects-to-youtube-embeds-in-wordpress.aspx) with eye-catching effects and animations
 > * Automatic tagging for video SEO
 > * Automatic Open Graph tagging for Facebook
 > * Deleted video alerts (i.e., did Google remove or take down videos I previously embedded?) 
@@ -117,8 +117,8 @@ See more details after installing. Enjoy!
 * iv_load_policy - Set this to 3 to turn off annotations (or 1 to show them). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&iv_load_policy=3"`
 * loop - Set this to 1 to loop the video (or 0 to not loop). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&loop=1"`
 * modestbranding - Set this to 1 to remove the YouTube logo while playing (or 0 to show the logo). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&modestbranding=1"`
-* rel - Set this to 0 to not show related videos at the end of playing (or 1 to show them). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&rel=0"`
-* showinfo - Set this to 0 to hide the video title and other info (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&showinfo=0"`
+* rel - Set this to 0 to only show related videos from the same channel as the current video (or 1 to show videos from any channel). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&rel=0"`
+* showinfo - Set this to 0 to hide the video title and other info (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&showinfo=0"` (YouTube/Google has deprecated this feature)
 * fs - Set this to 0 to hide the fullscreen button (or 1 to show it). Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&fs=0"`
 
 You can also start and end each individual video at particular times. Like the above, each option should begin with '&'
@@ -135,17 +135,34 @@ You can also start and end each individual video at particular times. Like the a
 
 == Screenshots ==
 
-1. YouTube Embed Screenshot 1: Paste a YouTube link on its own line and it will become a YouTube embed on your website. Or, use the shortcode method.
-2. YouTube Embed Screenshot 2: How to get to YouTube's admin settings
-3. YouTube Embed Screenshot 3: Visual YouTube Wizard and Search Tool
-4. YouTube Embed Screenshot 4: Wizard Insert Search Result Screenshot
-5. YouTube Embed Screenshot 5: Wizard Search Results Screenshot
-6. YouTube Embed Screenshot 6: Gallery layout for a playlist or channel
-7. YouTube Embed Screenshot 7: YouTube playlist galleries are also easily supported.  Here's the Billboard Top 25 Songs for example.
-8. YouTube Embed Screenshot 8: Localization/internationalization so you can set the player's interface language
-9. YouTube Embed Screenshot 9: Optional YouTube channel subscription button above gallery thumbnails
+1. Embed Plus for YouTube WordPress Plugin Screenshot 1: Paste a YouTube link on its own line and it will become a YouTube embed on your website. Or, use the shortcode method.
+2. Embed Plus for YouTube WordPress Plugin Screenshot 2: How to get to YouTube's admin settings
+3. Embed Plus for YouTube WordPress Plugin Screenshot 3: Visual YouTube Wizard and Search Tool
+4. Embed Plus for YouTube WordPress Plugin Screenshot 4: Wizard Insert Search Result Screenshot
+5. Embed Plus for YouTube WordPress Plugin Screenshot 5: Wizard Search Results Screenshot
+6. Embed Plus for YouTube WordPress Plugin Screenshot 6: Gallery layout for a playlist or channel
+7. Embed Plus for YouTube WordPress Plugin Screenshot 7: YouTube playlist galleries are also easily supported.  Here's the Billboard Top 25 Songs for example.
+8. Embed Plus for YouTube WordPress Plugin Screenshot 8: Localization/internationalization so you can set the player's interface language
+9. Embed Plus for YouTube WordPress Plugin Screenshot 9: Optional YouTube channel subscription button above gallery thumbnails
 
 == Changelog ==
+
+= Embed Plus for YouTube WordPress Plugin 13.2.0.2 =
+* Fixes the "Hide related videos at the end of playback" feature (fixes issue with galleries)
+
+= Embed Plus for YouTube WordPress Plugin 13.2.0.1 =
+* Compatibility with legacy versions of PHP
+* Fix Responsive sizing issue with lazyloading plugins
+
+= Embed Plus for YouTube WordPress Plugin 13.2 =
+* Add ability to embed a live stream from a given channel
+* Reduction in live stream YouTube API quota usage
+* Compatibility with other plugins having tabbed sections (e.g. Yuzo)
+* Show YouTube API errors to admins only
+
+= Embed Plus for YouTube WordPress Plugin 13.1.2.5 =
+* Improve responsive sizing aspect ratio in widgets
+* Fix issue: some users receive 403 error when saving
 
 = Embed Plus for YouTube WordPress Plugin 13.1.2.4 =
 * Pagination and autonext allow the current video to play
@@ -525,4 +542,4 @@ First release uploaded to the plugin repository.
 
 == Other Notes ==
 
-This YouTube plugin can include premium features like animation effects using lazy loading, alternate playlist and channel gallery styles, automatic video thumbnail support, automatic schema tagging for video SEO, mobile compatibility checking, and deleted video alerts when you [upgrade to PRO](https://www.embedplus.com/dashboard/pro-easy-video-analytics.aspx?ref=readme).
+This YouTube plugin can include premium features like lazy load (with animation), alternate playlist and channel gallery styles, automatic video thumbnail support, automatic schema tagging for video SEO, mobile compatibility checking, and deleted video alerts when you [upgrade to PRO](https://www.embedplus.com/dashboard/pro-easy-video-analytics.aspx?ref=readme).

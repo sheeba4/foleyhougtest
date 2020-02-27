@@ -400,7 +400,7 @@
 
         $(window).on('hashchange', function ()
         {
-            if (window.location.hash.length > 0)
+            if (window.location.hash.length > 0 && false) // stop; due to vi deprecation
             {
                 $section = $('section' + window.location.hash);
                 if ($section.length > 0)
