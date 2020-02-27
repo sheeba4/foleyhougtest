@@ -1,10 +1,10 @@
 === WpDevArt YouTube Embed, Playlist and Popup ===
 Contributors: wpdevart
-Donate link: http://wpdevart.com/wordpress-youtube-embed-plugin
+Donate link: https://wpdevart.com/wordpress-youtube-embed-plugin
 Tags:  youtube, youtube playlist, youtube player, youtube widget, youtube embed
 Requires at least: 3.2.0
-Tested up to: 5.2.4
-Stable tag: 2.1.4
+Tested up to: 5.3.2
+Stable tag: 2.1.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,7 +32,7 @@ Our plugin have some useful features that you'll need. Here are the features of 
 *   **User friendly back-end**
 *   **Tested on popular WordPress themes**
 
-You can upgrade the free version to [YouTube Embed Pro](http://wpdevart.com/wordpress-youtube-embed-plugin) to add more features.
+You can upgrade the free version to [YouTube Embed Pro](https://wpdevart.com/wordpress-youtube-embed-plugin) to add more features.
 
 ### The features of Pro version
 
@@ -593,6 +593,14 @@ No dear users, you need to pay only once for pro version.
 = 2.1.2 =
 
 * Removed an option.
+
+= 2.1.5 =
+
+* Changed admin part.
+
+= 2.1.6 =
+
+* New plugin added in featured plugins list.
 
 == Other Notes ==
 

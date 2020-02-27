@@ -27,6 +27,10 @@ html.wp-toolbar {padding: 0px;}
     font-family: inherit; 
 }
 
+.ui-widget .ui-widget li {
+    font-size: 13px;
+}
+
 
 .ui-accordion .ui-accordion-header {
     margin-top: 15px;
