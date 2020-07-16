@@ -2,22 +2,25 @@
 Contributors: embedplus
 Plugin Name: Embed Plus for YouTube - Gallery, Channel, Playlist, Live Stream
 Tags: youtube gallery, video gallery, youtube channel, youtube live, live stream
-Requires at least: 4.0
-Tested up to: 5.3
-Stable tag: 13.2.0.2
+Requires at least: 4.1
+Tested up to: 5.4
+Stable tag: 13.4
 License: GPLv3 or later
 
 YouTube Embed WordPress Plugin. Embed a responsive video, YouTube channel gallery, playlist gallery, or YouTube.com live stream (with GDPR options)
 
 == Description ==
 
-**Your WordPress YouTube embed, YouTube gallery (channel and playlist), and even YouTube live stream can be customized in a wide variety of ways with this plugin. Here are a few recently added features:**
+**A WordPress YouTube embed, YouTube gallery (channel or playlist), and even YouTube livestream or premiere can be customized in a wide variety of ways with this plugin. Here are a few recently added features:**
 
-* Compatible with the WordPress 5.0+ Gutenberg block editor (it also stays backwards-compatible with the classic editor). Both the Gutenberg block selector and the Gutenberg classic block will show the YouTube wizard button.  For the Gutenberg block selector, click on the (+) sign for the block editor list. The YouTube Wizard block is located under the "Embeds" category (make sure you choose "YouTube **Wizard**"). See more on [how to embed a YouTube video, gallery, or livestream with the WordPress Gutenberg block editor here >>](https://www.embedplus.com/embed-youtube-video-gallery-livestream-wordpress-gutenberg-block-editor.aspx)
+* Compatible with the WordPress Gutenberg block editor (it also stays backwards-compatible with the classic editor). Both the Gutenberg block selector and the Gutenberg classic block will show the YouTube wizard button. For the Gutenberg block selector, click on the (+) sign for the block editor list. The YouTube Wizard block is located under the "Embeds" category (make sure you choose "YouTube **Wizard**"). See more on [how to embed a YouTube video, gallery, or livestream with the WordPress Gutenberg block editor here >>](https://www.embedplus.com/embed-youtube-video-gallery-livestream-wordpress-gutenberg-block-editor.aspx) The plugin is also compatible with several popular page builders like [Elementor](https://www.youtube.com/watch?v=ldNfIGRTxDU), [Beaver Builder](https://www.youtube.com/watch?v=bPgz0jyt7TE), [SiteOrigin](https://www.youtube.com/watch?v=7QNYw_g-7WM), and [Visual Composer](https://www.youtube.com/watch?v=FWBQc9XhAqM).  For these and pretty much any other page builder with a short code widget, you can also embed your video, gallery, live stream, or premiere by creating the short code in the plugin's wizard and then embedding the code in the page builder's short code widget or text widget.
 * Privacy and Consent - Improved privacy and GDPR compliance options like YouTube no cookie, YouTube API restrictions, and a customizable GDPR consent message
 * YouTube gallery capability (channel and playlist) – The ability to make playlist and channel embeds have a gallery layout. By default, the plugin can generate a grid-based [responsive playlist or channel gallery >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx). Your visitors can browse through pages of video thumbnails and choose from videos that are pulled from an entire YouTube channel or playlist.
 * YouTube gallery auto continuous play - embed a playlist or channel gallery and allow it to play one video after the next without requiring viewers to click a thumbnail
-* YouTube Live Stream - Given a link to a YouTube channel, the plugin wizard automatically finds a livestream if one is active in that channel and displays the livestream for you. 
+* YouTube Live Stream - Given a link to a YouTube channel, the plugin wizard automatically finds a livestream if one is active in that channel and displays the livestream for you. You can embed a direct link to a livestream too.
+* YouTube Premieres - You can also embed premiere videos using the same method we created for live streams
+* Simultaneous playback control - you can enable/disable the ability for visitors to have separate videos running at the same time on the same page. This also works with YouTube livestream and gallery embeds.
+* JavaScript deferral – improve the initial load time of your pages by allowing this plugin's scripts to begin execution only after a page is loaded. Tested using [GTmetrix >>](https://gtmetrix.com/)
 * Improved accessibility by using title attributes for screen reader support. It should help your site pass functional accessibility evaluations (FAE).
 * Improved ajax theme support
 * Site origin information with each embed code as an extra security measure. In YouTube's/Google's own words, checking this option "protects against malicious third-party JavaScript being injected into your page and hijacking control of your YouTube player." We especially recommend checking it as it adds higher security than the built-in YouTube embedding method that comes with the current version of WordPress (i.e. oembed).
@@ -78,7 +81,8 @@ You can also start and end each individual video at particular times. Like the a
 > * [Alternate playlist and channel gallery styling >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx) (list layouts and slider layouts, popup/lightbox player, thumbnail hiding for text only paging, and more)
 > * Caching to avoid making frequent requests to YouTube.com and speed up your page loads
 > * Automatic video thumbnail images: each post or page that contains at least one video will have the thumbnail of its first video serve as its featured image
-> * [Lazy load YouTube embeds >>](https://www.embedplus.com/add-special-effects-to-youtube-embeds-in-wordpress.aspx) with eye-catching effects and animations
+> * [Lazy load YouTube embeds >>](https://www.embedplus.com/defer-parsing-of-javascript-improve-gtmetrix-speed-of-page-with-youtube-embed.aspx) with eye-catching [effects and animations](https://www.embedplus.com/add-special-effects-to-youtube-embeds-in-wordpress.aspx)
+> * [YouTube live chat >>](https://www.embedplus.com/embed-youtube-live-chat-box-with-live-stream-embed-wordpress.aspx) Add more interaction to your site by including the YouTube live chat box as part of each live stream embed. Note that live chat can also be an option for earning money from your audience by using the Super Chat and Super Stickers feature.
 > * Automatic tagging for video SEO
 > * Automatic Open Graph tagging for Facebook
 > * Deleted video alerts (i.e., did Google remove or take down videos I previously embedded?) 
@@ -108,7 +112,7 @@ See more details after installing. Enjoy!
 1. You can also [embed a playlist and channel gallery with this plugin >>](https://www.embedplus.com/responsive-youtube-playlist-channel-gallery-for-wordpress.aspx).  Please install the plugin and visit the settings page for instructions.
 1. To get video SEO, an analytics dashboard and many other premium features, [sign up for one of the options here >>](https://www.embedplus.com/dashboard/pro-easy-video-analytics.aspx?ref=readme)
 
-**Additional codes (adding these will override the default settings in the admin):**
+**Manual codes (adding these will override the default settings in the admin):**
 
 * width - Sets the width of your player. If omitted, the default width will be the width of your theme's content. Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&width=500&height=350"`
 * height - Sets the height of your player. If omitted, this will be calculated for you automatically. Example: `"https://www.youtube.com/watch?v=quwebVjAEJA&width=500&height=350"`
@@ -146,6 +150,23 @@ You can also start and end each individual video at particular times. Like the a
 9. Embed Plus for YouTube WordPress Plugin Screenshot 9: Optional YouTube channel subscription button above gallery thumbnails
 
 == Changelog ==
+
+= Embed Plus for YouTube WordPress Plugin 13.4 =
+* Better compatibility with themes that use the Gutenberg block editor and responsive sizing
+* Fix notice on new installs
+* Add pagebuilder tips to Wizard tab of the documentation
+
+= Embed Plus for YouTube WordPress Plugin 13.3.1 =
+* Fix simultaneous playback control issue
+* Add support for premiere video embedding
+
+= Embed Plus for YouTube WordPress Plugin 13.2.3 =
+* Defer JavaScript for performance
+* Compatibility between loop and hide relative videos features
+* Simultaneous playback control
+
+= Embed Plus for YouTube WordPress Plugin 13.2.1 =
+* Provides more compatibility with other lazyload plugins and responsive themes
 
 = Embed Plus for YouTube WordPress Plugin 13.2.0.2 =
 * Fixes the "Hide related videos at the end of playback" feature (fixes issue with galleries)

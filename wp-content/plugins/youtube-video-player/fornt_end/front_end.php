@@ -36,6 +36,8 @@ class youtube_embed_front_end{
 		$initial_values= array( 
 			"youtube_embed_width"  				=> "640",
 			"youtube_embed_height"  				=> "385",
+			"youtube_embed_align"  				=> "left",
+			"youtube_embed_caption"  			=> "",
 			"youtube_embed_autoplay"  			=> "0",
 			"youtube_embed_theme"  				=> "dark",
 			"youtube_embed_loop_video"  			=> "0",
@@ -90,7 +92,7 @@ class youtube_embed_front_end{
 		$link_youtube = add_query_arg( $parametrs, $link_youtube );
 
 		
-			$code='<iframe allow="autoplay" class="youtube_embed_iframe"   '.$voloutput.$allowfullScreen.' style="width:'.$atts['width'].'px; height:'.$atts['height'].'px" src="'.$link_youtube.'"></iframe>';
+			$code='<div style="text-algn:'.$atts['align'].'"><span style="display:inline-block;text-align:center;"><iframe allow="autoplay" class="youtube_embed_iframe"   '.$voloutput.$allowfullScreen.' style="width:'.$atts['width'].'px; height:'.$atts['height'].'px" src="'.$link_youtube.'"></iframe></span></div>';
 
 		return $code;
 	}

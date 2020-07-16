@@ -255,7 +255,19 @@ if ( ! class_exists( 'All_in_One_SEO_Pack_Module_Manager' ) ) {
 				}
 			}
 			if ( $mod_enable ) {
-				return $this->do_load_module( $mod );
+				if ( AIOSEOPPRO ) {
+					return $this->do_load_module( $mod );
+				}
+
+				// Don't load Pro modules if Pro was previously installed.
+				switch ( $mod ) {
+					case 'schema_local_business':
+					case 'video_sitemap':
+					case 'image_seo':
+						break;
+					default:
+						return $this->do_load_module( $mod );
+				}
 			}
 
 			return false;

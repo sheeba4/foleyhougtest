@@ -33,6 +33,8 @@ class wpda_youtube_gutenberg{
 		$initial_values= array( 
 			"youtube_embed_width"  				=> "640",
 			"youtube_embed_height"  				=> "385",
+			"youtube_embed_align"  				=> "left",
+			"youtube_embed_caption"  			=> "",
 			"youtube_embed_autoplay"  			=> "0",
 			"youtube_embed_theme"  				=> "dark",
 			"youtube_embed_loop_video"  			=> "0",
