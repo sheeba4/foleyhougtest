@@ -69,6 +69,8 @@ class youtube_admin_menu{
         $initial_values= array( 
 			"youtube_embed_width"  				=> "640",
 			"youtube_embed_height"  				=> "385",
+			"youtube_embed_align"  				=> "left",
+			"youtube_embed_caption"  			=> "",
 			"youtube_embed_autoplay"  			=> "0",			
 			"youtube_embed_loop_video"  			=> "0",
 			"youtube_embed_enable_fullscreen"  	=> "1",
@@ -143,6 +145,26 @@ class youtube_admin_menu{
                     	<input type="text" name="youtube_embed_height" id="youtube_embed_height" value="<?php echo $youtube_embed_height; ?>" onMouseDown="alert('If you want to use this feature upgrade to Pro Version'); return false;"><span class="befor_input_small_desc">(px)</span>
                     </td>
                 </tr> 
+				<tr>
+                    <td>     
+                    	position:
+                    </td>
+                    <td>     
+                    	<select id="youtube_embed_align">
+                            <option  value="left"  <?php selected($youtube_embed_align,'left') ?>>Left</option>
+                            <option value="center" <?php selected($youtube_embed_align,'center') ?>>Center</option>
+							<option value="right" <?php selected($youtube_embed_align,'right') ?>>Right</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr>
+                    <td>     
+                    	caption:
+                    </td>
+                    <td>     
+                    	<input type="text" name="youtube_embed_caption" id="youtube_embed_caption" value="<?php echo $youtube_embed_caption; ?>">
+                    </td>
+                </tr>
                 <tr>
                     <td>     
                     	Autoplay:<span class="pro_subtitle_span">Pro feature!</span>
@@ -328,7 +350,7 @@ class youtube_admin_menu{
 			if(jQuery('#youtube_embed_video').val()){
 				var generete_atributes='';
 				
-                tagtext = '[wpdevart_youtube]'+jQuery('#youtube_embed_video').val()+'[/wpdevart_youtube]';
+                tagtext = '[wpdevart_youtube'+' caption="'+jQuery('#youtube_embed_caption').val()+'" align="'+jQuery('#youtube_embed_align').val()+'"]'+jQuery('#youtube_embed_video').val()+'[/wpdevart_youtube]';
                 window.send_to_editor(tagtext);
               	tb_remove()
             }
@@ -348,15 +370,22 @@ class youtube_admin_menu{
     /*############ Menu Function #############*/	
 	
 	public function create_menu(){
-		
+		global $submenu;
+		$youtube_sub_slug=str_replace( ' ', '-', $this->menu_name);
 		$manage_page_main = add_menu_page( $this->menu_name, $this->menu_name, 'manage_options', str_replace( ' ', '-', $this->menu_name), array($this->content_default_params, 'controller_page'),$this->plugin_url.'admin/images/icon-youtube.png');
 							add_submenu_page( str_replace( ' ', '-', $this->menu_name), 'Post/Page Defaults', 'Post/Page Defaults', 'manage_options', str_replace( ' ', '-', $this->menu_name), array($this->content_default_params, 'controller_page'));
 		$page_widget	  = add_submenu_page( str_replace( ' ', '-', $this->menu_name), 'Widget Defaults', 'Widget Defaults', 'manage_options', 'youtube-plus-widget-default', array($this->wdiget_default_params, 'controller_page'));
 		$page_widget	  = add_submenu_page( str_replace( ' ', '-', $this->menu_name), 'Featured Plugins', 'Featured Plugins', 'manage_options', 'youtube-plus-featured-plugins', array($this->featured_plugins, 'controller_page'));
 		add_action('admin_print_styles-' .$manage_page_main, array($this,'menu_requeried_scripts'));
-		add_action('admin_print_styles-' .$page_widget, array($this,'menu_requeried_scripts'));	
+		add_action('admin_print_styles-' .$page_widget, array($this,'menu_requeried_scripts'));
+		if(isset($submenu[$youtube_sub_slug]))
+			add_submenu_page( $youtube_sub_slug, "Support or Any Ideas?", "<span style='color:#00ff66' >Support or Any Ideas?</span>", 'manage_options',"wpdevar_youtube_any_ideas",array($this, 'any_ideas'),156);
+		if(isset($submenu[$youtube_sub_slug]))
+			$submenu[$youtube_sub_slug][3][2]=wpdevart_youtube_support_url;
 	}
-	
+	public function any_ideas() {
+		
+	}
 	/*#################### Menu required scripts function ########################*/	
 	
 	public function menu_requeried_scripts(){

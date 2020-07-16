@@ -57,7 +57,7 @@ class youtube_embed_widget extends WP_Widget {
 		$link_youtube = add_query_arg( $parametrs, $link_youtube );
 
 
-		$code='<iframe class="youtube_embed_iframe"   '.$voloutput.$allowfullScreen.' style="width:'.$instance['youtube_embed_widget_width'].'px; height:'.$instance['youtube_embed_widget_height'].'px" src="'.$link_youtube.'"></iframe>';
+		$code='<div style="text-align:'.$instance['youtube_embed_widget_align'].'"><span style="display:inline-block;text-align:center;"><iframe class="youtube_embed_iframe"   '.$voloutput.$allowfullScreen.' style="width:'.$instance['youtube_embed_widget_width'].'px; height:'.$instance['youtube_embed_widget_height'].'px" src="'.$link_youtube.'"></iframe><div>'.$instance['youtube_embed_widget_caption'].'</div></span></div>';
 
 		echo $code;
 		// After widget part //
@@ -74,6 +74,8 @@ class youtube_embed_widget extends WP_Widget {
 			"youtube_embed_widget_playlist"				=>'',
 			"youtube_embed_widget_width"  				=> "320",
 			"youtube_embed_widget_height"  				=> "265",
+			"youtube_embed_widget_align"  				=> "left",
+			"youtube_embed_widget_caption"  			=> "",
 			"youtube_embed_widget_autoplay"  			=> "0",
 			"youtube_embed_widget_loop_video"  			=> "0",
 			"youtube_embed_widget_enable_fullscreen"  	=> "1",	
@@ -102,6 +104,8 @@ class youtube_embed_widget extends WP_Widget {
 			"youtube_embed_widget_playlist"				=>'',
 			"youtube_embed_widget_width"  				=> "320",
 			"youtube_embed_widget_height"  				=> "265",
+			"youtube_embed_widget_align"  				=> "left",
+			"youtube_embed_widget_caption"  			=> "",
 			"youtube_embed_widget_autoplay"  			=> "0",
 			"youtube_embed_widget_loop_video"  			=> "0",
 			"youtube_embed_widget_enable_fullscreen"  	=> "1",
@@ -160,6 +164,25 @@ class youtube_embed_widget extends WP_Widget {
                     	Height:<span class="pro_subtitle_span">Pro feature!</span>
                     </td>
                 </tr>
+				<tr>
+                    <td>     
+                    	Position:
+                    </td>
+				 </tr>
+                <tr>
+                    <td>     
+                    	<select name="<?php echo $this->get_field_name('youtube_embed_widget_align') ?>" id="<?php echo $this->get_field_id('youtube_embed_widget_align'); ?>">
+                            <option  value="left"  <?php selected($instance['youtube_embed_widget_align'],'left') ?>>Left</option>
+                            <option value="center" <?php selected($instance['youtube_embed_widget_align'],'center') ?>>Center</option>
+							<option value="right" <?php selected($instance['youtube_embed_widget_align'],'right') ?>>Right</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr>
+                    <td>     
+                    	Caption:
+                    </td>
+				 </tr>
                 <tr>
                     <td>     
                     	<input  onMouseDown="alert('If you want to use this feature upgrade to Pro Version'); return false;" type="text" name="<?php echo $this->get_field_name('youtube_embed_widget_height') ?>" id="<?php echo $this->get_field_id('youtube_embed_widget_height'); ?>" value="<?php echo $instance['youtube_embed_widget_height']; ?>"><span class="befor_input_small_desc">(px)</span>

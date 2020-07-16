@@ -28,6 +28,8 @@ class youtube_embed_content_default{
 		 $initial_values= array( 
 			"youtube_embed_width"  				=> "640",
 			"youtube_embed_height"  				=> "385",
+			"youtube_embed_align"  				=> "left",
+			"youtube_embed_caption"  			=> "",
 			"youtube_embed_autoplay"  			=> "0",			
 			"youtube_embed_loop_video"  			=> "0",
 			"youtube_embed_enable_fullscreen"  	=> "1",
@@ -76,6 +78,8 @@ class youtube_embed_content_default{
         $initial_values= array( 
 		"youtube_embed_width"  				=> "640",
 		"youtube_embed_height"  				=> "385",
+		"youtube_embed_align"  				=> "left",
+		"youtube_embed_caption"  			=> "",
 		"youtube_embed_autoplay"  			=> "0",			
 		"youtube_embed_loop_video"  			=> "0",
 		"youtube_embed_enable_fullscreen"  	=> "1",
@@ -138,7 +142,27 @@ class youtube_embed_content_default{
                     <td>     
                     	<input type="text" name="youtube_embed_height" id="youtube_embed_height" value="<?php echo $youtube_embed_height; ?>"><span class="befor_input_small_desc">(px)</span>
                     </td>
-                </tr> 
+                </tr>
+				<tr>
+                    <td>     
+                    	Position:  <span title="Set YouTube Player position " class="desription_class">?</span>
+                    </td>
+                    <td>     
+                    	<select id="youtube_embed_align">
+                            <option  value="left"  <?php selected($youtube_embed_align,'left') ?>>Left</option>
+                            <option value="center" <?php selected($youtube_embed_align,'center') ?>>Center</option>
+							<option value="right" <?php selected($youtube_embed_align,'right') ?>>Right</option>
+                        </select>
+                    </td>
+                </tr>
+				<tr>
+                    <td>     
+                    	Caption: <span title="Set YouTube Player caption " class="desription_class">?</span>
+                    </td>
+                    <td>     
+                    	<input type="text" name="youtube_embed_caption" id="youtube_embed_caption" value="<?php echo $youtube_embed_caption; ?>">
+                    </td>
+                </tr>				
                 <tr>
                     <td>     
                     	Autoplay: <span title="Set this option if you want automatically start playing videos" class="desription_class">?</span>

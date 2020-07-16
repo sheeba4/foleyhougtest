@@ -22,6 +22,11 @@
 				value: true,
 				default: true
 			},
+			version: {
+				type: 'string',
+				value: "",
+				default: ""
+			},
 			youtube_embed_video:{
 				type: 'string',
 				value: "",
@@ -38,6 +43,16 @@
 				default: "",
 			},
 			youtube_embed_height:{
+				type: 'string',
+				value: "",
+				default: "",
+			},
+			youtube_embed_align:{
+				type: 'string',
+				value: "",
+				default: "",
+			},
+			youtube_embed_caption:{
 				type: 'string',
 				value: "",
 				default: "",
@@ -131,7 +146,8 @@
 					initial_parametrs[objectKey]=value;
 					props.setAttributes(initial_parametrs)
 				}
-			});			
+			});
+			props.setAttributes({version:'1.0'})// begin is genereting save function;
 			return el( 'span', { },create_open_hide_block()
 					 
 					 );			
@@ -178,6 +194,8 @@
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_input("youtube_embed_playlist","Playlist Id:","Set YouTube playlist Id.",true));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_input_with_small("youtube_embed_width","Width:","Set YouTube Player Width.",true,"(px)"));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_input_with_small("youtube_embed_height","Height:","Set YouTube Player Height",true,"(px)"));
+				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_align",{"left":"Left","center":"Center","right":"Right"},"Position:","Select the YouTube position",false));
+				wpda_youtube_fields.push(wpda_youtube_lb_simple_input("youtube_embed_caption","Caption:","Set YouTube Caption:",false));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_autoplay",{"1":"Yes","0":"No"},"Autoplay:","Set this option if you want automatically start playing videos",true));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_theme",{"light":"Light","dark":"Dark"},"Player Theme:","Choose YouTube Player Theme",true));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_loop_video",{"1":"Yes","0":"No"},"Loop video:","Set this option for repeating YouTube videos",true));
@@ -186,7 +204,7 @@
 				wpda_youtube_fields.push(wpda_youtube_lb_select_open_hide_params("youtube_embed_show_popup",{"1":"Yes","0":"No"},['',"thumbnails"],"Show video in popup:","Set this option if you want to display YouTube videos in popup",true));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_input_with_small("youtube_embed_width","Thumbnail width:","Set the YouTube video thumbnail width for opening videos in popup ",true,"(px)",aditional_css_for_popup,"wpda_youtube_thumbnails"));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_input_with_small("youtube_embed_height","Thumbnail height:","Set the YouTube video thumbnail height for opening videos in popup ",true,"(px)",aditional_css_for_popup,"wpda_youtube_thumbnails"));
-			//	wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_show_title",{"1":"Yes","0":"No"},"Show information:","Set this option if you want to display YouTube videos information",true));
+			
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_show_youtube_icon",{"1":"Yes","0":"No"},"Show Youtube icon:","Set this option if you want to display Youtube icon",true));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_show_annotations",{"1":"Yes","0":"No"},"Show animations:","Set this option if you want to display animations in YouTube videos",true));
 				wpda_youtube_fields.push(wpda_youtube_lb_simple_select("youtube_embed_show_progress_bar_color",{"red":"Red","white":"White"},"Progress bar color:","Choose YouTube player Progress bar color",true));
@@ -366,6 +384,10 @@
 			shortcode_atributes = shortcode_atributes + ' playlist="' + props.attributes.youtube_embed_playlist + '"';
 			shortcode_atributes = shortcode_atributes + ' width="' + props.attributes.youtube_embed_width + '"';
 			shortcode_atributes = shortcode_atributes + ' height="' + props.attributes.youtube_embed_height + '"';
+			if(props.attributes.version=='1.0'){
+				shortcode_atributes = shortcode_atributes + ' align="' + props.attributes.youtube_embed_align + '"';
+				shortcode_atributes = shortcode_atributes + ' caption="' + props.attributes.youtube_embed_caption + '"';
+			}			
 			shortcode_atributes = shortcode_atributes + ' autoplay="' + props.attributes.youtube_embed_autoplay + '"';
 			shortcode_atributes = shortcode_atributes + ' theme="' + props.attributes.youtube_embed_theme + '"';
 			shortcode_atributes = shortcode_atributes + ' loop_video="' + props.youtube_embed_loop_video + '"';
