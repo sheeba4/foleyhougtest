@@ -69,7 +69,7 @@ class FH_CLI extends \WP_CLI_Command {
 				);
 			}
 		}
-		WP_CLI\Utils\format_items( 'table', $items, array( 'name', 'march_june', 'june_now', 'total_post_counts' ) );
+		WP_CLI\Utils\format_items( 'table', $items, array( 'name', '3142018_6142019', '6152019_now', 'total_post_counts' ) );
 		// WP_CLI::success( print_r( $post_ids ) );
 	}
 
