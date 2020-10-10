@@ -27,6 +27,7 @@ require( $options_path . 'user_profile.php' );
 * add-on's
 */
 require_once( $functions_path . 'css3pie.php' );
+require_once( $functions_path . 'cli.php' );
 //require_once($functions_path . 'TinyMCE.php');
 
 /*
