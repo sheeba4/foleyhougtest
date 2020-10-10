@@ -63,8 +63,8 @@ class FH_CLI extends \WP_CLI_Command {
 			if ( 0 !== $post_counts ) {
 				$items[] = array(
 					'name'              => $name,
-					'march_june'        => $covid_counts,
-					'june_now'          => $after_covid_counts,
+					'3142018_6142019'   => $covid_counts,
+					'6152019_now'       => $after_covid_counts,
 					'total_post_counts' => $post_counts,
 				);
 			}
