@@ -31,10 +31,18 @@ class User_Profile {
 				<th><label for="profile_image"><?php esc_html_e( 'File Url:', 'fohopoco' ); ?></label></th>
 				<?php $profile_image = get_the_author_meta( 'profile_image', $user->ID ); ?>
 
+				<td><img src="<?php echo esc_url($profile_image); ?>" /><td/>
 				<td>
 					<input type="text" class="text" size="60" name="profile_image" id="profile_image" value="<?php echo esc_url( $profile_image );?>">
 					<input type="button" id="profile_image-button" class="button" value="<?php _e( 'Choose or Upload a file' );?>">
 					<p class="description">Please enter your url for the image or upload</p>
+				</td>
+			</tr>
+			<tr>
+				<?php $hide_sidebar = get_the_author_meta( 'hide_sidebar', $user->ID ); ?>
+				<td>
+					<input type="checkbox" class="checkbox" name="hide_sidebar" id="hide_sidebar" value="hide" <?php checked($hide_sidebar, 'hide');?>>
+					<label for="hide_sidebar"><?php esc_html_e( 'Hide from author widgets', 'fohopoco' ); ?></label>
 				</td>
 			</tr>
 		</table>
@@ -50,6 +58,9 @@ class User_Profile {
 		if ( !current_user_can( 'edit_user', $user_id ) )
 			return false;
 
+		if( isset($_POST['hide_sidebar'] )){
+			update_usermeta( $user_id, 'hide_sidebar', $_POST['hide_sidebar'] );
+		}
 		update_usermeta( $user_id, 'profile_image', $_POST['profile_image'] );
 	}
 

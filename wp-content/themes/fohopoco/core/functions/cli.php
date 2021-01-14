@@ -7,6 +7,10 @@
  */
 
 
+ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
+ 	return;
+ }
+ 
 \WP_CLI::add_command( 'foley', 'FH_CLI' );
 
 /**
