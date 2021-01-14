@@ -120,23 +120,29 @@ class Foley_Author_Widget extends WP_Widget {
 		echo $after_title;
 		echo "<ul class=\"foley-authors\">";
 		foreach ( $authors as $author ) {
-			$display_name       = $author['data']->display_name;
-			$profile_image = get_the_author_meta( 'profile_image', $author['ID'] );
-			if( empty( $profile_image ) ){
-				$avatar = get_avatar( $author['ID'], $avatar_size, '', '', array('class'=> 'avatarThumb alignnone') );
-			}else{
-				$avatar = '<img class="avatarThumb alignnone" src="' . esc_url( str_replace( 'http://', 'https://', $profile_image ) ) .'" alt="' . esc_html( $display_name ) .'" width="47" height="47">';
+			$hide_sidebar = get_the_author_meta( 'hide_sidebar', $author['ID'] );
+			if( isset( $hide_sidebar ) && 'hide' == $hide_sidebar ){
+				continue;
+			}else {
+					$display_name       = $author['data']->display_name;
+					$profile_image = get_the_author_meta( 'profile_image', $author['ID'] );
+					if( empty( $profile_image ) ){
+						$avatar = get_avatar( $author['ID'], $avatar_size, '', '', array('class'=> 'avatarThumb alignnone') );
+					}else{
+						$avatar = '<img class="avatarThumb alignnone" src="' . esc_url( str_replace( 'http://', 'https://', $profile_image ) ) .'" alt="' . esc_html( $display_name ) .'" width="47" height="47">';
+					}
+
+					$author_profile_url = isset( $author['data']->user_url ) ? $author['data']->user_url : get_author_posts_url($author['ID']);
+					$description        = get_the_author_meta( 'description', $author['ID'] );
+
+					echo "<li class='clearfix'>";
+					echo $avatar;
+					echo "<h4><a href='$author_profile_url' rel='author'>$display_name</a></h4>";
+					echo "<p>" . ShortenText( $description ). "</p>";
+					echo "<p><a rel='author' class='more' href='$author_profile_url'>More</a></p>";
+					echo "</li>";
 			}
 
-			$author_profile_url = isset( $author['data']->user_url ) ? $author['data']->user_url : get_author_posts_url($author['ID']);
-			$description        = get_the_author_meta( 'description', $author['ID'] );
-
-			echo "<li class='clearfix'>";
-			echo $avatar;
-			echo "<h4><a href='$author_profile_url' rel='author'>$display_name</a></h4>";
-			echo "<p>" . ShortenText( $description ). "</p>";
-			echo "<p><a rel='author' class='more' href='$author_profile_url'>More</a></p>";
-			echo "</li>";
 		}
 		echo "</ul>";
 
