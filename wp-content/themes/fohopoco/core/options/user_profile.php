@@ -60,6 +60,8 @@ class User_Profile {
 
 		if( isset($_POST['hide_sidebar'] )){
 			update_usermeta( $user_id, 'hide_sidebar', $_POST['hide_sidebar'] );
+		} else {
+			update_usermeta( $user_id, 'hide_sidebar', '' );
 		}
 		update_usermeta( $user_id, 'profile_image', $_POST['profile_image'] );
 	}
